@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+  
+	<title>Domiclik</title>
+
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<!-- Latest compiled and minified CSS -->
+{% load static from staticfiles %}
+<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-theme.css">
+
+<!-- Latest compiled and minified JavaScript -->
+
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      
+      <a class="navbar-brand" href="#"><img src="{{MEDIA_URL}}img/logo_web.png" height="238" width="243"  alt=""></a>
+
+       
+
+    </div>
+
+     <ul class="nav navbar-nav">
+        <li class="active"><p id ="fuente" href="#">Pides On-line y pagas en casa</p></li>
+        
+        
+      </ul>
+       <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a  href="#"><i class="fa fa-cutlery fa-2x"></i>&nbsp; Restaurantes</a></li>
+        <li ><a    href="#"><i class="fa fa-glass fa-2x"></i>&nbsp; Licores</a></li>
+        <li><a  href="#"><i class="fa fa-medkit fa-2x"></i>&nbsp; Farmacias</a></li>
+        <a class="navbar-brand" href=""><img src="{{MEDIA_URL}}img/carro.png" height="151" width="124" alt=""></i></a>
+      
+      </ul>
+    
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+
+
+    <div id="myCarousel" class="carousel slide">
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+      </ol>
+      <!-- Carousel items -->
+      <div class="carousel-inner">
+        <div class="active item"><img class="img-responsive" src="{{MEDIA_URL}}img/imagen1.png"  width="100%" heigth="auto" alt="banner1" /></div>
+        <div class="item"><img class="img-responsive" src="{{MEDIA_URL}}img/imagen1.png"  width="100%" heigth="auto" alt="banner2" /></div>
+        <div class="item"><img class="img-responsive" src="{{MEDIA_URL}}img/imagen1.png"  width="100%" heigth="auto" alt="banner3" /></div>
+        <div class="item"><img class="img-responsive" src="{{MEDIA_URL}}img/imagen1.png"  width="100%" heigth="auto" alt="banner4" /></div>
+        <div class="item"><img class="img-responsive" src="{{MEDIA_URL}}img/imagen1.png"  width="100%" heigth="auto" alt="banner5" /></div>
+      </div>
+      <!-- Carousel nav -->
+      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+
+
+
+
+<!--<div class="jumbotron1">
+<div class="row">
+  <div class="homeBox">
+    <div class="col-md-2">
+      <div class="one_fourth">
+
+        <a href=""><div class = "boxImage"><img src = "img/pollo.png" height="89" width="100"></div></a>
+
+        <h3>Pollo</h3> </a>    
+
+        <div class = "boxDescription"></div>  
+
+      </div>
+      </div>
+      <div class="col-md-2 ">
+      <div class="one_fourth">
+
+        <a href=""><div class = "boxImage"><img src = "img/rapida.png" height="89" width="100"></div></a>
+
+        <h3>Rapidas</h3>
+
+        <div class = "boxDescription"></div>        
+
+      </div>
+     </div>
+
+
+<div class="col-md-2">
+      <div class="one_fourth">
+
+        <a href=""><div class = "boxImage"><img src = "img/pizza.png" height="89" width="100"></div> </a>
+
+        <h3>Pizza</h3>
+
+        <div class = "boxDescription"></div>        
+
+      </div>
+
+</div>
+<div class="col-md-2">
+      <div class="one_fourth last">
+
+        <a href=""><div class = "boxImage"><img src = "img/tradicional.png" height="89" width="100"></div> </a>
+
+        <h3>Tradicional</h3>
+
+        <div class = "boxDescription"></div> 
+
+      </div>
+</div>
+<div class="col-md-2">
+
+
+
+      <div class="one_fourth last">
+
+        <a href=""><div class = "boxImage"><img src = "img/ejecutiva.png" height="89" width="100"></div> </a>
+
+        <h3>Ejecutiva</h3>
+
+        <div class = "boxDescription"></div> 
+
+      </div>
+</div>
+
+
+     <div class="col-md-2">
+      <div class="one_fourth last">
+
+        <a href=""><div class = "boxImage"><img src = "img/vegetariana.png" height="89" width="100"></div> </a>
+
+        <h3>Vegetariana</h3>
+
+        <div class = "boxDescription"></div> 
+
+      </div>
+
+      </div>
+
+     </div>
+    </div>
+  </div>-->
+
+
+<div class="container">
+    <br><br><br>
+
+   
+
+  <div id="fuente">
+    <div class="col-md-offset-1 "><h2>PIDE COMIDA ONLINE A LOS MEJORES RESTAURANTES DE TU CIUDAD</h2></div>
+  </div>
+  
+<div class="row">
+  
+</div>
+<br><br>
+    <div class="row">
+     <div class="col-md-offset-3"> 
+      <form class="form-inline" role="form">
+  <div class="input-group">
+  <span class="input-group-addon"><i class="fa fa-map-marker "></i></span>
+  <select class="form-control ciudad">
+    <option value="">Todas</option>
+    {% for ciudad in ciudades %}
+    <option value="{{ciudad.id}}">{{ciudad.nombre}}</option>
+    {% endfor %}
+    <!--<option value="">Duitama</option>
+    <option value="">Sogamoso</option>
+    <option value="">Yopal</option>-->
+
+
+  </select>
+</div>
+
+<div class="input-group">
+  <span class="input-group-addon"><i class="fa fa-home "></i></span>
+  <select id="nuevo" class="form-control sector">
+    <option value="">Todos</option>
+    {% for sector in sectores %}
+    <option value="{{sector.id}}">{{sector.nombre}}</option>
+    {% endfor %}
+
+    
+    
+    
+ 
+ 
+  </select>
+  
+</div>
+
+<div class="input-group">
+  <span class="input-group-addon"><i class="fa fa-cutlery "></i></span>
+  <select id="tipo" class="form-control tipo">
+    <option value="">Todas</option>
+    {% for tipo in tipos %}
+    <option value="{{tipo.id}}">{{tipo.nombre}}</option>
+    {% endfor %}
+
+
+  </select>
+  
+</div>
+ 
+  
+   &nbsp;&nbsp;&nbsp;<a class="boton_estilo" id="fuente2" href="javascript:getUrl()"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;Buscar</a>
+ 
+</form>
+
+
+  </div>  
+    </div>
+  </div>
+
+<br>
+<br>
+<br><br>
+
+
+
+  <div class="jumbotron2">
+    <div class="row">
+      <div class="col-md-6"><img src="{{MEDIA_URL}}img/celulares.png" height="499" width="447" alt=""></div>
+      <br>
+      <br>
+      <br><br><br>
+      <div class="col-md-6">
+        <div id="fuente2"><h3>Tus Domicilios Siempre a la Mano!!!!</h3></div><br>
+        <div id="fuente2">Descarga nuestra App Gratis en:</div><br><br><br>
+        <img src="{{MEDIA_URL}}img/android.png" alt="">
+        <img src="{{MEDIA_URL}}img/apple.png" alt="">
+
+      </div>
+    </div>
+  </div>
+
+<br>
+<br>
+<div class="col-md-6 col-md-offset-3">
+<h4>Domiclik.com es una empresa que ofrece el servicio de Solicitud de comida a Domicilio
+Online. El uso de la Plataforma Web o M&oacute;vil no incurre en Gastos Adicionales
+ni incremento en los costos de los productos ofrecidos por cada uno de los
+restaurantes Aqu&iacute; Publicados.
+<br><br>
+Todo domicilio solicitado por Nuestra Plataforma sera aprobado despu&eacute;s de
+realzarse un proceso de Verificaci&oacute;n. Cualquier Dato falso suministrado al 
+momento de solicitar un pedido sera tomado por Domiclik.com como un pedido
+no ver&iacute;dico y por lo cual no se tramitar&aacute; la Orden.</h4>
+</div>
+<br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+
+</div>
+<div class="navbar-static-bottom">
+  
+  <img src="{{MEDIA_URL}}img/edificios.png"  width ="100%" alt="">
+</div>
+
+
+
+<nav class="navbar navbar-inverse navbar-static-bottom" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    
+
+     <ul class="nav navbar-nav ">
+      <li  class="active"><a  href="#"></a></li>
+        
+        <li  class="active"><a  href="#">T&eacute;rminos y Condiciones</a></li>
+        
+        <li  class="active"><a  href="#">|</a></li>
+        <li  class="active"><a  href="#">Cont&aacute;ctenos</a></li>
+
+        
+      
+         
+         <li  class="active"><a  href="#">|</a></li>
+         <li  class="active"><a  href="#"><i class="fa fa-android fa-2x"></i>&nbsp; Android</a></li>
+         <li  class="active"><a  href="#">|</a></li>
+         <li  class="active"><a  href="#"><i class="fa fa-apple fa-2x"></i>&nbsp; Apple</a></li>
+
+        <li ><a  href="#">&nbsp; | &nbsp;</a></li>
+        
+        
+      </ul>
+       <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="">S&iacute;guenos en : </a></li>
+        <li  class="active"><a  href="#"><i class="fa fa-facebook fa-2x"></i>&nbsp; Facebook</a></li>
+        <li class="active"><a  href="#"><i class="fa fa-twitter fa-2x"></i>&nbsp; Twitter</a></li>
+        <li class="active"><a  href="#"><i class="fa fa-google-plus fa-2x"></i>&nbsp; Google</a></li>
+        
+      
+      </ul>
+    
+  </div><!-- /.container-fluid -->
+  
+</nav>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{{STATIC_URL}}js/jquery.js"></script>
+  <script src="{{STATIC_URL}}/bootstrap.js"></script>
+
+<script>
+   $(document).ready(function(){
+        $('.carousel').carousel()
+    });
+
+</script>
+
+<script>
+  /*$('.ciudad').on('change',ciudad)
+  function ciudad(){
+    ciudad = $('.ciudad').val();
+    console.log(ciudad);
+
+  }
+  $('.sector').on('change',sector)
+  function sector(){
+    sector = $('.sector').val();
+    console.log(sector);
+
+  }
+
+  $('.tipo').on('change',tipo)
+  function tipo(){
+    tipo = $('.tipo').val();
+    console.log(tipo);
+
+  }*/
+  function getUrl(){
+     ciudad = $('.ciudad').val();
+     sector = $('.sector').val();
+
+    if (ciudad=='') {
+
+        alert('INGRESE CIUDAD PRIMERO');
+
+       }else if(ciudad!='' && sector==''){
+
+        alert('INGRESE SECTOR');
+
+       }
+
+
+     else{
+
+       var dir = "/restaurantes/"
+       dir += $('.ciudad').val();
+       var dir1 = "/"
+       dir1 += $('.sector').val();
+       var dir2 ='/';
+       dir2 += $('.tipo').val();
+       dir3 = dir+dir1+dir2;
+   window.location.href=dir3;
+        };
+
+   
+   
+
+  }
+</script>
+
+
+
+</body>
+</html>

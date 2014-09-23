@@ -1,0 +1,65 @@
+from django.db import models
+
+class Ciudade(models.Model):
+	nombre = models.CharField(max_length=60)
+	
+	def __str__(self):
+		return self.nombre
+
+class Sectore(models.Model):
+	nombre = models.CharField(max_length=60)
+	
+
+	def __str__(self):
+		return self.nombre
+
+class Tipo(models.Model):
+	nombre = models.CharField(max_length=60)
+	
+
+	def __str__(self):
+		return self.nombre
+
+class Restaurante(models.Model):
+	nombre = models.CharField(max_length=60)
+	descripcion = models.TextField(blank = True, default="descripcion")
+	logo = models.ImageField(upload_to = "logos")
+	ciudad = models.ForeignKey(Ciudade)
+	sector = models.ForeignKey(Sectore)
+	tipo = models.ForeignKey(Tipo)
+	hora_abrir = models.TimeField("%H")
+	hora_cerrar = models.TimeField("%H")
+	precio_domicilio = models.IntegerField()
+
+	def __str__(self):
+		return self.nombre
+
+
+
+class Menuesp(models.Model):
+	titulo = models.CharField(max_length=60)
+	descripcion = models.TextField()
+	precio = models.IntegerField()
+	restaurant = models.ForeignKey(Restaurante)
+
+	
+	def __str__(self):
+		return self.titulo
+
+
+
+
+
+class Adicionale(models.Model):
+	nombre = models.CharField(max_length=60,blank=True)
+	precio = models.IntegerField()
+	menuesp = models.ForeignKey(Menuesp)
+	
+	def __str__(self):
+		return self.nombre
+
+
+
+
+
+
