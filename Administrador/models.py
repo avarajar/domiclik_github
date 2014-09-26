@@ -34,21 +34,40 @@ class Restaurante(models.Model):
 	def __str__(self):
 		return self.nombre
 
-
-
-class Menuesp(models.Model):
+class Categoria(models.Model):
 	titulo = models.CharField(max_length=60)
-	descripcion = models.TextField()
-	precio = models.IntegerField()
 	restaurant = models.ForeignKey(Restaurante)
 
 	
 	def __str__(self):
 		return self.titulo
 
+class Menuesp(models.Model):
+	titulo = models.CharField(max_length=60)
+	descripcion = models.TextField()
+	precio = models.IntegerField()
+	restaurant = models.ForeignKey(Restaurante)
+	categoria = models.ForeignKey(Categoria)
+
+	
+	def __str__(self):
+		return self.titulo
 
 
+class TituloAdicionale(models.Model):
+	titulo = models.CharField(max_length=60,blank=True)
+	menuesp = models.ForeignKey(Menuesp)
+	
+	def __str__(self):
+		return self.titulo
 
+class AdiUnico(models.Model):
+	nombre = models.CharField(max_length=60,blank=True)
+	precio = models.IntegerField()
+	menuesp = models.ForeignKey(Menuesp)
+	
+	def __str__(self):
+		return self.nombre
 
 class Adicionale(models.Model):
 	nombre = models.CharField(max_length=60,blank=True)

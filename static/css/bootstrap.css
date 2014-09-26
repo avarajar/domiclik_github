@@ -6369,6 +6369,15 @@ button.close {
 /* CSS PERSONAL*/
 
 
+.fixed{
+
+   position: fixed;
+    overflow: hidden;
+    top: 0%;
+    bottom: 250px;
+    
+}
+
 .boton_estilo{
 
   position: relative;

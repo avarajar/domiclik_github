@@ -15,7 +15,7 @@
 <!-- Latest compiled and minified JavaScript -->
 
 </head>
-<body  >
+<body data-spy="scroll" data-target="#affix-nav" >
 	<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -71,7 +71,7 @@
     </div>
   </div>
 
-<div class="container">
+<div class="container ">
 <div class="col-md-7">
 
   <div class="jumbotron">
@@ -364,7 +364,7 @@
 
 </div>
 
-</div>
+<!--</div>-->
 
   
 
@@ -527,7 +527,7 @@
                  precio_num = dos[j].fields.precio;
                  };   
 
-                html +='<div class="jumbotron" id="remover"><ul class="list-group"><li class="list-group-item list-group-item-info"><span class="badge precio_menu" name="'+precio_num+'">'+precio+'</span>'+nombre+'</li></ul><div id="fuente2">Adicionales</div>'+adicional+'<div id="fuente2">Solicitudes Especiales</div><div class="input-group"><textarea name=" id="solicitud" cols="60" rows="5"class="form-control" placeholder="ejem: Sin lechuga"></textarea></div><br><br><button onClick="output()" type="button"class="btn btn-info btn-lg pedido" >Pedido</button>&nbsp;<button onClick="output2()"type="button" id="boton" class="btn btn-danger btn-lg">Quitar</button></div></div>'
+                html +='<div class="jumbotron " id="remover"><ul class="list-group"><li class="list-group-item list-group-item-info"><span class="badge precio_menu" name="'+precio_num+'">'+precio+'</span>'+nombre+'</li></ul><div id="fuente2">Adicionales</div>'+adicional+'<div id="fuente2">Solicitudes Especiales</div><div class="input-group"><textarea name=" id="solicitud" cols="60" rows="5"class="form-control" placeholder="ejem: Sin lechuga"></textarea></div><br><br><button onClick="output()" type="button"class="btn btn-info btn-lg pedido" >Pedido</button>&nbsp;<button onClick="output2()"type="button" id="boton" class="btn btn-danger btn-lg">Quitar</button></div></div>'
               
 
               $('#caja').append(html);
