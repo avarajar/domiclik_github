@@ -80,7 +80,7 @@
   <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
   <a href="#" class="list-group-item">Morbi leo risus</a>
   <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-  <a href="#" class="list-group-item">Vestibulum at eros</a>
+  <a href="#ancla" class="list-group-item">Vestibulum at eros</a>
 </div>
 
 </div>
@@ -112,7 +112,7 @@
                href="#">
                <div class="row" >
                 <div id="fuente2">
-                 <div class="col-md-6 ">{{menus.titulo}}</div>
+                 <div class="col-md-6 " id= "ancla">{{menus.titulo}}</div>
                  <div class="col-md-3"></div>
                  <div class="col-md-3">${{menus.precio}}</div>
                  <div class="col-md-8"><h5>{{menus.descripcion}}</h5></div>
@@ -597,6 +597,33 @@
 </script>
 
 <script>
+$(function(){
+
+     $('a[href*=#]').click(function() {
+
+     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
+         && location.hostname == this.hostname) {
+
+             var $target = $(this.hash);
+
+             $target = $target.length && $target || $('[name=' + this.hash.slice(1) +']');
+
+             if ($target.length) {
+
+                 var targetOffset = $target.offset().top;
+
+                 $('html,body').animate({scrollTop: targetOffset}, 1000);
+
+                 return false;
+
+            }
+
+       }
+
+   });
+
+});
+
   function output(){
     
     var nombre_ad ='';
