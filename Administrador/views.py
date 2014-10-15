@@ -107,6 +107,8 @@ def menu(request,idc):
 	
 	restaurant = get_object_or_404(Restaurante, pk = idc)
 	restaurantes = Ciudade.objects.all()
+	categoria = Categoria.objects.filter(restaurant_id=idc,)
+
 	#menu = Menu.objects.filter(restaurant_id = idc,)
 	menus = Menuesp.objects.filter(restaurant_id=idc,)
 	
@@ -115,6 +117,7 @@ def menu(request,idc):
 
 	return render(request,"index3.html",{
 		"restaurant": restaurant,
+		"categoria": categoria,
 		"menus": menus,})
 
 class Ajax(ListView):
