@@ -44,13 +44,14 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'Administrador', ['Restaurante'])
 
-        # Adding model 'Menu'
-        db.create_table(u'Administrador_menu', (
+        # Adding model 'Categoria'
+        db.create_table(u'Administrador_categoria', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('titulo', self.gf('django.db.models.fields.CharField')(max_length=60)),
+            ('imagen_categoria', self.gf('django.db.models.fields.files.ImageField')(max_length=100)),
             ('restaurant', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['Administrador.Restaurante'])),
         ))
-        db.send_create_signal(u'Administrador', ['Menu'])
+        db.send_create_signal(u'Administrador', ['Categoria'])
 
         # Adding model 'Menuesp'
         db.create_table(u'Administrador_menuesp', (
@@ -58,19 +59,27 @@ class Migration(SchemaMigration):
             ('titulo', self.gf('django.db.models.fields.CharField')(max_length=60)),
             ('descripcion', self.gf('django.db.models.fields.TextField')()),
             ('precio', self.gf('django.db.models.fields.IntegerField')()),
-            ('menu', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['Administrador.Menu'])),
             ('restaurant', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['Administrador.Restaurante'])),
+            ('categoria', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['Administrador.Categoria'])),
         ))
         db.send_create_signal(u'Administrador', ['Menuesp'])
 
-        # Adding model 'Tamano'
-        db.create_table(u'Administrador_tamano', (
+        # Adding model 'TituloAdicionale'
+        db.create_table(u'Administrador_tituloadicionale', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('tamano', self.gf('django.db.models.fields.CharField')(max_length=60, blank=True)),
+            ('titulo', self.gf('django.db.models.fields.CharField')(max_length=60, blank=True)),
+            ('menuesp', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['Administrador.Menuesp'])),
+        ))
+        db.send_create_signal(u'Administrador', ['TituloAdicionale'])
+
+        # Adding model 'AdiUnico'
+        db.create_table(u'Administrador_adiunico', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('nombre', self.gf('django.db.models.fields.CharField')(max_length=60, blank=True)),
             ('precio', self.gf('django.db.models.fields.IntegerField')()),
             ('menuesp', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['Administrador.Menuesp'])),
         ))
-        db.send_create_signal(u'Administrador', ['Tamano'])
+        db.send_create_signal(u'Administrador', ['AdiUnico'])
 
         # Adding model 'Adicionale'
         db.create_table(u'Administrador_adicionale', (
@@ -95,14 +104,17 @@ class Migration(SchemaMigration):
         # Deleting model 'Restaurante'
         db.delete_table(u'Administrador_restaurante')
 
-        # Deleting model 'Menu'
-        db.delete_table(u'Administrador_menu')
+        # Deleting model 'Categoria'
+        db.delete_table(u'Administrador_categoria')
 
         # Deleting model 'Menuesp'
         db.delete_table(u'Administrador_menuesp')
 
-        # Deleting model 'Tamano'
-        db.delete_table(u'Administrador_tamano')
+        # Deleting model 'TituloAdicionale'
+        db.delete_table(u'Administrador_tituloadicionale')
+
+        # Deleting model 'AdiUnico'
+        db.delete_table(u'Administrador_adiunico')
 
         # Deleting model 'Adicionale'
         db.delete_table(u'Administrador_adicionale')
@@ -116,22 +128,30 @@ class Migration(SchemaMigration):
             'nombre': ('django.db.models.fields.CharField', [], {'max_length': '60', 'blank': 'True'}),
             'precio': ('django.db.models.fields.IntegerField', [], {})
         },
+        u'Administrador.adiunico': {
+            'Meta': {'object_name': 'AdiUnico'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'menuesp': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['Administrador.Menuesp']"}),
+            'nombre': ('django.db.models.fields.CharField', [], {'max_length': '60', 'blank': 'True'}),
+            'precio': ('django.db.models.fields.IntegerField', [], {})
+        },
+        u'Administrador.categoria': {
+            'Meta': {'object_name': 'Categoria'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'imagen_categoria': ('django.db.models.fields.files.ImageField', [], {'max_length': '100'}),
+            'restaurant': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['Administrador.Restaurante']"}),
+            'titulo': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
         u'Administrador.ciudade': {
             'Meta': {'object_name': 'Ciudade'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombre': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
-        u'Administrador.menu': {
-            'Meta': {'object_name': 'Menu'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'restaurant': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['Administrador.Restaurante']"}),
-            'titulo': ('django.db.models.fields.CharField', [], {'max_length': '60'})
-        },
         u'Administrador.menuesp': {
             'Meta': {'object_name': 'Menuesp'},
+            'categoria': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['Administrador.Categoria']"}),
             'descripcion': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'menu': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['Administrador.Menu']"}),
             'precio': ('django.db.models.fields.IntegerField', [], {}),
             'restaurant': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['Administrador.Restaurante']"}),
             'titulo': ('django.db.models.fields.CharField', [], {'max_length': '60'})
@@ -154,17 +174,16 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombre': ('django.db.models.fields.CharField', [], {'max_length': '60'})
         },
-        u'Administrador.tamano': {
-            'Meta': {'object_name': 'Tamano'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'menuesp': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['Administrador.Menuesp']"}),
-            'precio': ('django.db.models.fields.IntegerField', [], {}),
-            'tamano': ('django.db.models.fields.CharField', [], {'max_length': '60', 'blank': 'True'})
-        },
         u'Administrador.tipo': {
             'Meta': {'object_name': 'Tipo'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombre': ('django.db.models.fields.CharField', [], {'max_length': '60'})
+        },
+        u'Administrador.tituloadicionale': {
+            'Meta': {'object_name': 'TituloAdicionale'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'menuesp': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['Administrador.Menuesp']"}),
+            'titulo': ('django.db.models.fields.CharField', [], {'max_length': '60', 'blank': 'True'})
         }
     }
 

@@ -36,6 +36,7 @@ class Restaurante(models.Model):
 
 class Categoria(models.Model):
 	titulo = models.CharField(max_length=60)
+	imagen_categoria = models.ImageField(upload_to = "categoria")
 	restaurant = models.ForeignKey(Restaurante)
 
 	
