@@ -79,7 +79,7 @@
     {{categoria.titulo}}
   </a>
 </div>
-{% endfor %}
+
 </div>
 
 
@@ -109,6 +109,8 @@
                href="#">
                <div class="row" >
                 <div id="fuente2">
+                  {{categoria.titulo}}
+                  {{categoria.imagen_categoria}}
                  <div class="col-md-6 " id= "ancla">{{menus.titulo}}</div>
                  <div class="col-md-3"></div>
                  <div class="col-md-3">${{menus.precio}}</div>
@@ -203,7 +205,7 @@
 
    </div>
    {% endfor %}
-   
+   {% endfor %}
    <!--<div class="panel ">
       <div class="panel-heading">
          <h2 >
