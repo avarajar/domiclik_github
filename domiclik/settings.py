@@ -68,7 +68,7 @@ MEDIA_URL = 'http://domiclik.herokuapp.com/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-#STATIC_ROOT = RUTA_PROYECTO.child('static')
+STATIC_ROOT = RUTA_PROYECTO.child('static')
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 
