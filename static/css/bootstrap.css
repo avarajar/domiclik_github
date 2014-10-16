@@ -6405,6 +6405,11 @@ button.close {
   text-decoration: none;
 }  
 
+.gris{
+color: #000;
+  
+}
+
 .fondo{
   background-image: url(../img/fondo.png);
   

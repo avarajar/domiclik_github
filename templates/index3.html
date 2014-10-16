@@ -122,7 +122,7 @@
        
 {% for categoria in categoria %}  
        <div id="fuente3"><div id="{{categoria.id}}">{{categoria.titulo}}<br>
-                  <img src="{{MEDIA_URL}}{{categoria.imagen_categoria}}" height="135" width="450">  
+                  <img src="{{MEDIA_URL}}{{categoria.imagen_categoria}}" height="135" width="100%">  
                   </div></div>
                  
     {% for menus in menus %}  
@@ -142,10 +142,10 @@
                  <div class="col-md-3"></div>
                  <div class="col-md-3"><h5>${{menus.precio}}</h5></div>
                  </div>
-                 <div class="col-md-8">{{menus.descripcion}}</div>
+                 <div class="col-md-8 gris">{{menus.descripcion}}</div>
                  <div class="col-md-1"></div>  
                 
-                 <div class="col-md-3"><button type="button" value="{{menus.id}}" class="btn btn-info btn-lg boton">Agregar</button></div>
+                 <div class="col-md-3"><button type="button" value="{{menus.id}}" class="btn btn-warning btn-lg boton">Agregar</button></div>
                 
                </div>
             </a>
@@ -164,7 +164,7 @@
                  <div class="col-md-4">{{menus.titulo}}</div>
                  <div class="col-md-4"></div>
                  <div class="col-md-4">${{menus.precio}}</div>
-                 <div class="col-md-4"><h5>{{menus.descripcion}}</h5></div>
+                 <div class="col-md-4 gris"><h5>{{menus.descripcion}}</h5></div>
                  <div class="col-md-4"></div>  
                 </div>
                  <div class="col-md-4"><button type="button"  class="btn btn-info btn-lg boton">Agregar</button></div>
