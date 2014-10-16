@@ -57,33 +57,49 @@
     
 
 
-  <div class="jumbotron">
+  <div class="jumbotronE">
     <br>
     <div class="row">
-      <div class="col-md-3 col-md-offset-3"><img src="{{MEDIA_URL}}{{restaurant.logo}}" height="135" width="135"></div>
-      <div class="col-md-4"><div id="fuente2"><strong><h1>{{restaurant.nombre}}</h1></strong><br><h5>{{restaurant.descripcion}}<br>Entrega en 40 min <br> Domicilio $ {{restaurant.precio_domicilio}}</h5></div></div><br>
+      <div class="col-md-1 col-md-offset-3"><img src="{{MEDIA_URL}}{{restaurant.logo}}" height="135" width="135"></div>
+      <div class="col-md-5"><div id="fuenteE"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{restaurant.nombre}}</strong><br><h5><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{restaurant.descripcion}}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entrega en 40 min <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Domicilio $ {{restaurant.precio_domicilio}}</strong></h5></div></div><br>
       
-      <div class="col-md-2 "><button type="button" class="btn btn-success btn-lg">Abierto</button><br><br><div id="fuente2">
+      <div class="col-md-3 "><button type="button" class="btn btn-success btn-lg">Abierto</button><br><br><div id="fuente2">
        <h5> Abre a las {{restaurant.hora_abrir |time}}</h5>
        <h5> Cierra a las {{restaurant.hora_cerrar |time}}</h5><br>
        </div>
       </div>
     </div>
   </div>
-
+  <nav class= "nav navbar-inverse">
+<ul class="nav navbar-nav">
+        <li class="active"><a href="/">Inicio</a></li>
+        <li class="active"><a href="#">></a></li>
+        
+        <li class="active"><a href="#">Restaurantes &nbsp;{{ciudad.nombre}} &nbsp;{{sector.nombre}} &nbsp;{{tipo.nombre}}</a></li>
+        <li class="active"><a href="#">></a></li>
+        <li class="active"><a href="/">{{restaurant.nombre}}</a></li>
+           
+      </ul>
+</nav>
+<br><br><br>
 <div class="container ">
 <div class="col-md-3">
-  {% for categoria in categoria %}
+ 
 <div class="list-group">
   <a href="#" class="list-group-item active">
+    Categorias
+  </a>
+   {% for categoria in categoria %}
+  <a href="#" class="list-group-item">
     {{categoria.titulo}}
   </a>
+  {% endfor %}
 </div>
 
 </div>
 
 
-<div class="col-md-5">
+<div class="col-md-6">
 
   <div class="jumbotron">
     <div class="row">
@@ -93,12 +109,15 @@
   </div>
   <br><br>
     <div class="row">
-
+<!--{{categoria_titulo.titulo}}<br>
+                  <img src="{{MEDIA_URL}}{{categoria_titulo.imagen_categoria}}">-->
       <div class="panel-group" id="accordion">
        
-         
-         
+       {% for categoria in categoria %}  
+       {{categoria.titulo}}<br>
+                  <img src="{{MEDIA_URL}}{{categoria.imagen_categoria}}">  
     {% for menus in menus %}  
+
 
    <div class="panel panel" >
     
@@ -109,8 +128,7 @@
                href="#">
                <div class="row" >
                 <div id="fuente2">
-                  {{categoria.titulo}}
-                  {{categoria.imagen_categoria}}
+                  
                  <div class="col-md-6 " id= "ancla">{{menus.titulo}}</div>
                  <div class="col-md-3"></div>
                  <div class="col-md-3">${{menus.precio}}</div>
@@ -206,6 +224,7 @@
    </div>
    {% endfor %}
    {% endfor %}
+   
    <!--<div class="panel ">
       <div class="panel-heading">
          <h2 >
@@ -364,7 +383,7 @@
 </div>
 
 
-<div class="col-md-4">
+<div class="col-md-3">
   
 
   <div id="caja"><!--CONTENIDO QUE SE AGREGARA--></div>

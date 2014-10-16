@@ -4577,6 +4577,14 @@ a.list-group-item.active > .badge,
   color: inherit;
   background-color: #eee;
 }
+.jumbotronE {
+  padding: 0px;
+  
+  margin-bottom: 0px;
+  color: inherit;
+  background-color: #eee;
+}
+
 .jumbotron h1,
 .jumbotron .h1 {
   color: inherit;
@@ -6350,15 +6358,28 @@ button.close {
 
 @font-face {
   font-family: "Impact";
-  src: url("../fonts/Impact.TTF") format("truetype");
+  src: url("../fonts/Impact.ttf") format("truetype");
 }
-
 #fuente2 {
   font-family: Impact;
-  font-size: 23px;
+  font-size: 38px;
   color: black !important;
   text-decoration: none;
-}    
+}   
+
+@font-face {
+  font-family: "Arial";
+  src: url("../fonts/arial.ttf") format("truetype");
+}
+
+#fuenteE {
+  font-family: Arial;
+  font-size: 38px;
+  color: black !important;
+  text-decoration: none;
+}  
+
+ 
 
 .fondo{
   background-image: url(../img/fondo.png);
@@ -6385,7 +6406,7 @@ button.close {
   border-radius: 3px;
   background-color: #F5911D;
   width: 100px;
-  height: 500px;
+  /*height: 500px;*/
 }
 
 .pedido_fixed{

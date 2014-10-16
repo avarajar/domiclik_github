@@ -47,6 +47,9 @@ class Menuesp(models.Model):
 	titulo = models.CharField(max_length=60)
 	descripcion = models.TextField()
 	precio = models.IntegerField()
+	ciudad = models.ForeignKey(Ciudade)
+	sector = models.ForeignKey(Sectore)
+	tipo = models.ForeignKey(Tipo)
 	restaurant = models.ForeignKey(Restaurante)
 	categoria = models.ForeignKey(Categoria)
 
