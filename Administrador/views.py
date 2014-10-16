@@ -109,7 +109,7 @@ def menu(request,idc):
 	ciudad = get_object_or_404(Ciudade, pk = idc)
 	sector = get_object_or_404(Sectore, pk = idc)
 	tipo = get_object_or_404(Tipo, pk = idc)
-	categoria_titulo = get_object_or_404(Categoria, pk = idc)
+	#categoria_titulo = get_object_or_404(Categoria, pk = idc)
 	restaurantes = Ciudade.objects.all()
 	categoria = Categoria.objects.filter(restaurant_id=idc,)
 
@@ -123,7 +123,7 @@ def menu(request,idc):
 	return render(request,"index3.html",{
 		"restaurant": restaurant,
 		"categoria": categoria,
-		"categoria_titulo": categoria_titulo,
+		#"categoria_titulo": categoria_titulo,
 		"menus": menus,
 		"ciudad": ciudad,
 		"sector": sector,

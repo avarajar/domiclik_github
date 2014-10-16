@@ -5121,6 +5121,16 @@ a.list-group-item-danger.active:focus {
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
+
+.panel1 {
+  margin-bottom: 20px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+          box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
 .panel-body {
   padding: 15px;
 }
@@ -6367,6 +6377,8 @@ button.close {
   text-decoration: none;
 }   
 
+
+
 @font-face {
   font-family: "Arial";
   src: url("../fonts/arial.ttf") format("truetype");
@@ -6379,7 +6391,19 @@ button.close {
   text-decoration: none;
 }  
 
- 
+ #fuente3 {
+  font-family: Impact;
+  font-size: 25px;
+  color: #A10000;
+  text-decoration: none;
+}   
+
+#fuente4 {
+  font-family: Impact;
+  font-size: 19px;
+  color: #000;
+  text-decoration: none;
+}  
 
 .fondo{
   background-image: url(../img/fondo.png);
@@ -6414,6 +6438,12 @@ button.close {
   position:fixed;
   top: 0;
   z-index: 1030;
+}
+
+.scrollspy.affix {
+    position: fixed;
+    top: 20px;
+    width: 255px;
 }
 
 .homeBox {
