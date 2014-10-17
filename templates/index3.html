@@ -127,7 +127,7 @@
                  
     {% for menus in menus %}  
 
-      {% if categoria.id == menus.categoria.id %} 
+      <!--{% if categoria.id == menus.categoria.id %} -->
    <div class="panel1 panel">
     
       <div class="panel-heading">
@@ -154,86 +154,10 @@
 
       </div>
    
-      <div id="{{menus.id}}" class="panel-collapse collapse ">
-        
-        
-    
-         <div class="panel-body">
-               <div class="row">
-                <div id="fuente2">
-                 <div class="col-md-4">{{menus.titulo}}</div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4">${{menus.precio}}</div>
-                 <div class="col-md-4 gris"><h5>{{menus.descripcion}}</h5></div>
-                 <div class="col-md-4"></div>  
-                </div>
-                 <div class="col-md-4"><button type="button"  class="btn btn-info btn-lg boton">Agregar</button></div>
-               </div>
-                <br>
-                 
-                    <!--CONTENIDO QUE SE AÑADE-->
-                      
-                 
-
-               <hr>
-               <!--<div  class="row">
-                <div id="fuente2">
-                 <div class="col-md-4">Grill Especial</div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4">$7000</div>
-                 <div class="col-md-4"><h5>Carne 100% res a la parrilla, lechuga,tomate, queso, jamon, tocineta y salsas</h5></div>
-                 <div class="col-md-4"></div>
-                 </div>
-                  <div class="col-md-4"><button type="button"  class="btn btn-info btn-lg boton">Agregar</button></div>
-               </div>
-                       
-                       <br>
-                 
-                   
-                      <div id="caja"></div>               
-               <hr>
-               <div  class="row">
-                <div id="fuente2">
-                 <div class="col-md-4">Grill BBQ</div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4">$8000</div>
-                 <div class="col-md-4"><h5>Carne 100% res a la parrilla, lechuga,tomate, queso, jamon, tocineta y salsas</h5></div>
-                 <div class="col-md-4"></div>
-                 
-                 </div>
-                  <div class="col-md-4"><button type="button"  class="btn btn-info btn-lg boton">Agregar</button></div>
-               </div>
-                   
-                   <br>
-                 
-                    
-                      <div id="caja"></div>
-               <hr>
-               <div class="row">
-                <div id="fuente2">
-                 <div class="col-md-4">Grill BBQ Especial</div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4">$8500</div>
-                 <div class="col-md-4"><h5>Carne 100% res a la parrilla, lechuga,tomate, queso, jamon, tocineta y salsas</h5></div>
-                 <div class="col-md-4"></div>
-                 
-                 </div>
-                  <div class="col-md-4"><button type="button"  class="btn btn-info btn-lg boton">Agregar</button></div>
-
-               </div>
-               <br>
-                 
-                    
-                      <div id="caja"></div>-->
-
-         </div>
-         
-         
-        
-      </div>
+      
 
    </div>
-   {% endif %}
+   <!--{% endif %}-->
    {% endfor %}
    {% endfor %}
    
