@@ -122,6 +122,7 @@ def menu_ciudad_sector(request,idc,idp,idk):
 	categoria = Categoria.objects.filter(restaurant_id=idc,)
 	tituloa = TituloAdicionale.objects.filter(menuesp_id=idc,)
 	#menu = Menu.objects.filter(restaurant_id = idc,)
+	promocion = Promocione.objects.filter(restaurant_id=idc,)
 	menus = Menuesp.objects.filter(restaurant_id=idc,restaurant__ciudad =idp, restaurant__sector = idk,)
 	now = datetime.now().strftime("%H")
 	entero = int(now)
@@ -135,6 +136,7 @@ def menu_ciudad_sector(request,idc,idp,idk):
 		"categoria": categoria,
 		#"categoria_titulo": categoria_titulo,
 		"menus": menus,
+		"promocion": promocion,
 		"ciudad": ciudad,
 		"sector": sector,
 		"tituloa": tituloa,
@@ -154,6 +156,7 @@ def menu_ciudad_sector_tipo(request,idc,idp,idk,idz):
 	categoria = Categoria.objects.filter(restaurant_id=idc,)
 	tituloa = TituloAdicionale.objects.filter(menuesp_id=idc,)
 	#menu = Menu.objects.filter(restaurant_id = idc,)
+	promocion = Promocione.objects.filter(restaurant_id=idc,)
 	menus = Menuesp.objects.filter(restaurant_id=idc,restaurant__ciudad =idp, restaurant__sector = idk, restaurant__tipo=idz,)
 	now = datetime.now().strftime("%H")
 	entero = int(now)
@@ -167,6 +170,7 @@ def menu_ciudad_sector_tipo(request,idc,idp,idk,idz):
 		"categoria": categoria,
 		#"categoria_titulo": categoria_titulo,
 		"menus": menus,
+		"promocion": promocion,
 		"ciudad": ciudad,
 		"sector": sector,
 		"tituloa": tituloa,
@@ -180,12 +184,26 @@ class Ajax(ListView):
 		#id_rest = request.GET['idc']
 		menuesp = Menuesp.objects.filter(pk=id_menu)
 		titulo = TituloAdicionale.objects.filter(menuesp__id=id_menu)
+		titulodos = TituloAdicionalDos.objects.filter(menuesp__id=id_menu)
+		titulotres= TituloAdicionalTres.objects.filter(menuesp__id=id_menu)
 		adicionales = Adicionale.objects.filter(menuesp__id=id_menu)
+		adicionalesdos = AdicionalDos.objects.filter(menuesp__id=id_menu)
+		adicionalestres = AdicionalTres.objects.filter(menuesp__id=id_menu)
 		unicos = AdiUnico.objects.filter(menuesp__id=id_menu)
+		unicosdos = AdiUnicoDos.objects.filter(menuesp__id=id_menu)
+		unicostres = AdiUnicoTres.objects.filter(menuesp__id=id_menu)
 
 		data1 = serializers.serialize('json', adicionales,
 									fields=('nombre','precio', 'titulo',))
 		data_a = simplejson.loads( data1 )
+
+		data1a = serializers.serialize('json', adicionalesdos,
+									fields=('nombre','precio', 'titulo',))
+		data_a1 = simplejson.loads( data1a )
+
+		data2a = serializers.serialize('json', adicionalestres,
+									fields=('nombre','precio', 'titulo',))
+		data_a2 = simplejson.loads( data2a )
 
 		data2 = serializers.serialize('json', menuesp,
 									fields=('titulo','precio',))
@@ -195,12 +213,31 @@ class Ajax(ListView):
 									fields=('titulo','id',))
 		data_c = simplejson.loads( data3 )
 
+		data3a = serializers.serialize('json', titulodos,
+									fields=('titulo','id',))
+		data_3a = simplejson.loads( data3a )
+
+		data3b = serializers.serialize('json', titulotres,
+									fields=('titulo','id',))
+		data_3b = simplejson.loads( data3b )
+
 		data4 = serializers.serialize('json', unicos,
 									fields=('nombre','precio','titulo',))
 		data_d = simplejson.loads( data4 )
 
+		data4a = serializers.serialize('json', unicosdos,
+									fields=('nombre','precio','titulo',))
+		data_4a = simplejson.loads( data4a )
 
-		data=simplejson.dumps( {'data1':data_a, 'data2':data_b, 'data3':data_c, 'data4':data_d, } )
+		data4b = serializers.serialize('json', unicostres,
+									fields=('nombre','precio','titulo',))
+		data_4b = simplejson.loads( data4b )
+
+
+		data=simplejson.dumps( {'data1':data_a, 'data1a':data_a1, 'data1b':data_a2,
+								 'data2':data_b, 'data3':data_c, 'data3a':data_3a,
+								 'data3b':data_3b, 'data4':data_d, 
+								 'data4a':data_4a,'data4b':data_4b,} )
 		
 		
 

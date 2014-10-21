@@ -89,7 +89,7 @@
 
 
 <div class="container">
-  <div class="row">
+  <!--<div class="row">-->
     <div class="col-md-4">
         <div id="fuente2"><h2>Comidas</h2></div>
         <div class="list-group">
@@ -106,8 +106,8 @@
       <div id="fuente2"><h2>Restaurantes Encontrados</h2></div>
       {% if restaurantes %}
       
-         {% for restaurant in restaurantes %}
-
+         
+{% for restaurant in restaurantes %}
         <div class="jumbotronF">
        
            <div class="row">
@@ -144,11 +144,11 @@
                 
             
                </div>
-               {% endfor %}
+              
             </div>
-            
+           {% endfor %} 
           </div>
-
+ 
           
        
           

@@ -92,6 +92,40 @@ class TituloAdicionale(models.Model):
 	def __unicode__(self):
 		return self.titulo
 
+class TituloAdicionalDos(models.Model):
+	titulo = models.CharField(max_length=60,blank=True)
+	restaurant = models.ForeignKey(Restaurante)
+	
+
+	menuesp = ChainedForeignKey(
+		Menuesp,
+		chained_field= "restaurant",
+		chained_model_field= "restaurant",
+		show_all=False,
+		auto_choose=True
+		)
+
+	
+	def __unicode__(self):
+		return self.titulo
+
+class TituloAdicionalTres(models.Model):
+	titulo = models.CharField(max_length=60,blank=True)
+	restaurant = models.ForeignKey(Restaurante)
+	
+
+	menuesp = ChainedForeignKey(
+		Menuesp,
+		chained_field= "restaurant",
+		chained_model_field= "restaurant",
+		show_all=False,
+		auto_choose=True
+		)
+
+	
+	def __unicode__(self):
+		return self.titulo
+
 class AdiUnico(models.Model):
 	nombre = models.CharField(max_length=60,blank=True)
 	precio = models.IntegerField()
@@ -107,6 +141,54 @@ class AdiUnico(models.Model):
 	
 	titulo =ChainedForeignKey(
 		TituloAdicionale,
+		chained_field="menuesp",
+		chained_model_field="menuesp",
+		show_all=False,
+		auto_choose=True
+		)
+	
+	def __unicode__(self):
+		return self.nombre
+
+class AdiUnicoDos(models.Model):
+	nombre = models.CharField(max_length=60,blank=True)
+	precio = models.IntegerField()
+	restaurant = models.ForeignKey(Restaurante)
+	
+	menuesp = ChainedForeignKey(
+		Menuesp,
+		chained_field="restaurant",
+		chained_model_field="restaurant",
+		show_all=False,
+		auto_choose=True
+		)
+	
+	titulo =ChainedForeignKey(
+		TituloAdicionalDos,
+		chained_field="menuesp",
+		chained_model_field="menuesp",
+		show_all=False,
+		auto_choose=True
+		)
+	
+	def __unicode__(self):
+		return self.nombre
+
+class AdiUnicoTres(models.Model):
+	nombre = models.CharField(max_length=60,blank=True)
+	precio = models.IntegerField()
+	restaurant = models.ForeignKey(Restaurante)
+	
+	menuesp = ChainedForeignKey(
+		Menuesp,
+		chained_field="restaurant",
+		chained_model_field="restaurant",
+		show_all=False,
+		auto_choose=True
+		)
+	
+	titulo = ChainedForeignKey(
+		TituloAdicionalTres,
 		chained_field="menuesp",
 		chained_model_field="menuesp",
 		show_all=False,
@@ -137,6 +219,61 @@ class Adicionale(models.Model):
 	
 	def __unicode__(self):
 		return self.nombre
+
+class AdicionalDos(models.Model):
+	nombre = models.CharField(max_length=60,blank=True)
+	precio = models.IntegerField()
+	restaurant = models.ForeignKey(Restaurante)
+	menuesp = ChainedForeignKey(
+		Menuesp,
+		chained_field="restaurant",
+		chained_model_field="restaurant",
+		show_all=False,
+		auto_choose=True
+		)
+	titulo =ChainedForeignKey(
+		TituloAdicionalDos,
+		chained_field="menuesp",
+		chained_model_field="menuesp",
+		show_all=False,
+		auto_choose=True
+		)
+	
+	def __unicode__(self):
+		return self.nombre
+
+class AdicionalTres(models.Model):
+	nombre = models.CharField(max_length=60,blank=True)
+	precio = models.IntegerField()
+	restaurant = models.ForeignKey(Restaurante)
+	menuesp = ChainedForeignKey(
+		Menuesp,
+		chained_field="restaurant",
+		chained_model_field="restaurant",
+		show_all=False,
+		auto_choose=True
+		)
+	titulo =ChainedForeignKey(
+		TituloAdicionalTres,
+		chained_field="menuesp",
+		chained_model_field="menuesp",
+		show_all=False,
+		auto_choose=True
+		)
+	
+	def __unicode__(self):
+		return self.nombre
+
+class Promocione(models.Model):
+	titulo = models.CharField(max_length=60)
+	imagen = models.ImageField(upload_to = "imagen_promo")
+	descripcion = models.TextField(blank = True)
+	restaurant = models.ForeignKey(Restaurante)
+	visible = models.BooleanField()
+
+	
+	def __unicode__(self):
+		return self.titulo
 
 
 

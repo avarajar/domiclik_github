@@ -62,9 +62,9 @@
 			
 			this.selectlabel.css( 'z-index', this.minZIndex + this.optsCount );
 			this._positionOpts();
-			//if( modernizr.csstransitions ) {
-			//	setTimeout( function() { self.opts.css( 'transition', 'all ' + self.options.speed + 'ms ' + self.options.easing ); }, 25 );
-			//}
+			if( Modernizr.csstransitions ) {
+				setTimeout( function() { self.opts.css( 'transition', 'all ' + self.options.speed + 'ms ' + self.options.easing ); }, 25 );
+			}
 
 		},
 		_transformSelect : function() {

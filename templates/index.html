@@ -119,17 +119,15 @@
     <option value="{{sector.id}}">{{sector.nombre}}</option>
     {% endfor %}
 
-    
-    
-    
- 
- 
-  </select>
+</select>
   
-
-
-
 </div>
+
+
+
+
+
+
 
 <div class="input-group">
   <span class="input-group-addon"><i class="fa fa-cutlery "></i></span>
@@ -243,20 +241,34 @@ no ver&iacute;dico y por lo cual no se tramitar&aacute; la Orden.</h4>
 </nav>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
   <script src="{{STATIC_URL}}js/jquery.js"></script>
-  <script src="{{STATIC_URL}}/jquery.dropdown.js"></script>
-  <script src="{{STATIC_URL}}/bootstrap.js"></script>
-  <script src="{{STATIC_URL}}/jquery.ddslick.min.js"></script>
+  <script src="{{STATIC_URL}}js/modernizr.js"></script>
+  <script src="{{STATIC_URL}}js/jquery.dropdown.js"></script>
+  <script src="{{STATIC_URL}}js/bootstrap.js"></script>
+  <script src="{{STATIC_URL}}js/jquery.ddslick.min.js"></script>
 
   
 
+<script type="text/javascript">
 
+$( function() {
+        
+        $('#cd-dropdown').dropdown( {
+          gutter : 5
+        } );
+
+      });
+
+
+</script>
 
 
 <script>
    $(document).ready(function(){
         
       $('.carousel').carousel()
+     
     });
 
 </script>
