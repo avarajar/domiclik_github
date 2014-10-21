@@ -916,13 +916,13 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #428bca;
+  color: #000;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #2a6496;
-  text-decoration: underline;
+  color: #fff;
+  text-decoration: none;
 }
 a:focus {
   outline: thin dotted;
@@ -4579,11 +4579,22 @@ a.list-group-item.active > .badge,
   background-color: #eee;
 }
 .jumbotronE {
-  padding: 0px;
+  padding: 20px 0px 20px 0px;
   
   margin-bottom: 0px;
   color: inherit;
   background-color: #eee;
+}
+
+.jumbotronF {
+  padding: 20px 0px 20px 10px;
+  
+  margin-bottom: 20px;
+  color: inherit;
+  background-color: #eee;
+}
+.container .jumbotronF {
+  border-radius: 6px;
 }
 
 .jumbotron h1,
@@ -6407,7 +6418,7 @@ button.close {
 }  
 
 .gris{
-color: #000;
+color: #606062;
 
 }
 

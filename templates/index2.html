@@ -35,7 +35,7 @@
         <li class="active"><a  href="#"><i class="fa fa-cutlery fa-2x"></i>&nbsp; Restaurantes</a></li>
         <li><a  href="#"><i class="fa fa-glass fa-2x"></i>&nbsp; Licores</a></li>
         <li><a  href="#"><i class="fa fa-medkit fa-2x"></i>&nbsp; Farmacias</a></li>
-        <a class="navbar-brand" href=""><img src="{{MEDIA_URL}}img/carro.png" height="151" width="124" alt=""></i></a>
+        
       
       </ul>
     
@@ -77,89 +77,7 @@
         
       </ul>
 </nav>
-<!--<div class="jumbotron1">
-<div class="row">
-  <div class="homeBox">
-    <div class="col-md-2">
-      <div class="one_fourth">
 
-        <a href=""><div class = "boxImage"><img src = "img/pollo.png" height="89" width="100"></div></a>
-
-        <h3>Pollo</h3> </a>    
-
-        <div class = "boxDescription"></div>  
-
-      </div>
-      </div>
-      <div class="col-md-2 ">
-      <div class="one_fourth">
-
-        <a href=""><div class = "boxImage"><img src = "img/rapida.png" height="89" width="100"></div></a>
-
-        <h3>Rapidas</h3>
-
-        <div class = "boxDescription"></div>        
-
-      </div>
-     </div>
-
-
-<div class="col-md-2">
-      <div class="one_fourth">
-
-        <a href=""><div class = "boxImage"><img src = "img/pizza.png" height="89" width="100"></div> </a>
-
-        <h3>Pizza</h3>
-
-        <div class = "boxDescription"></div>        
-
-      </div>
-
-</div>
-<div class="col-md-2">
-      <div class="one_fourth last">
-
-        <a href=""><div class = "boxImage"><img src = "img/tradicional.png" height="89" width="100"></div> </a>
-
-        <h3>Tradicional</h3>
-
-        <div class = "boxDescription"></div> 
-
-      </div>
-</div>
-<div class="col-md-2">
-
-
-
-      <div class="one_fourth last">
-
-        <a href=""><div class = "boxImage"><img src = "img/ejecutiva.png" height="89" width="100"></div> </a>
-
-        <h3>Ejecutiva</h3>
-
-        <div class = "boxDescription"></div> 
-
-      </div>
-</div>
-
-
-     <div class="col-md-2">
-      <div class="one_fourth last">
-
-        <a href=""><div class = "boxImage"><img src = "img/vegetariana.png" height="89" width="100"></div> </a>
-
-        <h3>Vegetariana</h3>
-
-        <div class = "boxDescription"></div> 
-
-      </div>
-
-      </div>
-
-     </div>
-    </div>
-  </div>
--->
 
 
     <br><br>
@@ -175,9 +93,9 @@
     <div class="col-md-4">
         <div id="fuente2"><h2>Comidas</h2></div>
         <div class="list-group">
-           <div id="fuente2">
+           <div >
            {% for tipo in tipos %}
-           <a href="./{{tipo.id}}" class="list-group-item">{{tipo.nombre}}</a>
+           <a href="./{{tipo.id}}" class="list-group-item"><strong>{{tipo.nombre}}</strong></a>
            
            {% endfor %}
            </div>
@@ -185,10 +103,12 @@
         
     </div>  
     <div class="col-md-8">
-      <div id="fuente2"><h2> Restaurantes Encontrados</h2></div>
+      <div id="fuente2"><h2>Restaurantes Encontrados</h2></div>
       {% if restaurantes %}
+      
          {% for restaurant in restaurantes %}
-        <div class="jumbotron">
+
+        <div class="jumbotronF">
        
            <div class="row">
               
@@ -202,92 +122,51 @@
                <br>
 
 
-               {% if restaurant.hora_abrir  <= restaurant.hora_cerrar %}
+               {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
 
                <div class="col-md-4 "><button type="button" class="btn btn-success btn-lg">Abierto</button>
                {% else %}
                <button type="button" class="btn btn-danger btn-lg" disabled= "disabled">Cerrado</button>
                {% endif %}
-               <a class="boton_estilo" id="fuente2" href="/menu/{{restaurant.id}}"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;Ver Menú</a><br>
-                <div id="fuente1"> <h5> Abre a las {{restaurant.hora_abrir |time}} </h5>
+               <a class="boton_estilo" href="/menu/{{restaurant.id}}/{{ciudad.id}}/{{sector.id}}/{{tipo.id}}"><i class="fa fa-search"></i><strong>Ver Menú</strong></a><br>
+
+              {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
+                <div id="fuente1"> <h5> <strong>Cierra a las {{restaurant.hora_cerrar | time }}</strong> </h5>
                   
-                </div>{{ ahora}}
-                <div id="fuente1"> <h5> Cierra a las {{restaurant.hora_cerrar |time}} </h5>
-                </div><br><br>
+                </div>
+
+                  {% else %}  
+                <div id="fuente1"> <h5> <strong>Abre a las {{restaurant.hora_abrir | time}} </strong></h5>
+                </div>
+                
+                {% endif %}
+                </div>
+                
+            
+               </div>
+               {% endfor %}
             </div>
-               
-    
-            </div>
+            
           </div>
 
           
        
           
             
-         {% endfor %}
+         
       {% else %}
           <div id="fuente1"><h2> No hay Restaurantes aún en esta zona</h2></div>
       {% endif %}
 
-        </div><!--JUMBOTRON-->
-      <!--  <div class="jumbotron">
-    <div class="row">
-      <div class="col-md-3"><img src="../static/img/gordo.png" height="126" width="126" alt=""></div>
-      <div class="col-md-4"><strong><div id="fuente1">Gordo</strong><br><h5>Comidas rapidas y Hamburguesas <br>Entrega en 40 min <br> Domicilio $ 3000</h5></div></div><br>
-      <div class="col-md-5 "><button type="button" class="btn btn-success btn-lg">Abierto</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-lg">Ver Men&uacute;</button><br><br>
-       <div id="fuente1"> <h5> Cierra en 2 horas</h5></div><br><br>
-       
-      </div>
-    </div>
-  </div>
+        </div>
 
-  <div class="jumbotron">
-    <div class="row">
-      <div class="col-md-3"><img src="../static/img/corralito.png" height="126" width="126" alt=""></div>
-      <div class="col-md-4"><strong><div id="fuente1">Corralito</strong><br><h5>Comidas rapidas y Hamburguesas <br>Entrega en 40 min <br> Domicilio $ 3000</h5></div></div><br>
+
+
+
+
+
+
       
-      <div class="col-md-5 "><button type="button" class="btn btn-success btn-lg">Abierto</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-lg">Ver Men&uacute;</button><br><br>
-       <div id="fuente1"> <h5> Cierra en 2 horas</h5></div><br><br>
-       
-      </div>
-    </div>
-  </div>
-
-
-  <div class="jumbotron">
-    <div class="row">
-      <div class="col-md-3"><img src="../static/img/pipe.png" height="126" width="126" alt=""></div>
-      <div class="col-md-4"><strong><div id="fuente1">Pipe</strong><br><h5>Comidas rapidas y Hamburguesas <br>Entrega en 40 min <br> Domicilio $ 3000</h5></div></div><br>
-      
-      <div class="col-md-5 "><button type="button" class="btn btn-danger btn-lg" disabled= "disabled">Cerrado</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-lg">Ver Men&uacute;</button><br><br>
-       <div id="fuente1"> <h5> Abre en 2 horas</h5></div><br><br>
-       
-      </div>
-    </div>
-  </div>
-
-  <div class="jumbotron">
-    <div class="row">
-      <div class="col-md-3"><img src="../static/img/ak.png" height="126" width="126" alt=""></div>
-      <div class="col-md-4"><strong><div id="fuente1">Ak</strong><br><h5>Comidas rapidas y Hamburguesas <br>Entrega en 40 min <br> Domicilio $ 3000</h5></div></div><br>
-      
-      <div class="col-md-5 "><button type="button" class="btn btn-danger btn-lg" disabled= "disabled">Cerrado</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-lg">Ver Men&uacute;</button><br><br>
-       <div id="fuente1"> <h5> Abre en 2 horas</h5></div><br><br>
-       
-      </div>
-    </div>
-  </div>-->
-
-
-
-
-
-
-
-      </div>
-    </div>
-</div>
-
 
 
 

@@ -36,8 +36,7 @@
         <li class="active"><a  href="../"><i class="fa fa-cutlery fa-2x"></i>&nbsp; Restaurantes</a></li>
         <li><a  href="#"><i class="fa fa-glass fa-2x"></i>&nbsp; Licores</a></li>
         <li><a  href="#"><i class="fa fa-medkit fa-2x"></i>&nbsp; Farmacias</a></li>
-        <a class="navbar-brand"  href=""><img src="{{MEDIA_URL}}img/carro.png" height="151" width="124" alt=""></i></a>
-      
+        
       </ul>
     
   </div><!-- /.container-fluid -->
@@ -59,16 +58,27 @@
 
   <div class="jumbotronE">
     <br>
-    <div class="row">
+   <div class="row2">
       <div class="col-md-2 col-md-offset-3"><img src="{{MEDIA_URL}}{{restaurant.logo}}" height="133" width="200"></div>
       <div class="col-md-4"><div id="fuenteE"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{restaurant.nombre}}</strong><br><h5><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{restaurant.descripcion}}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entrega en 40 min <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Domicilio $ {{restaurant.precio_domicilio}}</strong></h5></div></div><br>
-      
-      <div class="col-md-3 "><button type="button" class="btn btn-success btn-lg">Abierto</button><br><br><div id="fuente2">
-       <h5> Abre a las {{restaurant.hora_abrir |time}}</h5>
-       <h5> Cierra a las {{restaurant.hora_cerrar |time}}</h5><br>
-       </div>
+      <div class="col-md-3">
+      {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
+
+               <button type="button" class="btn btn-success btn-lg">Abierto</button><br><br>
+               {% else %}
+               <button type="button" class="btn btn-danger btn-lg" disabled= "disabled">Cerrado</button><br><br>
+               {% endif %}
+               
+{% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
+       
+          
+       <h5><strong> Cierra a las {{restaurant.hora_cerrar |time}}</strong></h5>
+       {% else %}
+       <h5><strong> Abre a las {{restaurant.hora_abrir |time}}</strong></h5>
+       
+       {% endif %}
       </div>
-    </div>
+    </div><br>
   </div>
   <nav class= "nav navbar-inverse">
 <ul class="nav navbar-nav">
@@ -84,14 +94,7 @@
 <br><br><br>
 <div class="container ">
 <div class="col-md-3">
- <!--<div class="span3 bs-docs-sidebar">
-        <ul class="nav nav-list bs-docs-sidenav">
-          <li><a href="#overview"><i class="icon-chevron-right"></i> Categorias</a></li>
-          {% for categoria in categoria %}
-          <li><a href="#{{categoria.id}}"><i class="icon-chevron-right"></i> {{categoria.titulo}}</a></li>
-          {% endfor %}
-        </ul>
-      </div>-->
+ 
 
 
 
@@ -116,8 +119,7 @@
     
   <br>
     <div class="row">
-<!--{{categoria_titulo.titulo}}<br>
-                  <img src="{{MEDIA_URL}}{{categoria_titulo.imagen_categoria}}">-->
+
       <div class="panel-group" id="accordion">
        
 {% for categoria in categoria %}  
@@ -127,7 +129,7 @@
                  
     {% for menus in menus %}  
 
-      <!--{% if categoria.id == menus.categoria.id %} -->
+      {% if categoria.id == menus.categoria.id %}
    <div class="panel1 panel">
     
       <div class="panel-heading">
@@ -143,10 +145,14 @@
                  <div class="col-md-3"><h5>${{menus.precio}}</h5></div>
                  </div>
                  <div class="col-md-8 gris">{{menus.descripcion}}</div>
-                 <div class="col-md-1"></div>  
-                
-                 <div class="col-md-3"><button type="button" value="{{menus.id}}" class="btn boton"><h4>Agregar</h4></button></div>
-                
+                 <div class="col-md-1"></div> 
+
+                {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
+                <div class="col-md-3" ><button type="button" value="{{menus.id}}" class="btn boton "data-toggle="modal" data-target="#modalform"><h4>Agregar</h4></button></div>
+                 {% else %}
+                 
+                 <div class="col-md-3" ><button type="button" class="btn boton " data-toggle="tooltip" data-placement="top" title="RESTAURANT CERRADO"><h4>Agregar</h4></button></div>
+                {% endif %}
                </div>
             </a>
             
@@ -157,157 +163,11 @@
       
 
    </div>
-   <!--{% endif %}-->
+   {% endif %}
    {% endfor %}
    {% endfor %}
    
-   <!--<div class="panel ">
-      <div class="panel-heading">
-         <h2 >
-            <a id="fuente2" data-toggle="collapse" data-parent="#accordion" 
-               href="#collapseTwo">
-               Perros
-          </a>
-         </h2>
-      </div>
-      <div id="collapseTwo" class="panel-collapse collapse">
-         <div class="panel-body">
-            <div class="row">
-                 <div class="col-md-4"><h2>Perro Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-               <hr>
-               <div class="row">
-                 <div class="col-md-4"><h2>Perro Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-               <hr>
-               <div class="row">
-                 <div class="col-md-4"><h2>Perro Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-               <hr>
-               <div class="row">
-                 <div class="col-md-4"><h2>Perro Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-         </div>
-      </div>
-   </div>
-   <div class="panel panel-primary">
-      <div class="panel-heading">
-         <h2 >
-            <a id="fuente2" data-toggle="collapse" data-parent="#accordion" 
-               href="#collapseThree">
-               Parrillas
-            </a>
-         </h2>
-      </div>
-      <div id="collapseThree" class="panel-collapse collapse">
-         <div class="panel-body">
-            <div class="row">
-                 <div class="col-md-4"><h2>Parilla Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-               <hr>
-               <div class="row">
-                 <div class="col-md-4"><h2>Parilla Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-               <hr>
-               <div class="row">
-                 <div class="col-md-4"><h2>Parilla Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-               <hr>
-               <div class="row">
-                 <div class="col-md-4"><h2>Parilla Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-         </div>
-      </div>
-   </div>
-   <div class="panel ">
-      <div class="panel-heading">
-         <h2 >
-            <a id="fuente2" data-toggle="collapse" data-parent="#accordion" 
-               href="#collapseFour">
-              Combos 
-            </a>
-         </h2>
-      </div>
-      <div id="collapseFour" class="panel-collapse collapse">
-         <div class="panel-body">
-            <div class="row">
-                 <div class="col-md-4"><h2>Combo Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-               <hr>
-               <div class="row">
-                 <div class="col-md-4"><h2>Combo Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-               <hr>
-               <div class="row">
-                 <div class="col-md-4"><h2>Combo Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-               <hr>
-               <div class="row">
-                 <div class="col-md-4"><h2>Combo Tales</h2></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><h2>Precio $</h2></div>
-                 <div class="col-md-4"><h4>Descripcion</h4></div>
-                 <div class="col-md-4"></div>
-                 <div class="col-md-4"><button type="button" class="btn btn-info btn-lg">Agregar</button></div>
-               </div>
-         </div>
-      </div>
-   </div>-->
+   
 
 
 
@@ -322,18 +182,20 @@
 <div class="col-md-3">
   
 
-  <div id="caja"><div class="list-group scrollspy" >
+  <div id="caja2"><div class="list-group scrollspy">
+    
   <a href="#" class="list-group-item active">
     Tu pedido
   </a>
-   
+   <div id="caja3">
   <a href="#" class="list-group-item">
     <div id="fuente2"><h5>Pides online y pagas en casa</h5></div><br><p class="text-center"><i class="fa fa-shopping-cart fa-5x"></i></p><br>
     <div id="fuente2"><h5>La mejor forma de pedir tu comida</h5></div>
   </a>
-  
+  </div>
+  <div id="caja1" ></div>
 </div><!--CONTENIDO QUE SE AGREGARA--></div>
-  <!--<div class="pedido_fixed">--><div id="caja1" ></div><!--</div>-->
+  <!--<div class="pedido_fixed">--><div id="caja6" ></div><!--</div>-->
     <!--<div class="jumbotron">-->
 
       
@@ -352,17 +214,17 @@
                               <div class="modal-content">
                                   
                                   <div class="modal-header">
-                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                      <img src="{{MEDIA_URL}}img/logo_web.png" height="164" width="172" alt="">
-                                      <div id="fuente2"><h2>Orden de Pedido</h2></div>
-                                  </div>
+                                      <button type="button" onClick="borrar()" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times-circle fa-2x" > </i></button>
+                                      <!--<img src="{{MEDIA_URL}}img/logo_web.png" height="164" width="172" alt="">-->
+                                      
+                                  </div><br>
                                   <div class="modal-body">
-                                    <div id="caja2"></div>
+                                    <div id="caja"></div>
                                     <!--<div id='fuente1'><strong>T&Uacute; PEDIDO</strong></div><ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'>$5000</span>Grill Normal</li><li class='list-group-item '><span class='badge'>$5000</span>1/2 libra</li><li class='list-group-item '><span class='badge'>$800</span>Jalape&ntilde;os</li><li class='list-group-item '><span class='badge'>$1000</span>Queso Chedar</li><li class='list-group-item '> <strong>PD:</strong> Sin lechuga ni tomate</li><li class='list-group-item list-group-item-info '><span class='badge'>$14800</span>Total</li></ul><br>-->
                                     
-                                    <div id="fuente1"><strong>DATOS DE ENVIO</strong></div>
+                                    <!--<div id="fuente1"><strong>DATOS DE ENVIO</strong></div>-->
 
-                                    <div class="fcontacto">
+                                    <!--<div class="fcontacto">
                                       <form method="POST"action="./" name="contact-form" id=" contact-form" class="form-horizontal">
                                         <div class="row">
                                             <div class="col-md-6 " >
@@ -391,18 +253,19 @@
                                         
                                           <div class="fuente1"><h5>Enviaremos los datos de la solicitud al correo proporcionado arriba..!</h5></div>
                                       </form>
-                                    </div>
+                                    </div>-->
                                   </div>
 
                                   <div class="modal-footer">
                                       
-                                      <button type="button" class="btn btn-danger btn-lg" data-dismiss="modal">Cerrar</button>
+                                      <button  type="button" onClick="output()" class="btn btn-info btn-lg" data-dismiss="modal" >Pedido</button>
                                   </div>
                               </div>
 
                           </div>
 
-                      </div>
+                       </div>
+                      
                    <!--fin div del modal contacto-->
 
 
@@ -471,12 +334,17 @@ $('.scrollspy').affix({
     offset: {top: 350}
 }); 
 
+$("[data-toggle='tooltip']").tooltip();
 
   $(":button.boton").click(function(){
      html = '';
      nombre='';
      precio = '';
      adicional= '';
+     titulo1='';
+     titulo2='';
+     unicos='';
+     select ='';
     var id = $(this).val();
   
 
@@ -493,50 +361,80 @@ $('.scrollspy').affix({
                        
 
                        dos = data["data2"];
-                       
 
+                       tres = data["data3"];
+
+                       cuatro = data["data4"];
+                       
+                       
+                       
+      for (var z = tres.length - 1; z >= 0; z--) {
+
+         if (uno[z]!=undefined) {
+          if (tres[z].pk==uno[z].fields.titulo) {
+          titulo1 += '<h5>'+tres[z].fields.titulo+'</h5>'
+          };
+         }
+        else{
+          titulo1 += ''
+        }
+         
+         if (cuatro[z]!=undefined) {
+           if (tres[z].pk==cuatro[z].fields.titulo) {
+           titulo2 += '<h5>'+tres[z].fields.titulo+'</h5>'
+           };
+          }
+          else{
+            titulo2 += ''
+          }
+      };
               for (var i=0; i<uno.length; i++) {
 
                  
+                
+               
                  
+                 
+                
                  adicional += '<div class="input-group"><span class="input-group-addon"><input class="joder" type="checkbox" id = "registros" name="'+uno[i].fields.precio+'" value="'+uno[i].fields.nombre+'"/></span><label type="text" class="form-control">'+uno[i].fields.nombre+'</label><span class="input-group-addon precio" value="'+uno[i].fields.precio+'">$ '+uno[i].fields.precio+'</span></div>'
                  };
+          
 
               for (var j = dos.length - 1; j >= 0; j--) {
                
-                 nombre += '<h4>'+dos[j].fields.titulo+'</h4>'
-                 precio += '<h4>$'+dos[j].fields.precio+'</h4>'
+                 nombre += ''+dos[j].fields.titulo+''
+                 precio += '$'+dos[j].fields.precio+''
                  precio_num = dos[j].fields.precio;
-                 };   
+                 }; 
 
-                html +='<div class="jumbotron " id="remover"><ul class="list-group"><li class="list-group-item list-group-item-info"><span class="badge precio_menu" name="'+precio_num+'">'+precio+'</span>'+nombre+'</li></ul><div id="fuente2">Adicionales</div>'+adicional+'<div id="fuente2">Solicitudes Especiales</div><div class="input-group"><textarea name=" id="solicitud" cols="60" rows="5"class="form-control" placeholder="ejem: Sin lechuga"></textarea></div><br><br><button onClick="output()" type="button"class="btn btn-info btn-lg pedido" >Pedido</button>&nbsp;<button onClick="output2()"type="button" id="boton" class="btn btn-danger btn-lg">Quitar</button></div></div>'
+                 for (var x = cuatro.length - 1; x >= 0; x--) {
+               
+                 unicos += '<option value="">'+cuatro[x].fields.nombre+'($'+cuatro[x].fields.precio+')</option>'
+                 
+                 
+
+                 }; 
+
+                if (unicos!='') {
+                  select += '<select class="form-control">'+unicos+'</select>'
+                  
+                }
+                else{
+                  select += ''
+
+                }
+
+
+
+                html +='<div class="jumbotron" id="remover"><ul class="list-group"><li class="list-group-item list-group-item-info"><span class="badge precio_menu" name="'+precio_num+'">'+precio+'</span>'+nombre+'</li></ul><div class="input-group">Cantidad<select class="form-control"><option value="">1</option><option value="">2</option><option value="">3</option><option value="">4</option><option value="">5</option></select></div><div>'+titulo1+'</div><div>'+adicional+'</div>'+titulo2+'<div class="input-group">'+select+'<br><br>&nbsp;</div></div>'
               
 
               $('#caja').append(html);
-
+              
                       
                           
 
-            /*$(":button.pedido").click(function(){
-                      
-               
-    
-
-            $("#caja1").append("<div class='jumbotron' id='remover1'><input type='text' name='status1' id='status1' /><div id='fuente2'>T&Uacute; PEDIDO<ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'><h6>"+precio+"</h6></span>"+nombre+"</li><li class='list-group-item '><span class='badge'><h6>$800</h6></span>Jalape&ntilde;os</li><li class='list-group-item '> <strong>PD:</strong> Sin lechuga ni tomate</li><li class='list-group-item list-group-item-info '><span class='badge'><h6>$14800</h6></span>Total</li></ul><br><button onClick='output1()' type='button' class='btn btn-info btn-lg confirmar' data-toggle='modal' data-target='#modalform'>Confirmar</button></div>");
-
-
-
-            $(":button.confirmar").click(function(){
-
-                
-
-            $("#caja2").append("<div class='jumbotron' ><div id='fuente2'>T&Uacute; PEDIDO<ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'><h6>$5000</h6></span>Grill Normal</li><li class='list-group-item '><span class='badge'><h6>$5000</h6></span>1/2 libra</li><li class='list-group-item '><span class='badge'><h6>$800</h6></span>Jalape&ntilde;os</li><li class='list-group-item '><span class='badge'><h6>$1000</h6></span>Queso Chedar</li><li class='list-group-item '><span class='badge'><h6>$3000</h6></span>Domicilio</li><li class='list-group-item '> <strong>PD:</strong> Sin lechuga ni tomate</li><li class='list-group-item list-group-item-info '><span class='badge'><h6>$14800</h6></span>Total</li></ul></div>");
-
-        });
-
-
-        });*/
-
+            
             
 
 
@@ -592,6 +490,8 @@ $(function(){
 
 });
 
+
+
   function output(){
     
     var nombre_ad ='';
@@ -619,7 +519,7 @@ $(function(){
         for (var i = adicio.length - 1; i >= 0; i--) {
               
               
-                 nombre_ad += '<li class="list-group-item"><span class="badge"><h5>$'+pecios[i]+'</h5></span>'+adicio[i]+'</li>'
+                 nombre_ad += '<li class="list-group-item"><span class="badge">$'+pecios[i]+'</span>'+adicio[i]+'</li>'
                  
                  total_ad = total_ad+parseInt(pecios[i]);
 
@@ -640,10 +540,13 @@ $(function(){
          var star = document.getElementById('remover');
          var padre = star.parentNode;
          padre.removeChild(star); 
-    
+         
+         var caja3 = document.getElementById('caja3');
+         var padrecaja3 = caja3.parentNode;
+         padrecaja3.removeChild(caja3); 
 
 
-    html1 += "<div class='jumbotron' id='remover1'><div id='fuente2'>T&Uacute; PEDIDO<ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'><h6>"+precio+"</h6></span>"+nombre+"</li>"+nombre_ad+"<li class='list-group-item '><span class='badge'><h5>$"+{{restaurant.precio_domicilio}}+"</h5></span>Domicilio</li>"+solicitud_enviada+"<li class='list-group-item list-group-item-info '><span class='badge'><h5>$"+total+"</h5></span>Total</li></ul><br><button onClick='output1()' type='button' class='btn btn-info btn-lg confirmar' data-toggle='modal' data-target='#modalform'>Confirmar</button></div>"
+    html1 += "<div class='jumbotronE' id='remover1'><ul class='list-group'><li class='list-group-item list-group-item'><span class='badge'>"+precio+"</span><strong>"+nombre+"</strong></li>"+nombre_ad+"<li class='list-group-item '><span class='badge'>$"+{{restaurant.precio_domicilio}}+"</span>Domicilio</li>"+solicitud_enviada+"<li class='list-group-item list-group-item-info '><span class='badge'>$"+total+"</span>Total</li></ul><br><button onClick='output1()' type='button' class='btn btn-info btn-lg confirmar' data-toggle='modal' data-target='#modalform'>Confirmar</button></div>"
 
      $("#caja1").append(html1);
 
@@ -655,6 +558,16 @@ $(function(){
             $("#caja2").append("<div class='jumbotron' id='remover1'><div id='fuente2'>T&Uacute; PEDIDO<ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'><h6>"+precio+"</h6></span>"+nombre+"</li>"+nombre_ad+"<li class='list-group-item '><span class='badge'><h5>$"+{{restaurant.precio_domicilio}}+"</h5></span>Domicilio</li>"+solicitud_enviada+"<li class='list-group-item list-group-item-info '><span class='badge'><h5>$"+total+"</h5></span>Total</li></ul><br></div>");
 
         });
+
+
+  }
+
+  function borrar(){
+
+    var star1 = document.getElementById('remover');
+        var padre1 = star1.parentNode;
+    padre1.removeChild(star1); 
+
 
 
   }
@@ -673,10 +586,8 @@ function output2(){
     var star1 = document.getElementById('remover');
         var padre1 = star1.parentNode;
     padre1.removeChild(star1); 
+}
 
-
-
-  }
  
 
 </script>

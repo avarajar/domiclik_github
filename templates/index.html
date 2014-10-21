@@ -37,15 +37,15 @@
     </div>
 
      <ul class="nav navbar-nav">
-        <li class="active"><p id ="fuente" href="#">Pides On-line</p></li>
+        <li class="active"><p id ="fuente" href="#">Pides On-line y pgas en casa</p></li>
         
         
       </ul>
        <ul class="nav navbar-nav navbar-right">
         <li class="active"><a  href="#"><i class="fa fa-cutlery fa-2x"></i>&nbsp; Restaurantes</a></li>
-        <li ><a    href="#"><i class="fa fa-glass fa-2x"></i>&nbsp; Licores</a></li>
-        <li><a  href="#"><i class="fa fa-medkit fa-2x"></i>&nbsp; Farmacias</a></li>
-        <a class="navbar-brand" href=""><img src="{{MEDIA_URL}}img/carro.png" height="151" width="124" alt=""></i></a>
+        <li ><a href="#"><i class="fa fa-glass fa-2x"></i>&nbsp; Licores</a></li>
+        <li><a href="#"><i class="fa fa-medkit fa-2x"></i>&nbsp; Farmacias</a></li>
+        
       
       </ul>
     
@@ -79,88 +79,7 @@
 
 
 
-<!--<div class="jumbotron1">
-<div class="row">
-  <div class="homeBox">
-    <div class="col-md-2">
-      <div class="one_fourth">
 
-        <a href=""><div class = "boxImage"><img src = "img/pollo.png" height="89" width="100"></div></a>
-
-        <h3>Pollo</h3> </a>    
-
-        <div class = "boxDescription"></div>  
-
-      </div>
-      </div>
-      <div class="col-md-2 ">
-      <div class="one_fourth">
-
-        <a href=""><div class = "boxImage"><img src = "img/rapida.png" height="89" width="100"></div></a>
-
-        <h3>Rapidas</h3>
-
-        <div class = "boxDescription"></div>        
-
-      </div>
-     </div>
-
-
-<div class="col-md-2">
-      <div class="one_fourth">
-
-        <a href=""><div class = "boxImage"><img src = "img/pizza.png" height="89" width="100"></div> </a>
-
-        <h3>Pizza</h3>
-
-        <div class = "boxDescription"></div>        
-
-      </div>
-
-</div>
-<div class="col-md-2">
-      <div class="one_fourth last">
-
-        <a href=""><div class = "boxImage"><img src = "img/tradicional.png" height="89" width="100"></div> </a>
-
-        <h3>Tradicional</h3>
-
-        <div class = "boxDescription"></div> 
-
-      </div>
-</div>
-<div class="col-md-2">
-
-
-
-      <div class="one_fourth last">
-
-        <a href=""><div class = "boxImage"><img src = "img/ejecutiva.png" height="89" width="100"></div> </a>
-
-        <h3>Ejecutiva</h3>
-
-        <div class = "boxDescription"></div> 
-
-      </div>
-</div>
-
-
-     <div class="col-md-2">
-      <div class="one_fourth last">
-
-        <a href=""><div class = "boxImage"><img src = "img/vegetariana.png" height="89" width="100"></div> </a>
-
-        <h3>Vegetariana</h3>
-
-        <div class = "boxDescription"></div> 
-
-      </div>
-
-      </div>
-
-     </div>
-    </div>
-  </div>-->
 
 
 <div class="container">
@@ -172,16 +91,14 @@
     <div class="col-md-offset-1 "><h2>PIDE COMIDA ONLINE A LOS MEJORES RESTAURANTES DE TU CIUDAD</h2></div>
   </div>
   
-<div class="row">
-  
-</div>
+
 <br><br>
     <div class="row">
      <div class="col-md-offset-3"> 
       <form class="form-inline" role="form">
   <div class="input-group">
   <span class="input-group-addon"><i class="fa fa-map-marker "></i></span>
-  <select class="form-control ciudad">
+  <select class="form-control ciudad" >
     <option value="">Todas</option>
     {% for ciudad in ciudades %}
     <option value="{{ciudad.id}}">{{ciudad.nombre}}</option>
@@ -209,6 +126,9 @@
  
   </select>
   
+
+
+
 </div>
 
 <div class="input-group">
@@ -225,7 +145,7 @@
 </div>
  
   
-   &nbsp;&nbsp;&nbsp;<a class="boton_estilo" id="fuente2" href="javascript:getUrl()"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;Buscar</a>
+   &nbsp;&nbsp;&nbsp;<a class="boton_estilo" href="javascript:getUrl()"><i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;<strong>Buscar</strong></a>
  
 </form>
 
@@ -324,11 +244,19 @@ no ver&iacute;dico y por lo cual no se tramitar&aacute; la Orden.</h4>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="{{STATIC_URL}}js/jquery.js"></script>
+  <script src="{{STATIC_URL}}/jquery.dropdown.js"></script>
   <script src="{{STATIC_URL}}/bootstrap.js"></script>
+  <script src="{{STATIC_URL}}/jquery.ddslick.min.js"></script>
+
+  
+
+
+
 
 <script>
    $(document).ready(function(){
-        $('.carousel').carousel()
+        
+      $('.carousel').carousel()
     });
 
 </script>

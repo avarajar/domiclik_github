@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'Administrador',
     'south',
+    'smart_selects',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
