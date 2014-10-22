@@ -51,6 +51,7 @@ class Categoria(models.Model):
 	titulo = models.CharField(max_length=60)
 	imagen_categoria = models.ImageField(upload_to = "categorias")
 	restaurant = models.ForeignKey(Restaurante)
+	promocion = models.BooleanField()
 
 	
 	def __unicode__(self):

@@ -119,7 +119,7 @@ def menu_ciudad_sector(request,idc,idp,idk):
 	
 	#categoria_titulo = get_object_or_404(Categoria, pk = idc)
 	restaurantes = Ciudade.objects.all()
-	categoria = Categoria.objects.filter(restaurant_id=idc,)
+	categoria = Categoria.objects.filter(restaurant_id=idc,).order_by('promocion')
 	tituloa = TituloAdicionale.objects.filter(menuesp_id=idc,)
 	#menu = Menu.objects.filter(restaurant_id = idc,)
 	promocion = Promocione.objects.filter(restaurant_id=idc,)

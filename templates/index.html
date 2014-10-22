@@ -99,7 +99,7 @@
   <div class="input-group">
   <span class="input-group-addon"><i class="fa fa-map-marker "></i></span>
   <select class="form-control ciudad" >
-    <option value="">Todas</option>
+    <option value="">Elige Ciudad</option>
     {% for ciudad in ciudades %}
     <option value="{{ciudad.id}}">{{ciudad.nombre}}</option>
     {% endfor %}
@@ -114,7 +114,7 @@
 <div class="input-group">
   <span class="input-group-addon"><i class="fa fa-home "></i></span>
   <select id="nuevo" class="form-control sector">
-    <option value="">Todos</option>
+    <option value="">Elige Sector</option>
     {% for sector in sectores %}
     <option value="{{sector.id}}">{{sector.nombre}}</option>
     {% endfor %}
@@ -132,7 +132,7 @@
 <div class="input-group">
   <span class="input-group-addon"><i class="fa fa-cutlery "></i></span>
   <select id="tipo" class="form-control tipo">
-    <option value="">Todas</option>
+    <option value="">Elige Comida</option>
     {% for tipo in tipos %}
     <option value="{{tipo.id}}">{{tipo.nombre}}</option>
     {% endfor %}

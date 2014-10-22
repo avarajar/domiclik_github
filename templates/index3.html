@@ -105,6 +105,7 @@
     Categorias
   </a>
    {% for categoria in categoria %}
+
   <a href="#{{categoria.id}}" class="list-group-item"><i class="glyphicon glyphicon-chevron-right pull-right"></i>{{categoria.titulo}}
   </a>
   {% endfor %}
@@ -119,7 +120,7 @@
     
   <br>
     <div class="row">
-{% for promocion in promocion %}
+<!--{% for promocion in promocion %}
    {% if promocion.visible == True %}
   <div class="panel1 panel">
     
@@ -155,7 +156,7 @@
 
 {% else %}
 {% endif %}
-{% endfor %}
+{% endfor %}-->
 
       <div class="panel-group" id="accordion">
        
@@ -246,8 +247,8 @@
   
 
 <!--div del modal contacto-->
-                      <div class="modal fade" id="modalform"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                          <div class="modal-dialog">
+                      <div class="modal fade" id="modalform"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                          <div class="modal-dialog modal-lg">
                               <div class="modal-content">
                                   
                                   <div class="modal-header">
@@ -256,6 +257,10 @@
                                       
                                   </div><br>
                                   <div class="modal-body">
+                                    
+                                      
+                                      <button  type="button" onClick="output()" class="btn btn-default btn-lg" data-dismiss="modal" ><strong>Agregar</strong></button>
+                                  
                                     <div id="caja"></div>
                                     <!--<div id='fuente1'><strong>T&Uacute; PEDIDO</strong></div><ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'>$5000</span>Grill Normal</li><li class='list-group-item '><span class='badge'>$5000</span>1/2 libra</li><li class='list-group-item '><span class='badge'>$800</span>Jalape&ntilde;os</li><li class='list-group-item '><span class='badge'>$1000</span>Queso Chedar</li><li class='list-group-item '> <strong>PD:</strong> Sin lechuga ni tomate</li><li class='list-group-item list-group-item-info '><span class='badge'>$14800</span>Total</li></ul><br>-->
                                     
@@ -293,10 +298,7 @@
                                     </div>-->
                                   </div>
 
-                                  <div class="modal-footer">
-                                      
-                                      <button  type="button" onClick="output()" class="btn btn-info btn-lg" data-dismiss="modal" >Pedido</button>
-                                  </div>
+                                  
                               </div>
 
                           </div>
@@ -505,24 +507,24 @@ $("[data-toggle='tooltip']").tooltip();
 
               for (var i=0; i<uno.length; i++) {
 
-                 adicional += '<div class="input-group"><span class="input-group-addon"><input class="joder" type="checkbox" id = "registros" name="'+uno[i].fields.precio+'" value="'+uno[i].fields.nombre+'"/></span><label type="text" class="form-control">'+uno[i].fields.nombre+'</label><span class="input-group-addon precio" value="'+uno[i].fields.precio+'">$ '+uno[i].fields.precio+'</span></div>'
+                 adicional += '<div class = "col-md-4"><div class="input-group"><span class="input-group-addon"><input class="joder" type="checkbox" id = "registros" name="'+uno[i].fields.precio+'" value="'+uno[i].fields.nombre+'"/></span><label type="text" class="form-control">'+uno[i].fields.nombre+'</label><span class="input-group-addon precio" value="'+uno[i].fields.precio+'">$ '+uno[i].fields.precio+'</span></div></div>'
                  };
 
                  for (var a=0; a<unoa.length; a++) {
 
-                 adicionala += '<div class="input-group"><span class="input-group-addon"><input class="joder" type="checkbox" id = "registros" name="'+unoa[a].fields.precio+'" value="'+unoa[a].fields.nombre+'"/></span><label type="text" class="form-control">'+unoa[a].fields.nombre+'</label><span class="input-group-addon precio" value="'+unoa[a].fields.precio+'">$ '+unoa[a].fields.precio+'</span></div>'
+                 adicionala += '<div class = "col-md-4"><div class="input-group"><span class="input-group-addon"><input class="joder" type="checkbox" id = "registros" name="'+unoa[a].fields.precio+'" value="'+unoa[a].fields.nombre+'"/></span><label type="text" class="form-control">'+unoa[a].fields.nombre+'</label><span class="input-group-addon precio" value="'+unoa[a].fields.precio+'">$ '+unoa[a].fields.precio+'</span></div></div>'
                  };
 
                  for (var b=0; b<unob.length; b++) {
 
-                 adicionalb += '<div class="input-group"><span class="input-group-addon"><input class="joder" type="checkbox" id = "registros" name="'+unob[b].fields.precio+'" value="'+unob[b].fields.nombre+'"/></span><label type="text" class="form-control">'+unob[b].fields.nombre+'</label><span class="input-group-addon precio" value="'+unob[b].fields.precio+'">$ '+unob[b].fields.precio+'</span></div>'
+                 adicionalb += '<div class = "col-md-4"><div class="input-group"><span class="input-group-addon"><input class="joder" type="checkbox" id = "registros" name="'+unob[b].fields.precio+'" value="'+unob[b].fields.nombre+'"/></span><label type="text" class="form-control">'+unob[b].fields.nombre+'</label><span class="input-group-addon precio" value="'+unob[b].fields.precio+'">$ '+unob[b].fields.precio+'</span></div></div>'
                  };
           
 
               for (var j = dos.length - 1; j >= 0; j--) {
                
-                 nombre += ''+dos[j].fields.titulo+''
-                 precio += '$'+dos[j].fields.precio+''
+                 nombre += '<div id=fuente2><h4>'+dos[j].fields.titulo+'</h4></div>'
+                 precio += '<h4>$'+dos[j].fields.precio+'</h4>'
                  precio_num = dos[j].fields.precio;
                  }; 
 
@@ -579,7 +581,7 @@ $("[data-toggle='tooltip']").tooltip();
 
                console.log(titulo2a);
 
-                html +='<div class="jumbotron" id="remover"><ul class="list-group"><li class="list-group-item list-group-item-info"><span class="badge precio_menu" name="'+precio_num+'">'+precio+'</span>'+nombre+'</li></ul><div class="input-group">Cantidad<select class="form-control"><option value="">1</option><option value="">2</option><option value="">3</option><option value="">4</option><option value="">5</option></select></div><div>'+titulo1+'</div><div>'+adicional+'</div><div>'+titulo1a+'</div><div>'+adicionala+'</div><div>'+titulo1b+'</div><div>'+adicionalb+'</div>'+titulo2+'<div class="input-group">'+select+'<br>'+titulo2a+'<div class="input-group">'+selecta+'<br>'+titulo2b+'<div class="input-group">'+selectb+'<br><br>&nbsp;</div></div>'
+                html +='<div class="jumbotron" id="remover"><ul class="list-group"><li class="list-group-item list-group-item-info"><span class="badge precio_menu" name="'+precio_num+'">'+precio+'</span>'+nombre+'</li></ul><div class="input-group">Cantidad<select class="form-control"><option value="">1</option><option value="">2</option><option value="">3</option><option value="">4</option><option value="">5</option></select></div><div>'+titulo1+'</div><div class = "row">'+adicional+'</div><div>'+titulo1a+'</div><div class ="row">'+adicionala+'</div><div>'+titulo1b+'</div><div class ="row">'+adicionalb+'</div>'+titulo2+'<div class="input-group">'+select+'<br>'+titulo2a+'<div class="input-group">'+selecta+'<br>'+titulo2b+'<div class="input-group">'+selectb+'<br><br>&nbsp;</div></div>'
               
 
               $('#caja').append(html);

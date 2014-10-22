@@ -89,7 +89,7 @@
 
 
 <div class="container">
-  <!--<div class="row">-->
+  <div class="row">
     <div class="col-md-4">
         <div id="fuente2"><h2>Comidas</h2></div>
         <div class="list-group">
@@ -107,9 +107,9 @@
       {% if restaurantes %}
       
          
-{% for restaurant in restaurantes %}
+ {% for restaurant in restaurantes %}
         <div class="jumbotronF">
-       
+      
            <div class="row">
               
                <div class="col-md-4"><img src="{{MEDIA_URL}}{{restaurant.logo}}" height="133" width="200" alt="">
@@ -144,11 +144,11 @@
                 
             
                </div>
-              
+            
             </div>
-           {% endfor %} 
+           {% endfor %}   
           </div>
- 
+ </div>
           
        
           
