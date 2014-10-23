@@ -10,11 +10,10 @@ from django.utils import timezone
 
 def home(request):
 	
-	ciudades = Ciudade.objects.all()
-	sectores = Sectore.objects.all()
-	tipos = Tipo.objects.all()
+	ciudades = Ciudade.objects.all().order_by('nombre')
+	sectores = Sectore.objects.all().order_by('nombre')
+	tipos = Tipo.objects.all().order_by('nombre')
 	
-
 	return render(request,"index.html",{"ciudades": ciudades, "sectores":sectores,"tipos":tipos,})
 
 def restaurantes_ciudad(request,slug,idc):
@@ -65,6 +64,7 @@ def restaurantes_ciudad_sector(request,idc, idp):
 		
 		"tipos": tipos,
 		"ahora": ahora,})
+
 
 def restaurantes_ciudad_sector_tipo(request,idc, idp, idk):
 
@@ -122,7 +122,7 @@ def menu_ciudad_sector(request,idc,idp,idk):
 	categoria = Categoria.objects.filter(restaurant_id=idc,).order_by('promocion')
 	tituloa = TituloAdicionale.objects.filter(menuesp_id=idc,)
 	#menu = Menu.objects.filter(restaurant_id = idc,)
-	promocion = Promocione.objects.filter(restaurant_id=idc,)
+	
 	menus = Menuesp.objects.filter(restaurant_id=idc,restaurant__ciudad =idp, restaurant__sector = idk,)
 	now = datetime.now().strftime("%H")
 	entero = int(now)
@@ -136,7 +136,7 @@ def menu_ciudad_sector(request,idc,idp,idk):
 		"categoria": categoria,
 		#"categoria_titulo": categoria_titulo,
 		"menus": menus,
-		"promocion": promocion,
+		
 		"ciudad": ciudad,
 		"sector": sector,
 		"tituloa": tituloa,
@@ -153,10 +153,10 @@ def menu_ciudad_sector_tipo(request,idc,idp,idk,idz):
 	tipo = get_object_or_404(Tipo, pk = idz)
 	#categoria_titulo = get_object_or_404(Categoria, pk = idc)
 	restaurantes = Ciudade.objects.all()
-	categoria = Categoria.objects.filter(restaurant_id=idc,)
+	categoria = Categoria.objects.filter(restaurant_id=idc,).order_by('promocion')
 	tituloa = TituloAdicionale.objects.filter(menuesp_id=idc,)
 	#menu = Menu.objects.filter(restaurant_id = idc,)
-	promocion = Promocione.objects.filter(restaurant_id=idc,)
+	
 	menus = Menuesp.objects.filter(restaurant_id=idc,restaurant__ciudad =idp, restaurant__sector = idk, restaurant__tipo=idz,)
 	now = datetime.now().strftime("%H")
 	entero = int(now)
@@ -170,7 +170,7 @@ def menu_ciudad_sector_tipo(request,idc,idp,idk,idz):
 		"categoria": categoria,
 		#"categoria_titulo": categoria_titulo,
 		"menus": menus,
-		"promocion": promocion,
+		
 		"ciudad": ciudad,
 		"sector": sector,
 		"tituloa": tituloa,

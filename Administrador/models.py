@@ -265,16 +265,7 @@ class AdicionalTres(models.Model):
 	def __unicode__(self):
 		return self.nombre
 
-class Promocione(models.Model):
-	titulo = models.CharField(max_length=60)
-	imagen = models.ImageField(upload_to = "imagen_promo")
-	descripcion = models.TextField(blank = True)
-	restaurant = models.ForeignKey(Restaurante)
-	visible = models.BooleanField()
 
-	
-	def __unicode__(self):
-		return self.titulo
 
 
 

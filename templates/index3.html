@@ -220,7 +220,7 @@
 <div class="col-md-3">
   
 
-  <div id="caja2"><div class="list-group scrollspy">
+  <div ><div class="list-group scrollspy">
     
   <a href="#" class="list-group-item active">
     Tu pedido
@@ -299,6 +299,64 @@
                                   </div>
 
                                   
+                              </div>
+
+                          </div>
+
+                       </div>
+
+
+                       <div class="modal fade" id="modalform2"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                          <div class="modal-dialog ">
+                              <div class="modal-content">
+                                  
+                                  <div class="modal-header">
+                                      <button type="button" onClick="borrar()" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times-circle fa-2x" > </i></button>
+                                      <!--<img src="{{MEDIA_URL}}img/logo_web.png" height="164" width="172" alt="">-->
+                                      
+                                  </div><br>
+                                  <div class="modal-body">
+                                    
+                                      
+                                      
+                                  
+                                    <div id="caja2"></div>
+                                    <!--<div id='fuente1'><strong>T&Uacute; PEDIDO</strong></div><ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'>$5000</span>Grill Normal</li><li class='list-group-item '><span class='badge'>$5000</span>1/2 libra</li><li class='list-group-item '><span class='badge'>$800</span>Jalape&ntilde;os</li><li class='list-group-item '><span class='badge'>$1000</span>Queso Chedar</li><li class='list-group-item '> <strong>PD:</strong> Sin lechuga ni tomate</li><li class='list-group-item list-group-item-info '><span class='badge'>$14800</span>Total</li></ul><br>-->
+                                    
+                                    <div id="fuente1"><strong>DATOS DE ENVIO</strong></div>
+
+                                    <div class="fcontacto">
+                                      <form method="POST"action="./" name="contact-form" id=" contact-form" class="form-horizontal">
+                                        <div class="row">
+                                            <div class="col-md-6 " >
+                                             <label ><h5><strong>Nombre <strong></h5></label>
+                                             <input type="text" name="nombre" id="nombre" class="form-control"> 
+                                             </div>
+                                             <div class="col-md-6">
+                                             <label ><h5><strong>Correo <strong></h5></label>
+                                            <input type="text" name="correo" id="correo" class="form-control"> 
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 " >
+                                             <label ><h5><strong>Tel&eacute;fono<strong></h5></label>
+                                             <input type="text" name="nombre" id="nombre" class="form-control"> 
+                                             </div>
+                                             <div class="col-md-6">
+                                             <label ><h5><strong>Otro(Opcional) <strong></h5></label>
+                                            <input type="text" name="correo" id="correo" class="form-control"> 
+                                            </div>
+                                        </div>
+                                        <label ><h5><strong>Direcci&oacute;n Exacta<strong></h5></label>
+                                         <textarea name="mensaje" id="mensaje" cols="30" rows="10"class="form-control"></textarea><br>
+                                          <div class="fuente1"><h5><strong>Enviaremos los datos de la solicitud al correo proporcionado arriba..!</strong></h5></div>
+                                      </form>
+                                    </div>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button  type="button" onClick="output()" class="btn btn-default btn-lg" data-dismiss="modal" ><strong>Pedir</strong></button>
+                                    </div>
                               </div>
 
                           </div>
@@ -701,7 +759,7 @@ $(function(){
          padrecaja3.removeChild(caja3); 
 
 
-    html1 += "<div class='jumbotronE' id='remover1'><ul class='list-group'><li class='list-group-item list-group-item'><span class='badge'>"+precio+"</span><strong>"+nombre+"</strong></li>"+nombre_ad+"<li class='list-group-item '><span class='badge'>$"+{{restaurant.precio_domicilio}}+"</span>Domicilio</li>"+solicitud_enviada+"<li class='list-group-item list-group-item-info '><span class='badge'>$"+total+"</span>Total</li></ul><br><button onClick='output1()' type='button' class='btn btn-info btn-lg confirmar' data-toggle='modal' data-target='#modalform'>Confirmar</button></div>"
+    html1 += "<div class='' id='remover1'><ul class='list-group'><li class='list-group-item list-group-item'>"+nombre+"</h6></li>"+nombre_ad+"<li class='list-group-item '><span class='badge'>$"+{{restaurant.precio_domicilio}}+"</span>Domicilio</li>"+solicitud_enviada+"<li class='list-group-item list-group-item-info '><span class='badge'>$"+total+"</span>Total</li></ul><br><button onClick='output1()' type='button' class='btn btn-info btn-lg confirmar' data-toggle='modal' data-target='#modalform2'>Confirmar</button></div>"
 
      $("#caja1").append(html1);
 
