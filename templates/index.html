@@ -113,11 +113,11 @@
 
 <div class="input-group">
   <span class="input-group-addon"><i class="fa fa-home "></i></span>
-  <select id="nuevo" class="form-control sector">
-    <option value="">Elige Sector</option>
-    {% for sector in sectores %}
-    <option value="{{sector.id}}">{{sector.nombre}}</option>
-    {% endfor %}
+  <select  id="agregar_sector" class="form-control sector">
+    <option id ="remover_sector" value="">Elige Sector</option>
+    
+    
+    
 
 </select>
   
@@ -274,13 +274,37 @@ $( function() {
 </script>
 
 <script>
-  /*$('.ciudad').on('change',ciudad)
+  $('.ciudad').on('change',ciudad)
   function ciudad(){
     ciudad = $('.ciudad').val();
-    console.log(ciudad);
+
+    var star = document.getElementById('remover_sector');
+        var padre = star.parentNode;
+         padre.removeChild(star);
+
+    $.ajax({
+
+      data : {'ciudad':ciudad},
+      url  : '/ajax_ciudad_sector/',
+      type : 'get',
+      success: function(data){
+        html='';
+        id='';
+
+        for (var i = data.length - 1; i >= 0; i--) {
+          html+= '<option  value="'+data[i].pk+'">'+data[i].fields.nombre+'</option>'
+          
+        };
+        
+        $('#agregar_sector').append(html);
+
+      }
+
+
+    });
 
   }
-  $('.sector').on('change',sector)
+  /*$('.sector').on('change',sector)
   function sector(){
     sector = $('.sector').val();
     console.log(sector);
@@ -293,6 +317,9 @@ $( function() {
     console.log(tipo);
 
   }*/
+
+
+
   function getUrl(){
      ciudad = $('.ciudad').val();
      sector = $('.sector').val();

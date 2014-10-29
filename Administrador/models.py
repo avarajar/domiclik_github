@@ -3,24 +3,27 @@ from django.db import models
 from django.db.models import signals
 from django.template.defaultfilters import slugify
 #from slughifi import slughifi
+#from uuslug import uuslug
 from smart_selects.db_fields import ChainedForeignKey
 
 class Ciudade(models.Model):
 	nombre = models.CharField(max_length=60)
-	slug = models.SlugField(max_length=100, blank=True)
+	slug = models.SlugField(max_length=250, blank=True, default='')
 
 	
 	
 	def __unicode__(self):
 		return self.nombre
 
-	def ciudad_pre_save(signal, instance, sender, **kwargs):
-		instance.slug = slugify(instance.nombre)
-		signals.pre_save.connect(ciudad_pre_save, sender=Ciudade)
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.nombre)
+		super(Ciudade, self).save(*args, **kwargs)
 	
 
 class Sectore(models.Model):
 	nombre = models.CharField(max_length=60)
+	ciudad = models.ForeignKey(Ciudade)
 	
 
 	def __unicode__(self):
@@ -42,7 +45,8 @@ class Restaurante(models.Model):
 	tipo = models.ManyToManyField(Tipo)
 	hora_abrir = models.TimeField()
 	hora_cerrar = models.TimeField()
-	precio_domicilio = models.IntegerField()
+	precio_domicilio = models.CharField(max_length=60)
+	tiempo = models.CharField(max_length=60)
 
 	def __unicode__(self):
 		return self.nombre

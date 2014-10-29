@@ -6445,7 +6445,7 @@ color: #606062;
 .boton_estilo{
 
   position: relative;
-  padding: 9px;
+  padding: 15px 10px 15px 10px;
   border-radius: 3px;
   background-color: #F5911D;
   width: 100px;

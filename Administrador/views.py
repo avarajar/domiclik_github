@@ -3,10 +3,11 @@ from time import  time, localtime
 from datetime import  datetime, time, timedelta
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render,get_object_or_404
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.core import serializers
 from django.utils import simplejson
 from django.utils import timezone
+
 
 def home(request):
 	
@@ -22,7 +23,7 @@ def restaurantes_ciudad(request,slug,idc):
 
 
     
-	ciudad = Ciudade.objects.get(slug=slug, pk = idc)
+	ciudad = Ciudade.objects.get( slug=slug, pk=idc)
 
 	ciudades = Ciudade.objects.all()
 	restaurantes = Restaurante.objects.filter(ciudad_id = idc, )
@@ -176,6 +177,17 @@ def menu_ciudad_sector_tipo(request,idc,idp,idk,idz):
 		"tituloa": tituloa,
 		"tipo": tipo,
 		"ahora": ahora,})
+
+class Ajax_Ciudad_Sector(ListView):
+	def get(self, request, *args, **kwargs):
+		id_ciudad = request.GET['ciudad']
+		sector = Sectore.objects.filter(ciudad__id=id_ciudad)
+		data = serializers.serialize('json',sector,
+									fields=('nombre','id',))
+		#data_sector = simplejson.loads(data1)
+
+		return HttpResponse(data,mimetype='application/json')
+
 
 class Ajax(ListView):
 
