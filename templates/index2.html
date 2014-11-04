@@ -51,7 +51,7 @@
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
         <li data-target="#myCarousel" data-slide-to="3"></li>
-        <li data-target="#myCarousel" data-slide-to="4"></li>
+        
       </ol>
       <!-- Carousel items -->
       <div class="carousel-inner">
@@ -95,7 +95,7 @@
         <div class="list-group">
            <div >
            {% for tipo in tipos %}
-           <a href="./{{tipo.id}}" class="list-group-item"><strong>{{tipo.nombre}}</strong></a>
+           <a href="./{{tipo.slug_tipo}}" class="list-group-item"><strong>{{tipo.nombre}}</strong></a>
            
            {% endfor %}
            </div>
@@ -116,22 +116,64 @@
                </div>
 
                <div class="col-md-4"><strong>
-                <div id="fuente1">{{restaurant.nombre}}</strong><br><h5>{{restaurant.descripcion}}<br>Entrega en {{restaurant.tiempo}} <br> Domicilio $ {{restaurant.precio_domicilio}}</h5>
+                <div id="fuente1">{{restaurant.nombre}}</strong><br><h5>{{restaurant.descripcion}}<br>Entrega en 40 min <br> Domicilio $ {{restaurant.precio_domicilio}}</h5>
                </div>
                </div>
                <br>
 
-              <div class="col-md-4 ">
-               {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
+            <div class="col-md-4 ">
+               {% if  restaurant.hora_abrir.hour < hora  and restaurant.hora_cerrar.hour > hora  %}
+               
 
                <button type="button" class="btn btn-success btn-lg">Abierto</button>
-               {% else %}
-               <button type="button" class="btn btn-danger btn-lg" disabled= "disabled">Cerrado</button>
-               {% endif %}
-               <a class="boton_estilo" href="/menu/{{restaurant.id}}/{{ciudad.id}}/{{sector.id}}/{{tipo.id}}"><i class="fa fa-search"></i><strong>Ver Menú</strong></a><br>
+               <a class="boton_estilo" href="/menu/{{restaurant.slug_restaurant}}/{{ciudad.slug}}/{{sector.slug_sector}}/{{tipo.slug_tipo}}"><i class="fa fa-search"></i><strong>Ver Menú</strong></a><br>
+               <div id="fuente1"> <h5> <strong>Cierra a las {{restaurant.hora_cerrar | time}}</strong> </h5>
+                  
+                </div>
+               {% elif restaurant.hora_abrir.hour == hora  and restaurant.hora_abrir.minute <= minutos and restaurant.hora_cerrar.hour > hora %}
+                
+                <button type="button" class="btn btn-success btn-lg">Abierto</button>
+               <a class="boton_estilo" href="/menu/{{restaurant.slug_restaurant}}/{{ciudad.slug}}/{{sector.slug_sector}}/{{tipo.slug_tipo}}"><i class="fa fa-search"></i><strong>Ver Menú</strong></a><br>
+              <div id="fuente1"> <h5> <strong>Cierra a las {{restaurant.hora_cerrar | time}}</strong> </h5>
+                  </div> 
 
-              {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
-                <div id="fuente1"> <h5> <strong>Cierra a las {{restaurant.hora_cerrar | time }}</strong> </h5>
+
+                  {% elif restaurant.hora_cerrar.hour == hora  and restaurant.hora_cerrar.minute >= minutos and restaurant.hora_abrir.hour < hora %}
+               <button type="button" class="btn btn-success btn-lg">Abierto</button>
+               <a class="boton_estilo" href="/menu/{{restaurant.slug_restaurant}}/{{ciudad.slug}}/{{sector.slug_sector}}/{{tipo.slug_tipo}}"><i class="fa fa-search"></i><strong>Ver Menú</strong></a><br>
+              <div id="fuente1"> <h5> <strong>Cierra a las {{restaurant.hora_cerrar | time}}</strong> </h5>
+                  </div>
+                
+
+                {% elif restaurant.hora_cerrar.hour == hora  and restaurant.hora_cerrar.minute <= minutos and restaurant.hora_abrir.hour < hora %}
+
+                <button type="button" class="btn btn-lg" ><h4>Cerrado</h4></button>
+               <a class="boton_estilo" href="/menu/{{restaurant.slug_restaurant}}/{{ciudad.slug}}/{{sector.slug_sector}}/{{tipo.slug_tipo}}"><i class="fa fa-search"></i><strong>Ver Menú</strong></a><br>
+               <div id="fuente1"> <h5> <strong>Abre a las {{restaurant.hora_abrir | time}} </strong></h5>
+                </div>
+                  
+
+               
+               
+
+               
+              
+               {% else %}
+               <button type="button" class="btn btn-lg" ><h4>Cerrado</h4></button>
+               <a class="boton_estilo" href="/menu/{{restaurant.slug_restaurant}}/{{ciudad.slug}}/{{sector.slug_sector}}/{{tipo.slug_tipo}}"><i class="fa fa-search"></i><strong>Ver Menú</strong></a><br>
+               <div id="fuente1"> <h5> <strong>Abre a las {{restaurant.hora_abrir | time}} </strong></h5>
+                </div>
+
+
+               
+           
+              
+               
+               {% endif %}
+               
+
+              <!-- {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
+                <div id="fuente1"> <h5> <strong>Cierra a las {{restaurant.hora_cerrar | time}}</strong> </h5>
                   
                 </div>
 
@@ -139,14 +181,14 @@
                 <div id="fuente1"> <h5> <strong>Abre a las {{restaurant.hora_abrir | time}} </strong></h5>
                 </div>
                 
-                {% endif %}
+                {% endif %} -->
                 </div>
                 
             
                </div>
             
             </div>
-            {% endfor %}  
+           {% endfor %}   
           </div>
  </div>
           

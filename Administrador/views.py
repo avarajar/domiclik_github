@@ -7,7 +7,7 @@ from django.views.generic import ListView, TemplateView
 from django.core import serializers
 from django.utils import simplejson
 from django.utils import timezone
-
+from django.utils.timezone import utc
 
 def home(request):
 	
@@ -17,21 +17,23 @@ def home(request):
 	
 	return render(request,"index.html",{"ciudades": ciudades, "sectores":sectores,"tipos":tipos,})
 
-def restaurantes_ciudad(request,slug,idc):
+def restaurantes_ciudad(request,slug):
 		
 
 
-
+	
     
-	ciudad = Ciudade.objects.get( slug=slug, pk=idc)
+	ciudad = get_object_or_404(Ciudade,slug = slug)
 
 	ciudades = Ciudade.objects.all()
-	restaurantes = Restaurante.objects.filter(ciudad_id = idc, )
+	restaurantes = Restaurante.objects.filter(ciudad__slug = slug )
 	tipos = Tipo.objects.all()
 	
-	now = datetime.now().strftime("%H")
-	entero = int(now)
-	ahora = time(entero)
+	now = datetime.now()
+
+	# entero = int(now)
+	hora= now.hour
+	minutos = now.minute
 	
 
 	
@@ -39,47 +41,54 @@ def restaurantes_ciudad(request,slug,idc):
 	return render(request,"index2.html",{
 		"ciudades": ciudades,
 		"restaurantes": restaurantes,
-		"idcs" : idc,
+		# "idcs" : idc,
 		"ciudad": ciudad,
 		"tipos": tipos,
-		"ahora": ahora,})
+		"hora": hora,
+		"minutos": minutos,})
 
-def restaurantes_ciudad_sector(request,idc, idp):
+def restaurantes_ciudad_sector(request,slug, slug_sector):
 
-	ciudad = get_object_or_404(Ciudade, pk = idc)
-	sector = get_object_or_404(Sectore, pk = idp)
+	ciudad = get_object_or_404(Ciudade, slug = slug)
+	sector = get_object_or_404(Sectore, slug_sector = slug_sector)
 	ciudades = Ciudade.objects.all()
-	restaurantes = Restaurante.objects.filter(ciudad_id = idc, sector=idp)
+	restaurantes = Restaurante.objects.filter(ciudad__slug = slug, sector__slug_sector=slug_sector)
 
 	tipos = Tipo.objects.all()
-	now = datetime.now().strftime("%H")
-	entero = int(now)
-	ahora = time(entero)
+	now = datetime.now()
+
+	# entero = int(now)
+	hora= now.hour
+	minutos = now.minute
+
+	
 	
 
 	return render(request,"index2.html",{
 		"ciudad": ciudad,
 		"sector": sector,
 		"restaurantes": restaurantes,
-		"idcs" : idc,
+		# "idcs" : idc,
 		
 		"tipos": tipos,
-		"ahora": ahora,})
+		"hora": hora,
+		"minutos": minutos,})
 
 
-def restaurantes_ciudad_sector_tipo(request,idc, idp, idk):
+def restaurantes_ciudad_sector_tipo(request,slug, slug_sector, slug_tipo):
 
-	ciudad = get_object_or_404(Ciudade, pk = idc)
-	sector = get_object_or_404(Sectore, pk = idp)
-	tipo = get_object_or_404(Tipo, pk = idk)
+	ciudad = get_object_or_404(Ciudade, slug = slug)
+	sector = get_object_or_404(Sectore, slug_sector = slug_sector)
+	tipo = get_object_or_404(Tipo, slug_tipo = slug_tipo)
 	ciudades = Ciudade.objects.all()
-	restaurantes = Restaurante.objects.filter(ciudad_id = idc, sector=idp, tipo=idk)
+	restaurantes = Restaurante.objects.filter(ciudad__slug = slug, sector__slug_sector=slug_sector, tipo__slug_tipo=slug_tipo)
 
 	tipos = Tipo.objects.all()
-	now = datetime.now().strftime("%H")
-	entero = int(now)
-	ahora = time(entero)
-	
+	now = datetime.now()
+
+	# entero = int(now)
+	hora= now.hour
+	minutos = now.minute
 
 	
 
@@ -88,10 +97,11 @@ def restaurantes_ciudad_sector_tipo(request,idc, idp, idk):
 		"sector": sector,
 		"tipo": tipo,
 		"restaurantes": restaurantes,
-		"idcs" : idc,
+		# "idcs" : idc,
 		
 		"tipos": tipos,
-		"ahora": ahora,})
+		"hora": hora,
+		"minutos": minutos,})
 
 
 def restaurantes(request):
@@ -111,23 +121,25 @@ def restaurantes(request):
 		"tipos": tipos,
 		"ahora": ahora,})
 
-def menu_ciudad_sector(request,idc,idp,idk):
+def menu_ciudad_sector(request,slug_restaurant,slug,slug_sector):
 
 	
-	restaurant = get_object_or_404(Restaurante, pk = idc)
-	ciudad = get_object_or_404(Ciudade, pk = idp)
-	sector = get_object_or_404(Sectore, pk = idk)
+	restaurant = get_object_or_404(Restaurante, slug_restaurant = slug_restaurant)
+	ciudad = get_object_or_404(Ciudade, slug = slug)
+	sector = get_object_or_404(Sectore, slug_sector = slug_sector)
 	
 	#categoria_titulo = get_object_or_404(Categoria, pk = idc)
 	restaurantes = Ciudade.objects.all()
-	categoria = Categoria.objects.filter(restaurant_id=idc,).order_by('promocion')
-	tituloa = TituloAdicionale.objects.filter(menuesp_id=idc,)
+	categoria = Categoria.objects.filter(restaurant__slug_restaurant=slug_restaurant,).order_by('promocion')
+	# tituloa = TituloAdicionale.objects.filter(menuesp_id=idc,)
 	#menu = Menu.objects.filter(restaurant_id = idc,)
 	
-	menus = Menuesp.objects.filter(restaurant_id=idc,restaurant__ciudad =idp, restaurant__sector = idk,)
-	now = datetime.now().strftime("%H")
-	entero = int(now)
-	ahora = time(entero)
+	menus = Menuesp.objects.filter(restaurant__slug_restaurant=slug_restaurant,restaurant__ciudad__slug =slug, restaurant__sector__slug_sector = slug_sector,)
+	now = datetime.now()
+
+	# entero = int(now)
+	hora= now.hour
+	minutos = now.minute
 
 
 	
@@ -140,28 +152,31 @@ def menu_ciudad_sector(request,idc,idp,idk):
 		
 		"ciudad": ciudad,
 		"sector": sector,
-		"tituloa": tituloa,
+		 # "tituloa": tituloa,
 		
-		"ahora": ahora,})	
+		"hora": hora,
+		"minutos": minutos,})	
 
 
-def menu_ciudad_sector_tipo(request,idc,idp,idk,idz):
+def menu_ciudad_sector_tipo(request,slug_restaurant,slug,slug_sector,slug_tipo):
 
 	
-	restaurant = get_object_or_404(Restaurante, pk = idc)
-	ciudad = get_object_or_404(Ciudade, pk = idp)
-	sector = get_object_or_404(Sectore, pk = idk)
-	tipo = get_object_or_404(Tipo, pk = idz)
+	restaurant = get_object_or_404(Restaurante, slug_restaurant = slug_restaurant)
+	ciudad = get_object_or_404(Ciudade, slug = slug)
+	sector = get_object_or_404(Sectore, slug_sector = slug_sector)
+	tipo = get_object_or_404(Tipo, slug_tipo = slug_tipo)
 	#categoria_titulo = get_object_or_404(Categoria, pk = idc)
 	restaurantes = Ciudade.objects.all()
-	categoria = Categoria.objects.filter(restaurant_id=idc,).order_by('promocion')
-	tituloa = TituloAdicionale.objects.filter(menuesp_id=idc,)
+	categoria = Categoria.objects.filter(restaurant__slug_restaurant=slug_restaurant,).order_by('promocion')
+	# tituloa = TituloAdicionale.objects.filter(menuesp_id=idc,)
 	#menu = Menu.objects.filter(restaurant_id = idc,)
 	
-	menus = Menuesp.objects.filter(restaurant_id=idc,restaurant__ciudad =idp, restaurant__sector = idk, restaurant__tipo=idz,)
-	now = datetime.now().strftime("%H")
-	entero = int(now)
-	ahora = time(entero)
+	menus = Menuesp.objects.filter(restaurant__slug_restaurant=slug_restaurant,restaurant__ciudad__slug =slug, restaurant__sector__slug_sector = slug_sector, restaurant__tipo__slug_tipo = slug_tipo,)
+	now = datetime.now()
+
+	# entero = int(now)
+	hora= now.hour
+	minutos = now.minute
 
 
 	
@@ -171,19 +186,19 @@ def menu_ciudad_sector_tipo(request,idc,idp,idk,idz):
 		"categoria": categoria,
 		#"categoria_titulo": categoria_titulo,
 		"menus": menus,
-		
+		"tipo":tipo,
 		"ciudad": ciudad,
 		"sector": sector,
-		"tituloa": tituloa,
-		"tipo": tipo,
-		"ahora": ahora,})
+		# "tituloa": tituloa,
+		"hora": hora,
+		"minutos": minutos,})
 
-class Ajax_Ciudad_Sector(ListView):
+class Ajax_Ciudad_Sector(TemplateView):
 	def get(self, request, *args, **kwargs):
 		id_ciudad = request.GET['ciudad']
-		sector = Sectore.objects.filter(ciudad__id=id_ciudad)
+		sector = Sectore.objects.filter(ciudad__slug=id_ciudad)
 		data = serializers.serialize('json',sector,
-									fields=('nombre','id',))
+									fields=('nombre','id','slug_sector',))
 		#data_sector = simplejson.loads(data1)
 
 		return HttpResponse(data,mimetype='application/json')

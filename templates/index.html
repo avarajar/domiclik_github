@@ -61,7 +61,7 @@
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
         <li data-target="#myCarousel" data-slide-to="3"></li>
-        <li data-target="#myCarousel" data-slide-to="4"></li>
+        
       </ol>
       <!-- Carousel items -->
       <div class="carousel-inner">
@@ -101,7 +101,8 @@
   <select class="form-control ciudad" >
     <option value="">Elige Ciudad</option>
     {% for ciudad in ciudades %}
-    <option value="{{ciudad.id}}">{{ciudad.nombre}}</option>
+
+    <option value="{{ciudad.slug}}" >{{ciudad.nombre}}</option>
     {% endfor %}
     <!--<option value="">Duitama</option>
     <option value="">Sogamoso</option>
@@ -114,7 +115,7 @@
 <div class="input-group">
   <span class="input-group-addon"><i class="fa fa-home "></i></span>
   <select  id="agregar_sector" class="form-control sector">
-    <option id ="remover_sector" value="">Elige Sector</option>
+    <option  value=""></option>
     
     
     
@@ -134,7 +135,7 @@
   <select id="tipo" class="form-control tipo">
     <option value="">Elige Comida</option>
     {% for tipo in tipos %}
-    <option value="{{tipo.id}}">{{tipo.nombre}}</option>
+    <option value="{{tipo.slug_tipo}}">{{tipo.nombre}}</option>
     {% endfor %}
 
 
@@ -277,10 +278,10 @@ $( function() {
   $('.ciudad').on('change',ciudad)
   function ciudad(){
     ciudad = $('.ciudad').val();
+    
+    
 
-    var star = document.getElementById('remover_sector');
-        var padre = star.parentNode;
-         padre.removeChild(star);
+    
 
     $.ajax({
 
@@ -290,13 +291,16 @@ $( function() {
       success: function(data){
         html='';
         id='';
-
+        
         for (var i = data.length - 1; i >= 0; i--) {
-          html+= '<option  value="'+data[i].pk+'">'+data[i].fields.nombre+'</option>'
+           html+= '<option id ="remover_sector" value="'+data[i].fields.slug_sector+'">'+data[i].fields.nombre+'</option>'
           
         };
         
-        $('#agregar_sector').append(html);
+        
+        document.getElementById('agregar_sector').innerHTML = html
+
+        
 
       }
 
@@ -323,6 +327,10 @@ $( function() {
   function getUrl(){
      ciudad = $('.ciudad').val();
      sector = $('.sector').val();
+     tipo = $('.tipo').val();
+     
+
+
 
     if (ciudad=='') {
 
@@ -340,9 +348,9 @@ $( function() {
        var dir = "/restaurantes/"
        dir += $('.ciudad').val();
        var dir1 = "/"
-       dir1 += $('.sector').val();
+       dir1 +=  $('.sector').val();
        var dir2 ='/';
-       dir2 += $('.tipo').val();
+       dir2 +=  $('.tipo').val();
        dir3 = dir+dir1+dir2;
    window.location.href=dir3;
         };

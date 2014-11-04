@@ -24,22 +24,29 @@ class Ciudade(models.Model):
 class Sectore(models.Model):
 	nombre = models.CharField(max_length=60)
 	ciudad = models.ForeignKey(Ciudade)
-	slug = models.SlugField(max_length=250, blank=True, default='')
+	slug_sector = models.SlugField(max_length=250, blank=True, default='')
+	
 
 	def __unicode__(self):
 		return self.nombre
 
 	def save(self, *args, **kwargs):
-		if not self.slug:
-			self.slug = slugify(self.nombre)
+		if not self.slug_sector:
+			self.slug_sector = slugify(self.nombre)
 		super(Sectore, self).save(*args, **kwargs)
 
 class Tipo(models.Model):
 	nombre = models.CharField(max_length=60)
+	slug_tipo = models.SlugField(max_length=250, blank=True, default='')
 	
 
 	def __unicode__(self):
 		return self.nombre
+
+	def save(self, *args, **kwargs):
+		if not self.slug_tipo:
+			self.slug_tipo = slugify(self.nombre)
+		super(Tipo, self).save(*args, **kwargs)
 
 class Restaurante(models.Model):
 	nombre = models.CharField(max_length=60)
@@ -51,10 +58,16 @@ class Restaurante(models.Model):
 	hora_abrir = models.TimeField()
 	hora_cerrar = models.TimeField()
 	precio_domicilio = models.CharField(max_length=60)
-	tiempo = models.CharField(max_length=60)
+	entrega = models.CharField(max_length=60)
+	slug_restaurant = models.SlugField(max_length=250, blank=True, default='')
 
 	def __unicode__(self):
 		return self.nombre
+
+	def save(self, *args, **kwargs):
+		if not self.slug_restaurant:
+			self.slug_restaurant = slugify(self.nombre)
+		super(Restaurante, self).save(*args, **kwargs)
 
 class Categoria(models.Model):
 	titulo = models.CharField(max_length=60)
@@ -72,6 +85,7 @@ class Menuesp(models.Model):
 	precio = models.IntegerField()
 	restaurant = models.ForeignKey(Restaurante)
 	
+	
 	categoria = ChainedForeignKey(
 		Categoria,
 		chained_field="restaurant",
@@ -83,6 +97,8 @@ class Menuesp(models.Model):
 	
 	def __unicode__(self):
 		return self.titulo
+
+	
 
 
 class TituloAdicionale(models.Model):

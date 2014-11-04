@@ -33,7 +33,7 @@
         
       </ul>
        <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a  href="../"><i class="fa fa-cutlery fa-2x"></i>&nbsp; Restaurantes</a></li>
+        <li class="active"><a  href="/restaurantes/{{ciudad.slug}}/{{sector.slug_sector}}/{{tipo.slug_tipo}}"><i class="fa fa-cutlery fa-2x"></i>&nbsp; Restaurantes</a></li>
         <li><a  href="#"><i class="fa fa-glass fa-2x"></i>&nbsp; Licores</a></li>
         <li><a  href="#"><i class="fa fa-medkit fa-2x"></i>&nbsp; Farmacias</a></li>
         
@@ -62,21 +62,53 @@
       <div class="col-md-2 col-md-offset-3"><img src="{{MEDIA_URL}}{{restaurant.logo}}" height="133" width="200"></div>
       <div class="col-md-4"><div id="fuenteE"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{restaurant.nombre}}</strong><br><h5><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{restaurant.descripcion}}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entrega en 40 min <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Domicilio $ {{restaurant.precio_domicilio}}</strong></h5></div></div><br>
       <div class="col-md-3">
-      {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
-
-               <button type="button" class="btn btn-success btn-lg">Abierto</button><br><br>
-               {% else %}
-               <button type="button" class="btn btn-danger btn-lg" disabled= "disabled">Cerrado</button><br><br>
-               {% endif %}
+      {% if  restaurant.hora_abrir.hour < hora  and restaurant.hora_cerrar.hour > hora  %}
                
-{% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
-       
-          
-       <h5><strong> Cierra a las {{restaurant.hora_cerrar |time}}</strong></h5>
-       {% else %}
-       <h5><strong> Abre a las {{restaurant.hora_abrir |time}}</strong></h5>
-       
-       {% endif %}
+
+               <button type="button" class="btn btn-success btn-lg">Abierto</button>
+               
+               <div id="fuente1"> <h5> <strong>Cierra a las {{restaurant.hora_cerrar | time}}</strong> </h5>
+                  
+                </div>
+               {% elif restaurant.hora_cerrar.hour == hora  and restaurant.hora_cerrar.minute <= minutos and restaurant.hora_abrir.hour < hora %}
+               <button type="button" class="btn btn-lg" ><h4>Cerrado</h4></button>
+               
+               <div id="fuente1"> <h5> <strong>Abre a las {{restaurant.hora_abrir | time}} </strong></h5>
+                </div> 
+                  
+
+                {% elif restaurant.hora_abrir.hour == hora  and restaurant.hora_abrir.minute <= minutos and restaurant.hora_cerrar.hour > hora %}
+
+                <button type="button" class="btn btn-success btn-lg">Abierto</button>
+               
+              <div id="fuente1"> <h5> <strong>Cierra a las {{restaurant.hora_cerrar | time}}</strong> </h5>
+                  
+                </div> 
+
+                {% elif restaurant.hora_cerrar.hour == hora  and restaurant.hora_cerrar.minute >= minutos and restaurant.hora_abrir.hour < hora %}
+                  
+                <button type="button" class="btn btn-success btn-lg">Abierto</button>
+               
+              <div id="fuente1"> <h5> <strong>Cierra a las {{restaurant.hora_cerrar | time}}</strong> </h5>
+                  
+                </div>
+               
+               
+
+               
+              
+               {% else %}
+               <button type="button" class="btn  btn-lg" ><h4>Cerrado</h4></button>
+               
+               <div id="fuente1"> <h5> <strong>Abre a las {{restaurant.hora_abrir | time}} </strong></h5>
+                </div>
+
+
+               
+           
+              
+               
+               {% endif %}
       </div>
     </div><br>
   </div>
@@ -85,7 +117,7 @@
         <li class="active"><a href="/">Inicio</a></li>
         <li class="active"><a href="#">></a></li>
         
-        <li class="active"><a href="#">Restaurantes &nbsp;{{ciudad.nombre}} &nbsp;{{sector.nombre}} &nbsp;{{tipo.nombre}}</a></li>
+        <li class="active"><a href="/restaurantes/{{ciudad.slug}}/{{sector.slug_sector}}/{{tipo.slug_tipo}}">Restaurantes &nbsp;{{ciudad.nombre}} &nbsp;{{sector.nombre}} &nbsp;{{tipo.nombre}}</a></li>
         <li class="active"><a href="#">></a></li>
         <li class="active"><a href="#">{{restaurant.nombre}}</a></li>
            
@@ -120,43 +152,7 @@
     
   <br>
     <div class="row">
-<!--{% for promocion in promocion %}
-   {% if promocion.visible == True %}
-  <div class="panel1 panel">
-    
-      <div class="panel-heading">
 
-         
-          
-            <a >
-               <div class="row" >
-                <div id="fuente3">
-                  
-                 <div class="col-md-12 " id= "ancla">{{promocion.titulo}}</div>
-                 <div class="col-md-12"><img src="{{MEDIA_URL}}{{promocion.imagen}}" height="135" width="100%"></div>
-                 </div>
-                 <div class="col-md-8 gris">{{promocion.descripcion}}</div>
-                 <div class="col-md-1"></div> 
-                {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
-                <div class="col-md-3" ><br><button type="button" value="{{menus.id}}" class="btn boton "data-toggle="modal" data-target="#modalform"><h4>Agregar</h4></button></div>
-                 {% else %}
-                 
-                 <div class="col-md-3" ><br><button type="button" class="btn boton " data-toggle="tooltip" data-placement="top" title="RESTAURANT CERRADO"><h4>Agregar</h4></button></div>
-                {% endif %}
-               
-            </a>
-            
-         
-</div>
-      </div>
-   
-      
-
-   </div>
-
-{% else %}
-{% endif %}
-{% endfor %}-->
 
       <div class="panel-group" id="accordion">
        
@@ -182,15 +178,60 @@
                  <div class="col-md-3"></div>
                  <div class="col-md-3"><h5>${{menus.precio}}</h5></div>
                  </div>
-                 <div class="col-md-8 gris">{{menus.descripcion}}</div>
-                 <div class="col-md-1"></div> 
+                 <div class="col-md-9 gris">{{menus.descripcion}}</div>
+                  
 
-                {% if  restaurant.hora_abrir <= ahora  and restaurant.hora_cerrar > ahora %}
-                <div class="col-md-3" ><button type="button" value="{{menus.id}}" class="btn boton "data-toggle="modal" data-target="#modalform"><h4>Agregar</h4></button></div>
-                 {% else %}
-                 
-                 <div class="col-md-3" ><button type="button" class="btn boton " data-toggle="tooltip" data-placement="top" title="RESTAURANT CERRADO"><h4>Agregar</h4></button></div>
-                {% endif %}
+                
+                  {% if  restaurant.hora_abrir.hour < hora  and restaurant.hora_cerrar.hour > hora  %}
+               
+
+               <div class="col-md-3" ><button type="button" value="{{menus.id}}" class="btn boton "data-toggle="modal" data-target="#modalform"><h4>Agregar</h4></button></div>
+               
+               
+               {% elif restaurant.hora_cerrar.hour == hora  and restaurant.hora_cerrar.minute <= minutos and restaurant.hora_abrir.hour < hora %}
+               <div class="col-md-3" ><button type="button" class="btn boton " data-toggle="tooltip" data-placement="top" title="RESTAURANT CERRADO"><h4>Agregar</h4></button></div>
+               
+                
+                  
+
+                {% elif restaurant.hora_abrir.hour == hora  and restaurant.hora_abrir.minute <= minutos and restaurant.hora_cerrar.hour > hora %}
+
+                <div class="col-md-3" ><button type="button" value="{{menus.id}}" class="btn boton " data-toggle="modal" data-target="#modalform"><h4>Agregar</h4></button></div>
+
+                {% elif restaurant.hora_cerrar.hour == hora  and restaurant.hora_cerrar.minute >= minutos and restaurant.hora_abrir.hour < hora %}
+                <div class="col-md-3" ><button type="button" value="{{menus.id}}" class="btn boton " data-toggle="modal" data-target="#modalform"><h4>Agregar</h4></button></div>
+               
+              
+                  
+                
+
+                  
+
+               
+               
+
+               
+              
+               {% else %}
+               <div class="col-md-3" ><button type="button" class="btn boton " data-toggle="tooltip" data-placement="top" title="RESTAURANT CERRADO"><h4>Agregar</h4></button></div>
+               
+               
+
+
+               
+           
+              
+               
+               {% endif %}
+
+
+
+
+
+
+
+
+
                </div>
             </a>
             
@@ -225,13 +266,13 @@
   <a href="#" class="list-group-item active">
     Tu pedido
   </a>
-   <div id="caja3">
+   <div id="caja3" class="caja3">
   <a href="#" class="list-group-item">
-    <div id="fuente2"><h5>Pides online y pagas en casa</h5></div><br><p class="text-center"><i class="fa fa-shopping-cart fa-5x"></i></p><br>
+    <div id="fuente2" class="hola" name="hola"><h5>Pides online y pagas en casa</h5></div><br><p class="text-center"><i class="fa fa-shopping-cart fa-5x"></i></p><br>
     <div id="fuente2"><h5>La mejor forma de pedir tu comida</h5></div>
   </a>
   </div>
-  <div id="caja1" ></div>
+  <div id="caja1" ><div id="aux"></div></div>
 </div><!--CONTENIDO QUE SE AGREGARA--></div>
   <!--<div class="pedido_fixed">--><div id="caja6" ></div><!--</div>-->
     <!--<div class="jumbotron">-->
@@ -253,49 +294,16 @@
                                   
                                   <div class="modal-header">
                                       <button type="button" onClick="borrar()" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times-circle fa-2x" > </i></button>
-                                      <!--<img src="{{MEDIA_URL}}img/logo_web.png" height="164" width="172" alt="">-->
+                                      
                                       
                                   </div><br>
                                   <div class="modal-body">
                                     
                                       
-                                      <button  type="button" onClick="output()" class="btn btn-default btn-lg" data-dismiss="modal" ><strong>Agregar</strong></button>
+                                      <button  type="button" onClick="agregar()" class="btn btn-default btn-lg" data-dismiss="modal" ><strong>Agregar</strong></button>
                                   
                                     <div id="caja"></div>
-                                    <!--<div id='fuente1'><strong>T&Uacute; PEDIDO</strong></div><ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'>$5000</span>Grill Normal</li><li class='list-group-item '><span class='badge'>$5000</span>1/2 libra</li><li class='list-group-item '><span class='badge'>$800</span>Jalape&ntilde;os</li><li class='list-group-item '><span class='badge'>$1000</span>Queso Chedar</li><li class='list-group-item '> <strong>PD:</strong> Sin lechuga ni tomate</li><li class='list-group-item list-group-item-info '><span class='badge'>$14800</span>Total</li></ul><br>-->
-                                    
-                                    <!--<div id="fuente1"><strong>DATOS DE ENVIO</strong></div>-->
-
-                                    <!--<div class="fcontacto">
-                                      <form method="POST"action="./" name="contact-form" id=" contact-form" class="form-horizontal">
-                                        <div class="row">
-                                            <div class="col-md-6 " >
-                                             <label ><h5><strong>Nombre <strong></h5></label>
-                                             <input type="text" name="nombre" id="nombre" class="form-control"> 
-                                             </div>
-                                             <div class="col-md-6">
-                                             <label ><h5><strong>Correo <strong></h5></label>
-                                            <input type="text" name="correo" id="correo" class="form-control"> 
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 " >
-                                             <label ><h5><strong>Tel&eacute;fono<strong></h5></label>
-                                             <input type="text" name="nombre" id="nombre" class="form-control"> 
-                                             </div>
-                                             <div class="col-md-6">
-                                             <label ><h5><strong>Otro(Opcional) <strong></h5></label>
-                                            <input type="text" name="correo" id="correo" class="form-control"> 
-                                            </div>
-                                        </div>
-                                        <label ><h5><strong>Direcci&oacute;n Exacta<strong></h5></label>
-                                         <textarea name="mensaje" id="mensaje" cols="30" rows="10"class="form-control"></textarea><br>
-                                         <button type="submit" value="enviar" class="btn btn-info btn-lg">Pedir</button>
-
-                                        
-                                          <div class="fuente1"><h5>Enviaremos los datos de la solicitud al correo proporcionado arriba..!</h5></div>
-                                      </form>
-                                    </div>-->
+                                   
                                   </div>
 
                                   
@@ -312,7 +320,7 @@
                                   
                                   <div class="modal-header">
                                       <button type="button" onClick="borrar()" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times-circle fa-2x" > </i></button>
-                                      <!--<img src="{{MEDIA_URL}}img/logo_web.png" height="164" width="172" alt="">-->
+                                     
                                       
                                   </div><br>
                                   <div class="modal-body">
@@ -321,7 +329,7 @@
                                       
                                   
                                     <div id="caja2"></div>
-                                    <!--<div id='fuente1'><strong>T&Uacute; PEDIDO</strong></div><ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'>$5000</span>Grill Normal</li><li class='list-group-item '><span class='badge'>$5000</span>1/2 libra</li><li class='list-group-item '><span class='badge'>$800</span>Jalape&ntilde;os</li><li class='list-group-item '><span class='badge'>$1000</span>Queso Chedar</li><li class='list-group-item '> <strong>PD:</strong> Sin lechuga ni tomate</li><li class='list-group-item list-group-item-info '><span class='badge'>$14800</span>Total</li></ul><br>-->
+                                    
                                     
                                     <div id="fuente1"><strong>DATOS DE ENVIO</strong></div>
 
@@ -418,34 +426,51 @@
   </div><!-- /.container-fluid -->
   
 </nav>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="{{STATIC_URL}}js/prototype.js"></script>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="{{STATIC_URL}}js/jquery.js"></script>
   <script src="{{STATIC_URL}}js/bootstrap.js"></script>
+ 
+
+ <script type="text/javascript">
+  var jq = jQuery.noConflict();
+  jq(document).ready(function() {
+      
+  });
+</script>
+  
 
 
 <script type="text/javascript">
 
-  $(document).ready(function(){
-$('.scrollspy').affix({
+  jq(document).ready(function(){
+jq('.scrollspy').affix({
     offset: {top: 350}
 }); 
 
-$("[data-toggle='tooltip']").tooltip();
+jq("[data-toggle='tooltip']").tooltip();
 
-  $(":button.boton").click(function(){
+  jq(":button.boton").click(function(){
      html = '';
      nombre='';
+     solo_nombre='';
+     solo_nombre_id='';
      precio = '';
      adicional= '';
      adicionala= '';
      adicionalb= '';
      titulo1='';
+     titulo1p='';
      titulo1a='';
+     titulo1ap='';
      titulo1b='';
+     titulo1bp='';
      titulo2='';
+     titulo2p='';
      titulo2a='';
+     titulo2ap='';
      titulo2b='';
+     titulo2bp='';
      unicos='';
      unicosa='';
      unicosb='';
@@ -454,17 +479,20 @@ $("[data-toggle='tooltip']").tooltip();
      selectb ='';
      adi=0;
      adi2=0;
+     adiacum=0;
      valor=0;
      c=0;
+     d=0;
      nom='';
-    var id = $(this).val();
-  
+     nada1='';
+    var id = jq(this).val();
+    
 
 
-    $.ajax({
+    jq.ajax({
 
       data : {'id':id},
-      url  : '/restaurantes/menu/ajax/',
+      url  : '/ajax/',
       type : 'get',
       success: function(data){
                        
@@ -492,6 +520,7 @@ $("[data-toggle='tooltip']").tooltip();
          if (uno[z]!=undefined) {
           if (tres[z].pk==uno[z].fields.titulo) {
           titulo1 += '<h5>'+tres[z].fields.titulo+'</h5>'
+          titulo1p+='<small><strong>'+tres[z].fields.titulo+'</strong></small>'
           };
          }
         else{
@@ -505,6 +534,7 @@ $("[data-toggle='tooltip']").tooltip();
          if (cuatro[z]!=undefined) {
            if (tres[z].pk==cuatro[z].fields.titulo) {
            titulo2 += '<h5>'+tres[z].fields.titulo+'</h5>'
+           titulo2p += '<small><strong>'+tres[z].fields.titulo+'</strong></small>'
            };
           }
           else{
@@ -519,7 +549,8 @@ $("[data-toggle='tooltip']").tooltip();
       for (var i = tresa.length - 1; i >= 0; i--) {
         if (unoa[i]!=undefined) {
           if (tresa[i].pk==unoa[i].fields.titulo) {
-            titulo1a += '<h5>'+tresa[i].fields.titulo+'</h5>' 
+            titulo1a += '<h5>'+tresa[i].fields.titulo+'</h5>'
+          titulo1ap += '<small><strong>'+tresa[i].fields.titulo+'</strong></small>' 
           
 
           };
@@ -533,14 +564,15 @@ $("[data-toggle='tooltip']").tooltip();
 
         if (cuatroa[i]!=undefined) {
            if (tresa[i].pk==cuatroa[i].fields.titulo) {
-
-           titulo2a += '<h5>'+tresa[i].fields.titulo+'</h5>' 
-           console.log(cuatroa[i]);
+            titulo2a += '<h5>'+tresa[i].fields.titulo+'</h5>'
+          titulo2ap += '<small><strong>'+tresa[i].fields.titulo+'</strong></small>'
+            
+           
            };
           }
           else{
+            
             titulo2a += ''
-            console.log(cuatroa[i]);
           }
       };
 
@@ -549,6 +581,7 @@ $("[data-toggle='tooltip']").tooltip();
         if (unob[i]!=undefined) {
           if (tresb[i].pk==unob[i].fields.titulo) {
           titulo1b += '<h5>'+tresb[i].fields.titulo+'</h5>'
+          titulo1bp += '<small><strong>'+tresb[i].fields.titulo+'</strong></small>'
           };
          }
         else{
@@ -558,6 +591,7 @@ $("[data-toggle='tooltip']").tooltip();
         if (cuatrob[i]!=undefined) {
            if (tresb[i].pk==cuatrob[i].fields.titulo) {
             titulo2b += '<h5>'+tresb[i].fields.titulo+'</h5>'
+          titulo2bp += '<small><strong>'+tresb[i].fields.titulo+'</strong></small>'
            
            };
           }
@@ -571,40 +605,44 @@ $("[data-toggle='tooltip']").tooltip();
 
               for (var i=0; i<uno.length; i++) {
 
-                 adicional += '<div class = "col-md-4"><div class="input-group"><span class="input-group-addon"><input class="joder registros" type="checkbox"   id= "registros" name="'+uno[i].fields.precio+'" value="'+uno[i].fields.nombre+'"/></span><label type="text" class="form-control">'+uno[i].fields.nombre+'</label><span class="input-group-addon precio" value="'+uno[i].fields.precio+'">$ '+uno[i].fields.precio+'</span></div></div>'
+                 adicional += '<div class = "col-md-4"><div class="input-group"><span class="input-group-addon"><input class="joder registros" type="checkbox"   id= "registros1" name="'+uno[i].fields.precio+'" value="'+uno[i].fields.nombre+'"/></span><label type="text" class="form-control">'+uno[i].fields.nombre+'</label><span class="input-group-addon precio" value="'+uno[i].fields.precio+'">$ '+uno[i].fields.precio+'</span></div></div>'
 
 
                  };
 
                  for (var a=0; a<unoa.length; a++) {
 
-                 adicionala += '<div class = "col-md-4"><div class="input-group"><span class="input-group-addon"><input class="joder registros" type="checkbox" id = "registros" name="'+unoa[a].fields.precio+'" value="'+unoa[a].fields.nombre+'"/></span><label type="text" class="form-control">'+unoa[a].fields.nombre+'</label><span class="input-group-addon precio" value="'+unoa[a].fields.precio+'">$ '+unoa[a].fields.precio+'</span></div></div>'
+                 adicionala += '<div class = "col-md-4"><div class="input-group"><span class="input-group-addon"><input class="joder registros" type="checkbox" id = "registros2" name="'+unoa[a].fields.precio+'" value="'+unoa[a].fields.nombre+'"/></span><label type="text" class="form-control">'+unoa[a].fields.nombre+'</label><span class="input-group-addon precio" value="'+unoa[a].fields.precio+'">$ '+unoa[a].fields.precio+'</span></div></div>'
                  };
 
                  for (var b=0; b<unob.length; b++) {
 
-                 adicionalb += '<div class = "col-md-4"><div class="input-group"><span class="input-group-addon"><input class="joder registros" type="checkbox" id = "registros" name="'+unob[b].fields.precio+'" value="'+unob[b].fields.nombre+'"/></span><label type="text" class="form-control">'+unob[b].fields.nombre+'</label><span class="input-group-addon precio" value="'+unob[b].fields.precio+'">$ '+unob[b].fields.precio+'</span></div></div>'
+                 adicionalb += '<div class = "col-md-4"><div class="input-group"><span class="input-group-addon"><input class="joder registros" type="checkbox" id = "registros3" name="'+unob[b].fields.precio+'" value="'+unob[b].fields.nombre+'"/></span><label type="text" class="form-control">'+unob[b].fields.nombre+'</label><span class="input-group-addon precio" value="'+unob[b].fields.precio+'">$ '+unob[b].fields.precio+'</span></div></div>'
                  };
           
 
               for (var j = dos.length - 1; j >= 0; j--) {
                
                  nombre += '<div id=fuente2><h4>'+dos[j].fields.titulo+'</h4></div>'
-                 precio += '<h4>$'+dos[j].fields.precio+'</h4>'
+                 solo_nombre +=''+dos[j].fields.titulo+''
+                 solo_nombre_id +=''+dos[j].pk+''
+                 precio += '<h4>$<div id="suma_precio">'+dos[j].fields.precio+'</div></h4>'
                  precio_num = dos[j].fields.precio;
                  }; 
 
                  for (var x = cuatro.length - 1; x >= 0; x--) {
                
-                 unicos += '<option value="">'+cuatro[x].fields.nombre+'($'+cuatro[x].fields.precio+')</option>'
+                 unicos += ' <option  value="'+cuatro[x].fields.precio+''+cuatro[x].fields.nombre+'">'+cuatro[x].fields.nombre+'($'+cuatro[x].fields.precio+')</option>'
                  
                  
 
-                 }; 
+                 };
+
+ 
 
                  for (var x = cuatroa.length - 1; x >= 0; x--) {
                
-                 unicosa += '<option value="">'+cuatroa[x].fields.nombre+'($'+cuatroa[x].fields.precio+')</option>'
+                 unicosa += ' <option  value="'+cuatroa[x].fields.precio+''+cuatroa[x].fields.nombre+'">'+cuatroa[x].fields.nombre+'($'+cuatroa[x].fields.precio+')</option>'
                  
                  
 
@@ -612,14 +650,14 @@ $("[data-toggle='tooltip']").tooltip();
 
                  for (var x = cuatrob.length - 1; x >= 0; x--) {
                
-                 unicosb += '<option value="">'+cuatrob[x].fields.nombre+'($'+cuatrob[x].fields.precio+')</option>'
+                 unicosb += ' <option  value="'+cuatrob[x].fields.precio+''+cuatrob[x].fields.nombre+'">'+cuatrob[x].fields.nombre+'($'+cuatrob[x].fields.precio+')</option>'
                  
                  
 
                  };
 
                 if (unicos!='') {
-                  select += '<select class="form-control">'+unicos+'</select><br>'
+                  select += '<select  class="form-control " id="adi_unicos1">'+unicos+'</select><br>'
                   
                 }
                 else{
@@ -628,7 +666,7 @@ $("[data-toggle='tooltip']").tooltip();
                 }
 
                 if (unicosa!='') {
-                  selecta += '<select class="form-control">'+unicosa+'</select><br>'
+                  selecta += '<select class="form-control " id= "adi_unicos2">'+unicosa+'</select><br>'
                   
                 }
                 else{
@@ -637,7 +675,7 @@ $("[data-toggle='tooltip']").tooltip();
                 }
 
                 if (unicosb!='') {
-                  selectb += '<select class="form-control">'+unicosb+'</select><br>'
+                  selectb += '<select class="form-control " id="adi_unicos3">'+unicosb+'</select><br>'
                   
                 }
                 else{
@@ -647,49 +685,135 @@ $("[data-toggle='tooltip']").tooltip();
 
              
 
-                html +='<div class="jumbotron" id="remover"><ul class="list-group"><li class="list-group-item list-group-item-info"><span class="badge precio_menu" name="'+precio_num+'">'+precio+'</span>'+nombre+'</li></ul><div class="input-group">Cantidad<select class="form-control"><option value="">1</option><option value="">2</option><option value="">3</option><option value="">4</option><option value="">5</option></select></div><div>'+titulo1+'</div><div class = "row">'+adicional+'</div><div>'+titulo1a+'</div><div class ="row">'+adicionala+'</div><div>'+titulo1b+'</div><div class ="row">'+adicionalb+'</div>'+titulo2+'<div class="input-group">'+select+'<br>'+titulo2a+'<div class="input-group">'+selecta+'<br>'+titulo2b+'<div class="input-group">'+selectb+'<br><br>&nbsp;</div></div>'
+                html +='<div class="jumbotron" id="remover"><ul class="list-group"><li class="list-group-item list-group-item-info"><span class="badge precio_menu" name="'+precio_num+'">'+precio+'</span>'+nombre+'</li></ul><div class="input-group">Cantidad<select class="form-control cantidad"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div><div>'+titulo1+'</div><div class = "row">'+adicional+'</div><div>'+titulo1a+'</div><div class ="row">'+adicionala+'</div><div>'+titulo1b+'</div><div class ="row">'+adicionalb+'</div>'+titulo2+'<div class="input-group">'+select+'<br>'+titulo2a+'<div class="input-group">'+selecta+'<br>'+titulo2b+'<div class="input-group">'+selectb+'<br><br>&nbsp;</div></div>'
               
 
-              $('#caja').append(html);
+              document.getElementById('caja').innerHTML = html
+              var checkboxes = jq('.registros').length;
+                total_ad = 0; 
+                 
               
-            $('.registros').on('change', function() { 
+            jq('.registros').on('change', function() { 
                 // From the other examples
                 
+                var precio_adicional = new Array(); 
+                var adicio = new Array(); 
                 
+                
+
                 
                 if (this.checked) {
+                    
+                     c=c+1;
                   
-                    c=c+1;
-                   adi = $(this).attr('name');
-                   
-                   adi2= adi2+parseInt(adi);
-                   console.log(c);
-                   console.log(adi2);
 
+                  precio_adicional.push(jq(this).attr('name'));
+                  adicio.push(jq(this).val());
+                    
+              for (var i = adicio.length - 1; i >= 0; i--) {
+              
+              
+                 
+                 
+                 total_ad = total_ad+parseInt(precio_adicional[i]);
+
+                 };
                    for (var i = dos.length - 1; i >= 0; i--) {
                      
+                     
+
                        valor= dos[i].fields.precio;
                       
 
-                   };
-                    valor= valor+adi2;
-                     console.log(valor);
-                   //adi= $('span.precio_menu').text();
+                    };
+                 
+                   total = valor+total_ad;
+                  
+                   //  adi = jq(this).attr('name');
+                   //  adi2  = adi2+parseInt(adi);
+                  
+                    
+                   //  // adi2= parseInt(adi);
+                   //  console.log(adi2);
+                                      
                    
+                   
+
+                    
+                   //  valor= (valor+adi2);
+                   //  console.log('Suma');
+                   //   console.log(valor);
+                     
+                   //adi= jq('span.precio_menu').text();
+                  
                 }
                 else{
-                  adi2=0;
-                  adi = $(this).attr('name');
-                   adi2= adi2+parseInt(adi);
-                   valor= valor-adi2;
-                   
-                  console.log(valor);
+                  total_ad=0;
+                  precio_adicional=[];
+                  adicio=[];
+                   c=c-1;
+
+                  // adi2=0;
+                  // adi = jq(this).attr('name');
+                  // adi2  = adi2+parseInt(adi);
+                  
+                  // console.log('Resta');
+                 precio_adicional.push(jq(this).attr('name'));
+                  adicio.push(jq(this).val());
+                  
+                    
+              for (var i = adicio.length - 1; i >= 0; i--) {
+              
+              
+                 
+                 
+                 total_ad = total_ad+parseInt(precio_adicional[i]);
+
+
+                 };
+
+                 
+                   console.log(valor);
+                    console.log(total_ad);
+
+                 
+                   total = total-total_ad;
+                  // valor= (valor-adi2);
+                  // console.log(valor);
+                  // // adi2 = 0;
+
+                  // if (c== 1 || c==2 || c==3 || c==4 || c==5|| c==6 ) {
+
+                  //     d = d+1;
+                  //     console.log('entroa');
+                  //   };
+                  //   if (d>=1) {
+                     
+                  //     console.log('entrob');
+                  //     adi = jq(this).attr('name');
+                  //     adi2  = adi2+parseInt(adi);
+                  //     d=0;
+                  //   }else{
+                  //     adi2 = 0;
+                  //      d=0;
+                  //   }
+                  
+
+                
                 }
+                
+                 
 
 
+
+                  document.getElementById('suma_precio').innerHTML= total
+                  
             });
 
+  
 
+
+                   
 
 
 
@@ -725,22 +849,22 @@ $("[data-toggle='tooltip']").tooltip();
 
 
 <script>
-$(function(){
+jq(function(){
 
-     $('a[href*=#]').click(function() {
+     jq('a[href*=#]').click(function() {
 
      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'')
          && location.hostname == this.hostname) {
 
-             var $target = $(this.hash);
+             var jqtarget = jq(this.hash);
 
-             $target = $target.length && $target || $('[name=' + this.hash.slice(1) +']');
+             jqtarget = jqtarget.length && jqtarget || jq('[name=' + this.hash.slice(1) +']');
 
-             if ($target.length) {
+             if (jqtarget.length) {
 
-                 var targetOffset = $target.offset().top;
+                 var targetOffset = jqtarget.offset().top;
 
-                 $('html,body').animate({scrollTop: targetOffset}, 1000);
+                 jq('html,body').animate({scrollTop: targetOffset}, 1000);
 
                  return false;
 
@@ -752,74 +876,421 @@ $(function(){
 
 });
 
-
+var cacheProductos=[];
+var canasto=[];
 
   function output(){
     
     var nombre_ad ='';
     var precio_ad ='';
     var html1 ='';
+    var html2 ='';
     var total_ad = 0;
     var total = 0;
     var solicitud_enviada = '';
     var adicio = new Array();
+    var adicio1 = new Array();
+    var adicio11 = new Array();
+    var adicio2 = new Array();
+    var adicio22 = new Array();
+    var adicio3 = new Array();
+    var adicio33 = new Array();
     var pecios = new Array();
+    x=0;
     
-     $("#registros:checked").each(function() {
+     jq(".registros:checked").each(function() {
            
-            //pecios = $("span.precio").text();
+            //pecios = jq("span.precio").text();
             
-            pecios.push($(this).attr('name'));
+            pecios.push(jq(this).attr('name'));
             
-            adicio.push($(this).val());
+            adicio.push(jq(this).val());
 
 
         });
+       jq("#registros1:checked").each(function() {
+           
+            //pecios = jq("span.precio").text();
+            
+           
+            
+            adicio1.push(jq(this).val());
+            adicio11 = '<small>'+adicio1+'</small><br>'
+
+
+        });jq("#registros2:checked").each(function() {
+           
+            //pecios = jq("span.precio").text();
+            
+           
+            
+            adicio2.push(jq(this).val());
+            adicio22 = '<small>'+adicio2+'</small><br>'
+
+
+        });jq("#registros3:checked").each(function() {
+           
+            //pecios = jq("span.precio").text();
+            
+            
+            
+            adicio3.push(jq(this).val());
+            adicio33 = '<small>'+adicio3+'</small><br>'
+
+        });
        
-       
+       if (adicio1=='') {
+
+          titulo1p='';
+       };
+
+       if (adicio2=='') {
+
+          titulo1ap='';
+       };
         
-       
+       if (adicio3=='') {
+
+          titulo1bp='';
+
+       };
 
         for (var i = adicio.length - 1; i >= 0; i--) {
               
+             
               
                  nombre_ad += '<li class="list-group-item"><span class="badge">$'+pecios[i]+'</span>'+adicio[i]+'</li>'
                  
                  total_ad = total_ad+parseInt(pecios[i]);
 
                  };
-        
+     
 
-          precio_plato = $("span.precio_menu").attr('name');
+          precio_plato = jq("span.precio_menu").attr('name');
+          cantidad = jq(".cantidad").val();
+
+           
+
           
-          total = parseInt(precio_plato)+total_ad+{{restaurant.precio_domicilio}};
+              hola1= jq('#adi_unicos1').val();
+
+              
+              
+              if (hola1==undefined) {
+                   valor_unico1 =0;
+                   nombre_unico1 ='';                  
+
+                }else{
+                  var valor_unico1 =hola1.replace(/\D/g,"");
+                  var nombre_unico1 = hola1.replace(/\d/g,"");
+                  nombre_unico1= '<small>'+nombre_unico1+'</small><br>'
+
+                }
+                    
+             // jq('#adi_unicos1').on('change', function() {
+
+             //          valor_unico1 = jq('#adi_unicos1').val();
+             //          console.log(valor_unico1);
+
+             //        });
+             hola2= jq('#adi_unicos2').val();
+
+              
+                if (hola2==undefined) {
+                   valor_unico2 =0;
+                   nombre_unico2='';
+                }else{
+                    var valor_unico2 =hola2.replace(/\D/g,"");
+                    var nombre_unico2 = hola2.replace(/\d/g,"");
+                    nombre_unico2= '<small>'+nombre_unico2+'</small><br>'
+
+                }
+                    
+             // jq('#adi_unicos2').on('change', function() {
+
+             //          valor_unico2 = jq('#adi_unicos2').val();
+             //          console.log(valor_unico2);
+
+             //        });
+             hola3= jq('#adi_unicos3').val();
+
+              
+                if (hola3==undefined) {
+                  nombre_unico3 ='';
+                  valor_unico3 =0;
+                }else{
+
+                  var valor_unico3 =hola3.replace(/\D/g,"");
+                  var nombre_unico3 = hola3.replace(/\d/g,"");
+                  nombre_unico3= '<small>'+nombre_unico3+'</small><br>'
+                }           
+                    
+             // jq('#adi_unicos3').on('change', function() {
+
+             //          valor_unico3 = jq('#adi_unicos3').val();
+             //          console.log(valor_unico3);
+
+             //        });
+          
+
+          
+          total = (parseInt(precio_plato)+total_ad+parseInt(valor_unico1)+parseInt(valor_unico2)+parseInt(valor_unico3))*cantidad;
 
            
      
-        var solicitud = $("textarea").val();
+        var solicitud = jq("textarea").val();
         solicitud_enviada+='<li class="list-group-item"> <strong>PD:</strong>' +solicitud+'</li>'
         
         
         
-         var star = document.getElementById('remover');
-         var padre = star.parentNode;
-         padre.removeChild(star); 
+         // var star = document.getElementById('caja3');
+         // var padre = star.parentNode;
+         // padre.removeChild(star); 
          
-         var caja3 = document.getElementById('caja3');
-         var padrecaja3 = caja3.parentNode;
-         padrecaja3.removeChild(caja3); 
+         // var caja3 = document.getElementById('caja3');
+         // var padrecaja3 = caja3.parentNode;
+         // padrecaja3.removeChild(caja3); 
 
+
+
+
+
+
+ 
+// var i=0;
+// var encontrado=false;
+
+// id = solo_nombre_id;
+// precio = total;
+// nombre = nombre;
+
+// while((i<canasto.length)&&(!encontrado))
+// {
+//     if(canasto[i].id==id)
+//     {
+//     encontrado=true;
+//     }
+//     else
+//     {
+//     i++;
+//     }
+// }
+// if(encontrado){
+// canasto[i].cantidad++;
+// }
+// else{
+// var producto=cacheProductos[id];
+// nuevoProducto={
+// 'id':id,
+// 'nombre':nombre,
+// 'precio':precio,
+// 'cantidad':1
+// };
+// canasto[canasto.length]=nuevoProducto;
+// }
+// actualizarCanasto();
+
+
+// function actualizarCanasto(){
+// var contenido="";
+
+// if(canasto.length==0){
+
+// contenido='';
+// }
+// else{
+//     var filaCanasto=0;
+//     var total=0;
+//     for(var i=0;i<canasto.length;i++){
+    
+//     //creo una fila por cada producto
+//     filaCanasto="<div class='filaCanasto'";
+//     filaCanasto+="id='canasto_"+canasto[i].id+"'>";
+    
+//     //se arma cada fila con una tabla
+    
+//     contenido+="<div class='jumbotronF' id='remover1'><strong>"+solo_nombre_id+"</strong></li><button id='mas'class='btn btn-info btn-xs pull-right onclick='subir("+canasto[i].id+")'><span class='glyphicon glyphicon-plus-sign '></span></button><button id='menos'class='btn btn-info btn-xs pull-right' onclick='bajar("+canasto[i].id+")'><span class='glyphicon glyphicon-minus-sign '></span></button><span id ='cantidad_plus' class='badge1 pull-right'>"+cantidad+"</span><br><div class='text-left'>"+titulo1p+" "+adicio11+""+titulo1ap+" "+adicio22+""+titulo1bp+" "+adicio33+""+titulo2p+" "+nombre_unico1+" "+titulo2ap+" "+nombre_unico2+" "+titulo2bp+" "+nombre_unico3+" </div><div id='otro_anadido'</div>"+solicitud_enviada+"</div>"
+//     total+=canasto[i].cantidad*canasto[i].precio;
+    
+
+//     }
+    
+//     //se muestra el total
+//     contenido+=generarFilaTotal(total);
+
+//     //boton finalizar
+//     // contenido+="<input type='button' id='btnFinalizar' value='Finalizar Pedido' onClick='finalizar()'/>";
+// }
+
+
+
+// document.getElementById('caja3').innerHTML= contenido
+// console.log(contenido);
+// console.log('mas alla');
+
+
+// }
+
+// function generarFilaTotal(total){
+
+// var filaCanasto="";
+
+// filaCanasto+="<li class='list-group-item list-group-item-info '><span id='total' class='badge'>jq"+total+"</span>Total</li></ul><br><button  type='button' class='btn btn-info btn-lg confirmar' data-toggle='modal' data-target='#modalform2'>Confirmar</button>";
+
+// return filaCanasto;
+// }
+
+
+// //quita un producto del canasto
+// function quitar(id){
+// //alert('bien');
+// var i=0;
+// var encontrado=false;
+// while((i<canasto.length)&&(!encontrado)){
+// //alert(i);
+// if(canasto[i].id==id){
+// //alert('encontrado');
+// encontrado=true;
+// //lo eliminamos de la lista con prototype
+// canasto=canasto.without(canasto[i]);
+// }
+// else{
+// i++;
+// }
+// }
+// actualizarCanasto();
+// }
+
+// //aumenta la cantidad de un producto seleccionado
+// function subir(id){
+// var i=0;
+// var encontrado=false;
+// while((i<canasto.length)&&(!encontrado)){
+// if(canasto[i].id==id){
+// encontrado=true;
+// //aumentamos la cantidad
+// canasto[i].cantidad++;
+// }
+// else{
+// i++
+// }
+// }
+// actualizarCanasto();
+// }
+
+// //disminuye la cantidad de un producto seleccionado
+// function bajar(id){
+// var i=0;
+// var encontrado=false;
+// while((i<canasto.length)&&(!encontrado)){
+// if(canasto[i].id==id){
+// encontrado=true;
+// //aumentamos la cantidad
+// canasto[i].cantidad--;
+
+// //si cantidad==0 eliminamos el producto de la lista
+// if(canasto[i].cantidad==0){
+// quitar(id);
+// }
+// }
+// else{
+// i++
+// }
+// }
+// actualizarCanasto();
+// }
+
+// //borra todos los productos que hay en el carrito
+// function vaciar(){
+// canasto=[];
+// actualizarCanasto();
+// }
+          
   
-    html1 += "<div class='' id='remover1'><ul class='list-group'><li class='list-group-item list-group-item'>"+nombre+"</h6><button class='btn btn-info btn-xs'><span class='glyphicon glyphicon-plus-sign '></span></button><button class='btn btn-info btn-xs'><span class='glyphicon glyphicon-minus-sign '></span></button></li>"+nombre_ad+"<li class='list-group-item '><span class='badge'>$"+{{restaurant.precio_domicilio}}+"</span>Domicilio</li>"+solicitud_enviada+"<li class='list-group-item list-group-item-info '><span class='badge'>$"+total+"</span>Total</li></ul><br><button  type='button' class='btn btn-info btn-lg confirmar' data-toggle='modal' data-target='#modalform2'>Confirmar</button></div>"
+    // html1 += "<div class='jumbotronF' id='remover1'><strong>"+solo_nombre_id+"</strong></li><button id='mas'class='btn btn-info btn-xs pull-right'><span class='glyphicon glyphicon-plus-sign '></span></button><button id='menos'class='btn btn-info btn-xs pull-right'><span class='glyphicon glyphicon-minus-sign '></span></button><span id ='cantidad_plus' class='badge1 pull-right'>"+cantidad+"</span><br><div class='text-left'>"+titulo1p+" "+adicio11+""+titulo1ap+" "+adicio22+""+titulo1bp+" "+adicio33+""+titulo2p+" "+nombre_unico1+" "+titulo2ap+" "+nombre_unico2+" "+titulo2bp+" "+nombre_unico3+" </div><div id='otro_anadido'</div>"+solicitud_enviada+"<li class='list-group-item list-group-item-info '><span id='total' class='badge'>jq"+total+"</span>Total</li></ul><br><button  type='button' class='btn btn-info btn-lg confirmar' data-toggle='modal' data-target='#modalform2'>Confirmar</button></div>"
 
-     $("#caja1").append(html1);
+    //  // jq("#caja1").append(html1);
+
+     
 
 
-     $(":button.confirmar").click(function(){
+
+
+
+
+
+
+
+
+
+     
+      
+
+    //      document.getElementById('caja3').innerHTML= html1
+
+        
+
+    
+      
+      
+    
+      
+      
+      
+
+        
+      
+      //   c =0;
+      // jq(":button#mas").click(function(){
+
+      //   c=c+1;
+      //   if (c==1) {
+      //   total = total/cantidad;
+      //   };
+      //   cantidad = parseInt(cantidad)+1;
+      //   document.getElementById('cantidad_plus').innerHTML= cantidad
+        
+        
+      //   sub_total = total*cantidad;
+        
+      //   document.getElementById('total').innerHTML = sub_total
+
+
+      // });
+
+
+      // jq(":button#menos").click(function(){
+ 
+
+
+
+      
+
+      // if (cantidad==1) {
+
+      // html2 += '<div id="caja3"><a href="#" class="list-group-item"><div id="fuente2"><h5>Pides online y pagas en casa</h5></div><br><p class="text-center"><i class="fa fa-shopping-cart fa-5x"></i></p><br><div id="fuente2"><h5>La mejor forma de pedir tu comida</h5></div></a></div>'
+
+
+
+      // document.getElementById('caja3').innerHTML= html2
+      // }else{
+
+       
+      // sub_total = sub_total-total;
+      
+      // document.getElementById('total').innerHTML = sub_total
+      // cantidad = parseInt(cantidad)-1;
+      // document.getElementById('cantidad_plus').innerHTML= cantidad
+      
+      
+      //   }
+      // });
+
+     jq(":button.confirmar").click(function(){
 
                 
 
-            $("#caja2").append("<div class='jumbotron' id='remover1'><div id='fuente2'>T&Uacute; PEDIDO<ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'><h6>"+precio+"</h6></span>"+nombre+"</li>"+nombre_ad+"<li class='list-group-item '><span class='badge'><h5>$"+{{restaurant.precio_domicilio}}+"</h5></span>Domicilio</li>"+solicitud_enviada+"<li class='list-group-item list-group-item-info '><span class='badge'><h5>$"+total+"</h5></span>Total</li></ul><br></div>");
+            jq("#caja2").append("<div class='jumbotron' id='remover1'><div id='fuente2'>T&Uacute; PEDIDO<ul class='list-group'><li class='list-group-item list-group-item-info'><span class='badge'><h6>"+precio+"</h6></span>"+nombre+"</li>"+nombre_ad+"<li class='list-group-item '><span class='badge'><h5>jq"+{{restaurant.precio_domicilio}}+"</h5></span>Domicilio</li>"+solicitud_enviada+"<li class='list-group-item list-group-item-info '><span class='badge'><h5>"+total+"</h5></span>Total($)</li></ul><br></div>");
 
         });
 
@@ -857,7 +1328,400 @@ function output2(){
 </script>
 
 
+ <script type="text/javascript">
 
+var html2 ='';
+
+ 
+
+var cacheProductos=[];
+var canasto=[];
+var x =0;
+function agregar(){
+
+  // if (x==1) {
+  // jq('#caja3').remove('a');
+  
+   
+
+  //   };
+
+  id= solo_nombre_id;
+  
+  
+x= x+1;
+var i=0;
+var encontrado=false;
+
+console.log('entro');
+console.log(id);
+console.log(canasto);
+
+
+
+
+while((i<canasto.length)&&(!encontrado))
+{
+    if(canasto[i].id==id)
+    {console.log(canasto[i].pk);
+    encontrado=true;
+    }
+    else
+    {
+    i++;
+    
+    }
+}
+if(encontrado){
+canasto[i].cantidad++;
+}
+else{
+
+//CONTENIDO DE OUTPUT//
+var nombre_ad ='';
+    var precio_ad ='';
+    var html1 ='';
+    var html2 ='';
+    var total_ad = 0;
+    var total = 0;
+    var solicitud_enviada = '';
+    var adicio = new Array();
+    var adicio1 = new Array();
+    var adicio11 = new Array();
+    var adicio2 = new Array();
+    var adicio22 = new Array();
+    var adicio3 = new Array();
+    var adicio33 = new Array();
+    var pecios = new Array();
+    x=0;
+    
+     jq(".registros:checked").each(function() {
+           
+            //pecios = jq("span.precio").text();
+            
+            pecios.push(jq(this).attr('name'));
+            
+            adicio.push(jq(this).val());
+
+
+        });
+       jq("#registros1:checked").each(function() {
+           
+            //pecios = jq("span.precio").text();
+            
+           
+            
+            adicio1.push(jq(this).val());
+            adicio11 = '<small>'+adicio1+'</small><br>'
+
+
+        });jq("#registros2:checked").each(function() {
+           
+            //pecios = jq("span.precio").text();
+            
+           
+            
+            adicio2.push(jq(this).val());
+            adicio22 = '<small>'+adicio2+'</small><br>'
+
+
+        });jq("#registros3:checked").each(function() {
+           
+            //pecios = jq("span.precio").text();
+            
+            
+            
+            adicio3.push(jq(this).val());
+            adicio33 = '<small>'+adicio3+'</small><br>'
+
+        });
+       
+       if (adicio1=='') {
+
+          titulo1p='';
+       };
+
+       if (adicio2=='') {
+
+          titulo1ap='';
+       };
+        
+       if (adicio3=='') {
+
+          titulo1bp='';
+
+       };
+
+        for (var i = adicio.length - 1; i >= 0; i--) {
+              
+             
+              
+                 nombre_ad += '<li class="list-group-item"><span class="badge">$'+pecios[i]+'</span>'+adicio[i]+'</li>'
+                 
+                 total_ad = total_ad+parseInt(pecios[i]);
+
+                 };
+     
+
+          precio_plato = jq("span.precio_menu").attr('name');
+          cantidad = jq(".cantidad").val();
+
+           
+
+          
+              hola1= jq('#adi_unicos1').val();
+
+              
+              
+              if (hola1==undefined) {
+                   valor_unico1 =0;
+                   nombre_unico1 ='';                  
+
+                }else{
+                  var valor_unico1 =hola1.replace(/\D/g,"");
+                  var nombre_unico1 = hola1.replace(/\d/g,"");
+                  nombre_unico1= '<small>'+nombre_unico1+'</small><br>'
+
+                }
+                    
+             // jq('#adi_unicos1').on('change', function() {
+
+             //          valor_unico1 = jq('#adi_unicos1').val();
+             //          console.log(valor_unico1);
+
+             //        });
+             hola2= jq('#adi_unicos2').val();
+
+              
+                if (hola2==undefined) {
+                   valor_unico2 =0;
+                   nombre_unico2='';
+                }else{
+                    var valor_unico2 =hola2.replace(/\D/g,"");
+                    var nombre_unico2 = hola2.replace(/\d/g,"");
+                    nombre_unico2= '<small>'+nombre_unico2+'</small><br>'
+
+                }
+                    
+             // jq('#adi_unicos2').on('change', function() {
+
+             //          valor_unico2 = jq('#adi_unicos2').val();
+             //          console.log(valor_unico2);
+
+             //        });
+             hola3= jq('#adi_unicos3').val();
+
+              
+                if (hola3==undefined) {
+                  nombre_unico3 ='';
+                  valor_unico3 =0;
+                }else{
+
+                  var valor_unico3 =hola3.replace(/\D/g,"");
+                  var nombre_unico3 = hola3.replace(/\d/g,"");
+                  nombre_unico3= '<small>'+nombre_unico3+'</small><br>'
+                }           
+                    
+             // jq('#adi_unicos3').on('change', function() {
+
+             //          valor_unico3 = jq('#adi_unicos3').val();
+             //          console.log(valor_unico3);
+
+             //        });
+          
+
+          
+          total = (parseInt(precio_plato)+total_ad+parseInt(valor_unico1)+parseInt(valor_unico2)+parseInt(valor_unico3))*cantidad;
+
+           
+     
+        var solicitud = jq("textarea").val();
+        solicitud_enviada+='<li class="list-group-item"> <strong>PD:</strong>' +solicitud+'</li>'
+
+        precio = total;
+        
+//CONTENIDO DE OUTPUT//
+
+
+
+
+
+
+
+
+var producto=cacheProductos[id];
+nuevoProducto={
+'id':id,
+'nombre':nombre,
+'precio':precio,
+'cantidad':1
+};
+canasto[canasto.length]=nuevoProducto;
+}
+actualizarCanasto();
+}
+
+function actualizarCanasto(){
+
+
+
+
+
+
+
+
+var contenido="";
+
+if(canasto.length==0){
+
+contenido='';
+}
+else{
+    var filaCanasto=0;
+    var total=0;
+    for(var i=0;i<canasto.length;i++){
+    
+    //creo una fila por cada producto
+    filaCanasto="<div class='filaCanasto'";
+    filaCanasto+="id='canasto_"+canasto[i].id+"'>";
+    
+    //se arma cada fila con una tabla
+    
+    var tablaCanasto;
+    tablaCanasto="<table width='100%'><tr>";
+    tablaCanasto+="<td class='canastoNombre'>"+canasto[i].nombre+"</td>";
+    tablaCanasto+="<td class='canastoCantidad'>"+canasto[i].cantidad+" <button id='mas'class='btn btn-info btn-xs' onclick='bajar("+canasto[i].id+")'><span class='glyphicon glyphicon-minus-sign '></span></button><button id='mas'class='btn btn-info btn-xs' onclick='subir("+canasto[i].id+")'><span class='glyphicon glyphicon-plus-sign '></span></button></td>";
+    tablaCanasto+="<td class='canastoPrecio'>$"+canasto[i].cantidad*canasto[i].precio+"</td>";
+    tablaCanasto+="<td><a href='javascript:quitar("+canasto[i].id+")' class='canastoQuitar'>Quitar</a></td>";
+    tablaCanasto+="</tr></table>";
+    filaCanasto+=tablaCanasto+"</div>";
+    contenido+=filaCanasto;
+    total+=canasto[i].cantidad*canasto[i].precio;
+    
+
+    }
+    
+    //se muestra el total
+    contenido+=generarFilaTotal(total);
+
+    //boton finalizar
+    contenido+="<input type='button' id='btnFinalizar' value='Finalizar Pedido' onClick='finalizar()'/>";
+}
+
+
+
+document.getElementById('caja3').innerHTML= contenido
+
+
+
+}
+
+function generarFilaTotal(total){
+
+var filaCanasto="<div class='totalCanasto'>"
+var tablaCanasto;
+tablaCanasto="<table width='100%'><tr>";
+tablaCanasto+="<td class='canastoNombre'>TOTAL</td>";
+tablaCanasto+="<td class='canastoCantidad'></td>";
+tablaCanasto+="<td class='canastoPrecio'>$"+total+"</td>";
+tablaCanasto+="<td><a href='javascript:vaciar()' class='canastoQuitar'>Vaciar</a></td>";
+tablaCanasto+="</tr></table>";
+//alert(tablaCanasto);
+filaCanasto+=tablaCanasto+"</div>";
+
+return filaCanasto;
+}
+
+//quita un producto del canasto
+function quitar(id){
+//alert('bien');
+var i=0;
+var encontrado=false;
+while((i<canasto.length)&&(!encontrado)){
+//alert(i);
+if(canasto[i].id==id){
+//alert('encontrado');
+encontrado=true;
+//lo eliminamos de la lista con prototype
+
+x=canasto.length;
+
+canasto = canasto.without(canasto[i]);
+console.log(x);
+
+console.log('entro');
+d=0;
+if (x==1) {
+
+    html2 += "<a href='#' class='list-group-item'><div id='fuente2'><h5>Pides online y pagas en casa</h5></div><br><p class='text-center'><i class='fa fa-shopping-cart fa-5x'></i></p><br><div id='fuente2'><h5>La mejor forma de pedir tu comida</h5></div></a>";
+
+
+ 
+   jq(".caja3").innerHTML = html2
+
+
+   
+};
+
+
+}
+else{
+i++;
+}
+}
+
+actualizarCanasto();
+}
+
+//aumenta la cantidad de un producto seleccionado
+function subir(id){
+var i=0;
+var encontrado=false;
+while((i<canasto.length)&&(!encontrado)){
+if(canasto[i].id==id){
+encontrado=true;
+//aumentamos la cantidad
+canasto[i].cantidad++;
+}
+else{
+i++
+}
+}
+actualizarCanasto();
+}
+
+//disminuye la cantidad de un producto seleccionado
+function bajar(id){
+var i=0;
+var encontrado=false;
+while((i<canasto.length)&&(!encontrado)){
+if(canasto[i].id==id){
+encontrado=true;
+//aumentamos la cantidad
+canasto[i].cantidad--;
+
+//si cantidad==0 eliminamos el producto de la lista
+if(canasto[i].cantidad==0){
+quitar(id);
+}
+}
+else{
+i++
+}
+}
+actualizarCanasto();
+}
+
+//borra todos los productos que hay en el carrito
+function vaciar(){
+canasto=[];
+actualizarCanasto();
+}
+
+
+
+
+ </script>
 
 
 </body>
