@@ -24,10 +24,15 @@ class Ciudade(models.Model):
 class Sectore(models.Model):
 	nombre = models.CharField(max_length=60)
 	ciudad = models.ForeignKey(Ciudade)
-	
+	slug = models.SlugField(max_length=250, blank=True, default='')
 
 	def __unicode__(self):
 		return self.nombre
+
+	def save(self, *args, **kwargs):
+		if not self.slug:
+			self.slug = slugify(self.nombre)
+		super(Sectore, self).save(*args, **kwargs)
 
 class Tipo(models.Model):
 	nombre = models.CharField(max_length=60)
