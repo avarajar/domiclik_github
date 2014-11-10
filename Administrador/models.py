@@ -57,7 +57,7 @@ class Restaurante(models.Model):
 	tipo = models.ManyToManyField(Tipo)
 	hora_abrir = models.TimeField()
 	hora_cerrar = models.TimeField()
-	precio_domicilio = models.CharField(max_length=60)
+	precio_domicilio = models.IntegerField()
 	entrega = models.CharField(max_length=60)
 	slug_restaurant = models.SlugField(max_length=250, blank=True, default='')
 

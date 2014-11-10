@@ -2795,7 +2795,7 @@ fieldset[disabled] .btn {
 }
 .btn-default {
   color: #A10000;
-  background-color: #fff;
+  background-color: #F04B04;
   border-color: #fff;
 }
 .btn-default:hover,
@@ -4546,6 +4546,21 @@ a.label:focus {
   background-color: transparent;
   border-radius: 10px;
 }
+.badge1 {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #A10000;
+  border-radius: 10px;
+}
+
 .badge:empty {
   display: none;
 }
@@ -5681,7 +5696,7 @@ button.close {
   color: #fff;
   text-align: center;
   text-decoration: none;
-  background-color: #000;
+  background-color: #F86510;
   border-radius: 4px;
 }
 .tooltip-arrow {
@@ -5696,7 +5711,7 @@ button.close {
   left: 50%;
   margin-left: -5px;
   border-width: 5px 5px 0;
-  border-top-color: #000;
+  border-top-color: #F86510;
 }
 .tooltip.top-left .tooltip-arrow {
   bottom: 0;
@@ -5729,7 +5744,7 @@ button.close {
   left: 50%;
   margin-left: -5px;
   border-width: 0 5px 5px;
-  border-bottom-color: #000;
+  border-bottom-color: #F86510;
 }
 .tooltip.bottom-left .tooltip-arrow {
   top: 0;
@@ -6432,7 +6447,15 @@ color: #606062;
 
 /* CSS PERSONAL*/
 
+.scroll{
 
+  
+  overflow: auto;
+max-height: 480px;
+height:expression(
+this.scrollHeight > 480? "480px" : "auto" );
+position: relative;
+}
 .fixed{
 
    position: fixed;
@@ -6463,6 +6486,12 @@ color: #606062;
     position: fixed;
     top: 20px;
     width: 255px;
+}
+
+.scrollspy1.affix {
+    position: fixed;
+    top: 20px;
+    width: 360px;
 }
 
 .homeBox {
