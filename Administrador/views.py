@@ -153,7 +153,7 @@ def menu_ciudad_sector(request,slug_restaurant,slug,slug_sector):
 	if request.method == 'POST': # If the form has been submitted...
 		form = PedidoForm(request.POST) # A form bound to the POST data
 		if form.is_valid(): # All validation rules pass
-			logo = '<img src="http://domiclik.herokuapp.com/media/img/logo_web.png" height="138" width="143" alt=""><br>'
+			logo = '<img src="http://domiclik.herokuapp.com/media/img/correos.png" height="170" width="500" alt=""><br>'
 			nombre = form.cleaned_data['nombre']
 			nombre_correo ='<strong>Cliente: </strong>'+nombre+'<br>'
 			correo = form.cleaned_data['correo']
