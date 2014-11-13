@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from .views import *
 
 #class TituloAdicionaleInline(admin.TabularInline):
 #	model = TituloAdicionale
@@ -48,6 +49,7 @@ class AdiUnicoTresAdmin (admin.ModelAdmin):
 	list_display =('nombre','menuesp')
 	list_filter = ('restaurant',)
 
+
 class AdicionalAdmin (admin.ModelAdmin):
 	list_display =('nombre','menuesp')
 	list_filter = ('restaurant',)
@@ -59,6 +61,14 @@ class AdicionalDosAdmin (admin.ModelAdmin):
 class AdicionalTresAdmin (admin.ModelAdmin):
 	list_display =('nombre','menuesp')
 	list_filter = ('restaurant',)
+
+class PedidoAdmin (admin.ModelAdmin):
+	list_display =('codigo','nombre','correo','telefono','direccion','pedido_total')
+	list_filter = ('restaurant','codigo',)
+
+	def pedido_total(self,obj):
+	 	return u'%s' % obj.pedido_completo
+	pedido_total.allow_tags=True
 
 admin.site.register(Ciudade)
 admin.site.register(Sectore)
@@ -75,3 +85,5 @@ admin.site.register(AdiUnicoTres, AdiUnicoTresAdmin)
 admin.site.register(Adicionale, AdicionalAdmin)
 admin.site.register(AdicionalDos, AdicionalDosAdmin)
 admin.site.register(AdicionalTres, AdicionalTresAdmin)
+admin.site.register(Pedido, PedidoAdmin)
+
