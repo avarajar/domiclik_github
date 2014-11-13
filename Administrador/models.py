@@ -3,7 +3,6 @@ from django.db import models
 from django.db.models import signals
 from django.template.defaultfilters import slugify
 #from slughifi import slughifi
-#from uuslug import uuslug
 from smart_selects.db_fields import ChainedForeignKey
 
 class Ciudade(models.Model):
@@ -290,10 +289,17 @@ class AdicionalTres(models.Model):
 	def __unicode__(self):
 		return self.nombre
 
+class Pedido(models.Model):
+	codigo = models.CharField(max_length=60)
+	nombre = models.CharField(max_length=60)
+	correo = models.EmailField(max_length=75)
+	telefono = models.CharField(max_length=60)
+	barrio = models.CharField(max_length=60)
+	direccion = models.TextField()
+	restaurant =models.CharField(max_length=60)
+	pedido_completo = models.TextField()
+	# costo = models.IntegerField()
 
-
-
-
-
-
+	def __unicode__(self):
+		return self.nombre
 

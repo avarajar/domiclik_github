@@ -1,13 +1,18 @@
+#encoding:utf-8
 from .models import *
 from time import  time, localtime
 from datetime import  datetime, time, timedelta
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render,get_object_or_404
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, FormView
 from django.core import serializers
 from django.utils import simplejson
 from django.utils import timezone
 from django.utils.timezone import utc
+from .forms import PedidoForm
+import random
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives, EmailMessage
 
 def home(request):
 	
@@ -52,7 +57,7 @@ def restaurantes_ciudad_sector(request,slug, slug_sector):
 	ciudad = get_object_or_404(Ciudade, slug = slug)
 	sector = get_object_or_404(Sectore, slug_sector = slug_sector)
 	ciudades = Ciudade.objects.all()
-	restaurantes = Restaurante.objects.filter(ciudad__slug = slug, sector__slug_sector=slug_sector)
+	restaurantes = Restaurante.objects.filter(ciudad__slug = slug, sector__slug_sector=slug_sector).order_by('nombre')
 
 	tipos = Tipo.objects.all()
 	now = datetime.now()
@@ -81,7 +86,7 @@ def restaurantes_ciudad_sector_tipo(request,slug, slug_sector, slug_tipo):
 	sector = get_object_or_404(Sectore, slug_sector = slug_sector)
 	tipo = get_object_or_404(Tipo, slug_tipo = slug_tipo)
 	ciudades = Ciudade.objects.all()
-	restaurantes = Restaurante.objects.filter(ciudad__slug = slug, sector__slug_sector=slug_sector, tipo__slug_tipo=slug_tipo)
+	restaurantes = Restaurante.objects.filter(ciudad__slug = slug, sector__slug_sector=slug_sector, tipo__slug_tipo=slug_tipo).order_by('nombre')
 
 	tipos = Tipo.objects.all()
 	now = datetime.now()
@@ -110,8 +115,11 @@ def restaurantes(request):
 	ciudades = Ciudade.objects.all()
 	restaurantes = Restaurante.objects.all()
 	tipos = Tipo.objects.all()
-	ahora = datetime.now().strftime("%H:%M:%S")
-	
+	now = datetime.now()
+
+	# entero = int(now)
+	hora= now.hour
+	minutos = now.minute
 
 	
 
@@ -119,7 +127,8 @@ def restaurantes(request):
 		"ciudades": ciudades,
 		"restaurantes": restaurantes,
 		"tipos": tipos,
-		"ahora": ahora,})
+		"hora": hora,
+		"minutos": minutos,})
 
 def menu_ciudad_sector(request,slug_restaurant,slug,slug_sector):
 
@@ -141,6 +150,51 @@ def menu_ciudad_sector(request,slug_restaurant,slug,slug_sector):
 	hora= now.hour
 	minutos = now.minute
 
+	if request.method == 'POST': # If the form has been submitted...
+		form = PedidoForm(request.POST) # A form bound to the POST data
+		if form.is_valid(): # All validation rules pass
+			logo = '<img src="http://domiclik.herokuapp.com/media/img/logo_web.png" height="138" width="143" alt=""><br>'
+			nombre = form.cleaned_data['nombre']
+			nombre_correo ='<strong>Cliente: </strong>'+nombre+'<br>'
+			correo = form.cleaned_data['correo']
+			correo_correo ='<strong>Correo:</strong>'+correo+'<br>'
+			telefono = form.cleaned_data['telefono']
+			telefono_correo ='<strong>Telefono: </strong>'+telefono+'<br>'
+			barrio = form.cleaned_data['barrio']
+			barrio_correo ='<strong>Barrio: </strong>'+barrio+'<br>'
+			direccion = form.cleaned_data['direccion']
+			direccion_correo ='<strong>Direccion: </strong>'+direccion+'<br>'
+			ciudad = form.cleaned_data['ciudad']
+			ciudad_correo = '<strong>Ciudad: </strong>'+ciudad+'<br>'
+			restaurant = form.cleaned_data['restaurant']
+			restaurant_correo ='<strong>Restaurante: </strong>'+restaurant+'<br>'
+			chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+			id_pedido = ''.join(random.sample(chars, 8))
+			id_pedido_correo ='<strong>Codigo de pedido: </strong>'+id_pedido+'<br>'
+			pedido_completo = form.cleaned_data['pedido_completo']
+			mensaje= '\n'.join([logo,nombre_correo, telefono_correo, barrio_correo,direccion_correo,ciudad_correo,restaurant_correo,id_pedido_correo,pedido_completo])
+			recipients = ['info@avarajame.com','avarajame@gmail.com']
+			recipients.append(correo)
+			mail = EmailMessage('Nuevo Pedido', mensaje, 'info@avarajame.com', recipients,)
+			mail.content_subtype="html"
+			mail.send()
+			pedido = Pedido()
+			pedido.codigo = id_pedido
+			pedido.nombre = nombre
+			pedido.correo = correo
+			pedido.telefono = telefono
+			pedido.barrio = barrio
+			pedido.direccion = direccion
+			pedido.pedido_completo =pedido_completo
+			pedido.restaurant =restaurant
+			pedido.save()
+                # Proce data in form.cleaned_data
+                # ...
+                return HttpResponseRedirect('/pedido') # Redirect after POST
+        else:
+
+        	form = PedidoForm() # An unbound form
+
 
 	
 
@@ -149,7 +203,7 @@ def menu_ciudad_sector(request,slug_restaurant,slug,slug_sector):
 		"categoria": categoria,
 		#"categoria_titulo": categoria_titulo,
 		"menus": menus,
-		
+		"form": form,
 		"ciudad": ciudad,
 		"sector": sector,
 		 # "tituloa": tituloa,
@@ -178,13 +232,56 @@ def menu_ciudad_sector_tipo(request,slug_restaurant,slug,slug_sector,slug_tipo):
 	hora= now.hour
 	minutos = now.minute
 
+	if request.method == 'POST': # If the form has been submitted...
+		form = PedidoForm(request.POST) # A form bound to the POST data
+		if form.is_valid(): # All validation rules pass
+		    logo = '<img src="http://domiclik.herokuapp.com/media/img/logo_web.png" height="138" width="143" alt=""><br>'
+		    nombre = form.cleaned_data['nombre']
+		    nombre_correo ='<strong>Cliente: </strong>'+nombre+'<br>'
+		    correo = form.cleaned_data['correo']
+		    correo_correo ='<strong>Correo: </strong>'+correo+'<br>'
+		    telefono = form.cleaned_data['telefono']
+		    telefono_correo ='<strong>Telefono: </strong>'+telefono+'<br>'
+		    barrio = form.cleaned_data['barrio']
+		    barrio_correo ='<strong>Barrio: </strong>'+barrio+'<br>'
+		    direccion = form.cleaned_data['direccion']
+		    direccion_correo ='<strong>Direccion: </strong>'+direccion+'<br>'
+		    restaurant = form.cleaned_data['restaurant']
+		    restaurant_correo ='<strong>Restaurante: </strong>'+restaurant+'<br>'
+		    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+		    id_pedido = ''.join(random.sample(chars, 8))
+		    id_pedido_correo ='<strong>Codigo de pedido: </strong>'+id_pedido+'<br>'
+		    pedido_completo = form.cleaned_data['pedido_completo']
+		    mensaje= '\n'.join([logo,nombre_correo, telefono_correo, barrio_correo,direccion_correo,restaurant_correo,id_pedido_correo,pedido_completo])
+		    recipients = ['info@avarajame.com','avarajame@gmail.com']
+		    recipients.append(correo)
+		    mail = EmailMessage('Nuevo Pedido', mensaje, 'info@avarajame.com', recipients,)
+		    mail.content_subtype="html"
+		    mail.send()
+		    pedido = Pedido()
+		    pedido.codigo = id_pedido
+		    pedido.nombre = nombre
+		    pedido.correo = correo
+		    pedido.telefono = telefono
+		    pedido.barrio = barrio
+		    pedido.direccion = direccion
+		    pedido.pedido_completo =pedido_completo
+		    pedido.restaurant =restaurant
+		    pedido.save()
+		    
+                # Process the data in form.cleaned_data
+                # ...
+                return HttpResponseRedirect('/pedido') # Redirect after POST
+        else:
+
+        	form = PedidoForm() # An unbound form
 
 	
 
 	return render(request,"index3.html",{
 		"restaurant": restaurant,
 		"categoria": categoria,
-		#"categoria_titulo": categoria_titulo,
+		"form": form,
 		"menus": menus,
 		"tipo":tipo,
 		"ciudad": ciudad,
@@ -272,4 +369,37 @@ class Ajax(ListView):
 
 		return HttpResponse(data, mimetype='application/json')
 
+
+# class PedidoForm(FormView):
+# 	template_name = 'index4.html'
+# 	form_class = PedidoForm
+# 	success_url = '/'
+
+# 	def form_valid(self, form):
+# 		self.object = form.save(commit = True)
+# 		return super(PedidoForm, self).form_valid(form)
+
+# def pedido_form(request):
+#     if request.method == 'POST': # If the form has been submitted...
+#         form = PedidoForm(request.POST) # A form bound to the POST data
+#         if form.is_valid(): # All validation rules pass
+#         	form.save()
+#                 # Process the data in form.cleaned_data
+#                 # ...
+#                 return HttpResponseRedirect('/pedido/') # Redirect after POST
+#     else:
+#         form = PedidoForm() # An unbound form
+
+    
+#     return render(request,"index4.html",{
+# 		"form": form,
+# 		})
+
+
+def pedido(request):
+	
+	
+	return render(request,"index4.html",{
+		
+		})
 

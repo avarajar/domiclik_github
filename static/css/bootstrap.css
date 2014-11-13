@@ -6447,6 +6447,17 @@ color: #606062;
 
 /* CSS PERSONAL*/
 
+/* # cambiar estilo a error
+============================================*/
+.controls > .error {
+    color: green;
+    display: inline-block;
+    /**display: inline;*/
+    padding-left: 5px;
+    vertical-align: middle;
+    /**zoom: 1;*/
+}
+
 .scroll{
 
   
