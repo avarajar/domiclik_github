@@ -173,9 +173,9 @@ def menu_ciudad_sector(request,slug_restaurant,slug,slug_sector):
 			id_pedido_correo ='<strong>Codigo de pedido: </strong>'+id_pedido+'<br>'
 			pedido_completo = form.cleaned_data['pedido_completo']
 			mensaje= '\n'.join([logo,nombre_correo, telefono_correo, barrio_correo,direccion_correo,ciudad_correo,restaurant_correo,id_pedido_correo,pedido_completo])
-			recipients = ['info@avarajame.com','avarajame@gmail.com']
+			recipients = ['domiclik.com@gmail.com','servicioalcliente.domiclik@hotmail.com']
 			recipients.append(correo)
-			mail = EmailMessage('Nuevo Pedido', mensaje, 'info@avarajame.com', recipients,)
+			mail = EmailMessage('Nuevo Pedido: Domiclik', mensaje, 'ventas@domiclik.com', recipients,)
 			mail.content_subtype="html"
 			mail.send()
 			pedido = Pedido()
@@ -187,6 +187,7 @@ def menu_ciudad_sector(request,slug_restaurant,slug,slug_sector):
 			pedido.direccion = direccion
 			pedido.pedido_completo =pedido_completo
 			pedido.restaurant =restaurant
+			pedido.ciudad = ciudad
 			pedido.save()
                 # Proce data in form.cleaned_data
                 # ...
@@ -246,16 +247,18 @@ def menu_ciudad_sector_tipo(request,slug_restaurant,slug,slug_sector,slug_tipo):
 		    barrio_correo ='<strong>Barrio: </strong>'+barrio+'<br>'
 		    direccion = form.cleaned_data['direccion']
 		    direccion_correo ='<strong>Direccion: </strong>'+direccion+'<br>'
+		    ciudad = form.cleaned_data['ciudad']
+		    ciudad_correo = '<strong>Ciudad: </strong>'+ciudad+'<br>'
 		    restaurant = form.cleaned_data['restaurant']
 		    restaurant_correo ='<strong>Restaurante: </strong>'+restaurant+'<br>'
 		    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 		    id_pedido = ''.join(random.sample(chars, 8))
 		    id_pedido_correo ='<strong>Codigo de pedido: </strong>'+id_pedido+'<br>'
 		    pedido_completo = form.cleaned_data['pedido_completo']
-		    mensaje= '\n'.join([logo,nombre_correo, telefono_correo, barrio_correo,direccion_correo,restaurant_correo,id_pedido_correo,pedido_completo])
-		    recipients = ['info@avarajame.com','avarajame@gmail.com']
+		    mensaje= '\n'.join([logo,nombre_correo, telefono_correo, barrio_correo,direccion_correo,ciudad_correo,restaurant_correo,id_pedido_correo,pedido_completo])
+		    recipients = ['domiclik.com@gmail.com','servicioalcliente.domiclik@hotmail.com']
 		    recipients.append(correo)
-		    mail = EmailMessage('Nuevo Pedido', mensaje, 'info@avarajame.com', recipients,)
+		    mail = EmailMessage('Nuevo Pedido: Domiclik', mensaje, 'ventas@domiclik.com', recipients,)
 		    mail.content_subtype="html"
 		    mail.send()
 		    pedido = Pedido()
@@ -267,6 +270,7 @@ def menu_ciudad_sector_tipo(request,slug_restaurant,slug,slug_sector,slug_tipo):
 		    pedido.direccion = direccion
 		    pedido.pedido_completo =pedido_completo
 		    pedido.restaurant =restaurant
+		    pedido.ciudad = ciudad
 		    pedido.save()
 		    
                 # Process the data in form.cleaned_data

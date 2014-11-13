@@ -28,10 +28,10 @@ DATABASES = {
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.avarajame.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 25
-EMAIL_HOST_USER = 'info@avarajame.com'
-EMAIL_HOST_PASSWORD = 'avarajame000101'
+EMAIL_HOST_USER = 'ventas@domiclik.com'
+EMAIL_HOST_PASSWORD = 'A71827700'
 EMAIL_USE_TLS = True
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -88,7 +88,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    #  RUTA_PROYECTO.child('static'),
+    # RUTA_PROYECTO.child('static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

@@ -63,7 +63,7 @@ class AdicionalTresAdmin (admin.ModelAdmin):
 	list_filter = ('restaurant',)
 
 class PedidoAdmin (admin.ModelAdmin):
-	list_display =('codigo','nombre','correo','telefono','direccion','pedido_total')
+	list_display =('codigo','restaurant','ciudad','nombre','correo','telefono','direccion','pedido_total')
 	list_filter = ('restaurant','codigo',)
 
 	def pedido_total(self,obj):

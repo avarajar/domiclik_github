@@ -298,7 +298,7 @@ class Pedido(models.Model):
 	direccion = models.TextField()
 	restaurant =models.CharField(max_length=60)
 	pedido_completo = models.TextField()
-	# costo = models.IntegerField()
+	ciudad = models.CharField(max_length=60)
 
 	def __unicode__(self):
 		return self.nombre
