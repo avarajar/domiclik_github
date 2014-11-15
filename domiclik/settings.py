@@ -78,6 +78,7 @@ MEDIA_URL = 'http://domiclik.herokuapp.com/media/'
 # Example: "/var/www/example.com/static/"
 STATIC_ROOT = RUTA_PROYECTO.child('static')
 
+
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
 
 
@@ -88,7 +89,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # RUTA_PROYECTO.child('static'),
+    #RUTA_PROYECTO.child('static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
