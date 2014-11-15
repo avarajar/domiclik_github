@@ -93,7 +93,7 @@ STATICFILES_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
 )
-print STATICFILES_DIRS
+
 
 # List of finder classes that know how to find static files in
 # various locations.
@@ -114,11 +114,11 @@ TEMPLATE_LOADERS = (
 )
 #AWS_S3_SECURE_URLS = False       # use http instead of https
 #AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
-#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-#AWS_ACCESS_KEY_ID = 'AKIAILHXU2SQGNT6GLXA'
-#AWS_SECRET_ACCESS_KEY ='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'
-#STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-#AWS_STOGAGE_BUCKET_NAME ='/domiclik'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# AWS_ACCESS_KEY_ID = 'AKIAILHXU2SQGNT6GLXA'
+# AWS_SECRET_ACCESS_KEY ='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'
+# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# AWS_STOGAGE_BUCKET_NAME ='domiclik'
 #S3_URL = 'http://domiclik.s3.amazonaws.com/' 
 #STATIC_URL = S3_URL
 
@@ -164,6 +164,8 @@ INSTALLED_APPS = (
     'Administrador',
     'south',
     'smart_selects',
+    'storages',
+
     
 )
 
