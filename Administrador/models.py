@@ -290,6 +290,7 @@ class AdicionalTres(models.Model):
 		return self.nombre
 
 class Pedido(models.Model):
+	fecha = models.CharField(max_length=60)
 	codigo = models.CharField(max_length=60)
 	nombre = models.CharField(max_length=60)
 	correo = models.EmailField(max_length=75)

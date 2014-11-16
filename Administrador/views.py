@@ -173,11 +173,13 @@ def menu_ciudad_sector(request,slug_restaurant,slug,slug_sector):
 			id_pedido_correo ='<strong>Codigo de pedido: </strong>'+id_pedido+'<br>'
 			pedido_completo = form.cleaned_data['pedido_completo']
 			mensaje= '\n'.join([logo,nombre_correo, telefono_correo, barrio_correo,direccion_correo,ciudad_correo,restaurant_correo,id_pedido_correo,pedido_completo])
-			recipients = ['domiclik.com@gmail.com','servicioalcliente.domiclik@hotmail.com','avarajame@gmail.com']
+			recipients = ['avarajame@gmail.com']
+			# 'domiclik.com@gmail.com','servicioalcliente.domiclik@hotmail.com',
 			recipients.append(correo)
 			mail = EmailMessage('Nuevo Pedido: Domiclik', mensaje, 'ventas@domiclik.com', recipients,)
 			mail.content_subtype="html"
 			mail.send()
+			fecha = datetime.now()
 			pedido = Pedido()
 			pedido.codigo = id_pedido
 			pedido.nombre = nombre
@@ -188,6 +190,7 @@ def menu_ciudad_sector(request,slug_restaurant,slug,slug_sector):
 			pedido.pedido_completo =pedido_completo
 			pedido.restaurant =restaurant
 			pedido.ciudad = ciudad
+			pedido.fecha = fecha
 			pedido.save()
                 # Proce data in form.cleaned_data
                 # ...
@@ -256,11 +259,13 @@ def menu_ciudad_sector_tipo(request,slug_restaurant,slug,slug_sector,slug_tipo):
 		    id_pedido_correo ='<strong>Codigo de pedido: </strong>'+id_pedido+'<br>'
 		    pedido_completo = form.cleaned_data['pedido_completo']
 		    mensaje= '\n'.join([logo,nombre_correo, telefono_correo, barrio_correo,direccion_correo,ciudad_correo,restaurant_correo,id_pedido_correo,pedido_completo])
-		    recipients = ['domiclik.com@gmail.com','servicioalcliente.domiclik@hotmail.com','avarajame@gmail.com']
+		    recipients = ['avarajame@gmail.com']
+		    # 'domiclik.com@gmail.com','servicioalcliente.domiclik@hotmail.com',
 		    recipients.append(correo)
 		    mail = EmailMessage('Nuevo Pedido: Domiclik', mensaje, 'ventas@domiclik.com', recipients,)
 		    mail.content_subtype="html"
 		    mail.send()
+		    fecha = datetime.now()
 		    pedido = Pedido()
 		    pedido.codigo = id_pedido
 		    pedido.nombre = nombre
@@ -271,6 +276,7 @@ def menu_ciudad_sector_tipo(request,slug_restaurant,slug,slug_sector,slug_tipo):
 		    pedido.pedido_completo =pedido_completo
 		    pedido.restaurant =restaurant
 		    pedido.ciudad = ciudad
+		    pedido.fecha = fecha
 		    pedido.save()
 		    
                 # Process the data in form.cleaned_data
