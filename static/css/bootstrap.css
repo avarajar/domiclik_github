@@ -6449,6 +6449,22 @@ color: #606062;
 
 /* # cambiar estilo a error
 ============================================*/
+
+/*.circular{
+   width: 200px;
+ height: 133px;
+ border-radius: 100px;
+-moz-border-radius: 100px;
+-webkit-border-radius: 100px;
+-khtml-border-radius: 100px;
+ overflow: hidden;
+ float: left; 
+  box-shadow: 0 0 8px rgba(0, 0, 0, .8); 
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8); 
+  -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+}*/
+
+
 .controls > .error {
     color: green;
     display: inline-block;

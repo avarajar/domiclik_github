@@ -1,6 +1,6 @@
 # Django settings for domiclik project.
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 
@@ -76,7 +76,7 @@ MEDIA_URL = 'http://domiclik.herokuapp.com/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = RUTA_PROYECTO.child('static')
+# STATIC_ROOT = RUTA_PROYECTO.child('static')
 
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
@@ -89,7 +89,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    # RUTA_PROYECTO.child('static'),
+     RUTA_PROYECTO.child('static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -116,8 +116,8 @@ TEMPLATE_LOADERS = (
 #AWS_S3_SECURE_URLS = False       # use http instead of https
 #AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-# AWS_ACCESS_KEY_ID = 'AKIAILHXU2SQGNT6GLXA'
-# AWS_SECRET_ACCESS_KEY ='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'
+# AWS_ACCESS_KEY_ID = ''
+# AWS_SECRET_ACCESS_KEY =''
 # STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 # AWS_STOGAGE_BUCKET_NAME ='domiclik'
 #S3_URL = 'http://domiclik.s3.amazonaws.com/' 
