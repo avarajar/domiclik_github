@@ -197,6 +197,20 @@ LOGGING = {
 
 # hay que poner DEBUG = false 
 if not DEBUG:
+    # -------Para usar en heroku----------
+    # hay que descargar la libreia de postgres para python psycopg2 y agregarla a las INSTALLED_APPS
+     DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2', 
+            'NAME': 'nombre_base_de_datos',                     
+            'USER': 'tu_usuariod_De_la_base_de_datos',
+            'PASSWORD': '...H',
+            'HOST': 'no se si sea necesario pero ponlo tambien',              
+            'PORT': '5432',
+        }
+    }
+
+
     AWS_STORAGE_BUCKET_NAME = 'nombre_de_tu_bucket'
     STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
