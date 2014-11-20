@@ -1,7 +1,7 @@
 # Django settings for domiclik project.
 
-DEBUG = False
-TEMPLATE_DEBUG = True
+DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 
 
@@ -36,7 +36,7 @@ EMAIL_USE_TLS = True
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -46,7 +46,7 @@ TIME_ZONE = 'UTC'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-co'
 
 SITE_ID = 1
 
@@ -115,7 +115,13 @@ TEMPLATE_LOADERS = (
 )
 #AWS_S3_SECURE_URLS = False       # use http instead of https
 #AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
-
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# AWS_ACCESS_KEY_ID = ''
+# AWS_SECRET_ACCESS_KEY =''
+# STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# AWS_STOGAGE_BUCKET_NAME ='domiclik'
+#S3_URL = 'http://domiclik.s3.amazonaws.com/' 
+#STATIC_URL = S3_URL
 
 
 
@@ -194,27 +200,3 @@ LOGGING = {
         },
     }
 }
-
-# hay que poner DEBUG = false 
-if not DEBUG:
-    # -------Para usar en heroku----------
-    # hay que descargar la libreia de postgres para python psycopg2 y agregarla a las INSTALLED_APPS
-     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', 
-            'NAME': 'nombre_base_de_datos',                     
-            'USER': 'tu_usuariod_De_la_base_de_datos',
-            'PASSWORD': '...H',
-            'HOST': 'no se si sea necesario pero ponlo tambien',              
-            'PORT': '5432',
-        }
-    }
-
-
-    AWS_STORAGE_BUCKET_NAME = 'nombre_de_tu_bucket'
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    S3_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
-    STATIC_URL = S3_URL
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    AWS_ACCESS_KEY_ID = '...'
-    AWS_SECRET_ACCESS_KEY ='...'
